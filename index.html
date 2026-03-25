@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sprout — Healthcare Intelligence Workspace</title>
+<title>Sprout</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,300;1,14..32,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
@@ -120,6 +120,68 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   font-weight: 500;
   color: var(--white);
   letter-spacing: -0.01em;
+  flex: 1;
+}
+
+/* Sidebar collapse button — Claude.ai style */
+.sidebar-collapse-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--slate-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  opacity: 0;
+  flex-shrink: 0;
+}
+.sidebar:hover .sidebar-collapse-btn { opacity: 1; }
+.sidebar-collapse-btn:hover { background: rgba(255,255,255,0.08); color: var(--slate-300); }
+.sidebar-collapse-btn svg { width: 16px; height: 16px; }
+
+/* Sidebar expand button (visible when collapsed) */
+.sidebar-expand-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-500);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.sidebar-expand-btn:hover { background: var(--slate-50); color: var(--slate-700); box-shadow: var(--shadow-md); }
+.sidebar-expand-btn svg { width: 16px; height: 16px; }
+
+/* Collapsed state */
+.app.sidebar-collapsed .sidebar {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  border-right: none;
+  opacity: 0;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+.app.sidebar-collapsed .main {
+  border-radius: 0;
+}
+.app.sidebar-collapsed .sidebar-expand-btn {
+  display: flex;
+}
+.sidebar {
+  transition: all var(--duration-normal) var(--ease-out);
 }
 
 .sidebar-nav {
@@ -1900,6 +1962,174 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   60% { transform: scale(0.8); opacity: 0.3; }
 }
 
+/* ─── DISCOVER VIEW (Perplexity-inspired) ─── */
+.view-discover { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+.view-discover.active { display: flex; }
+
+.discover-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-10) var(--space-12);
+}
+
+.discover-header {
+  margin-bottom: var(--space-8);
+  animation: projFadeUp 0.4s var(--ease-out) both;
+}
+
+.discover-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--slate-900);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-2);
+}
+
+.discover-subtitle {
+  font-size: 0.88rem;
+  color: var(--slate-500);
+  font-weight: 300;
+}
+
+.discover-categories {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+  animation: projFadeUp 0.4s var(--ease-out) 0.06s both;
+}
+
+.discover-cat {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--slate-600);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.discover-cat:hover { border-color: var(--slate-300); background: var(--slate-50); }
+.discover-cat.active { border-color: var(--sage-400); background: var(--sage-50); color: var(--sage-600); font-weight: 500; }
+
+.discover-section {
+  margin-bottom: var(--space-10);
+  animation: projFadeUp 0.4s var(--ease-out) 0.12s both;
+}
+
+.discover-section-title {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-5);
+}
+
+.discover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-5);
+}
+
+.discover-card {
+  padding: var(--space-6);
+  border: 1px solid var(--slate-100);
+  border-radius: 12px;
+  background: var(--white);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.discover-card:hover { border-color: var(--slate-200); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+.discover-card-topic {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.discover-card-topic-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.discover-card-topic-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.discover-card-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.35;
+  margin-bottom: var(--space-2);
+}
+
+.discover-card-excerpt {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+  line-height: 1.55;
+  font-weight: 300;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.discover-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  font-size: 0.72rem;
+  color: var(--slate-400);
+}
+
+.discover-card-meta-dot {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--slate-300);
+}
+
+/* Featured card (larger) */
+.discover-card.featured {
+  grid-column: span 2;
+  display: flex;
+  gap: var(--space-6);
+}
+.discover-card.featured .discover-card-content { flex: 1; }
+.discover-card.featured .discover-card-image {
+  width: 200px;
+  height: 140px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--sage-100), var(--sage-50));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.discover-card.featured .discover-card-image svg {
+  width: 48px;
+  height: 48px;
+  color: var(--sage-400);
+  stroke-width: 1.2;
+}
+
 /* ─── PROJECTS VIEW ─── */
 .view-projects { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .view-projects.active { display: flex; }
@@ -2507,7 +2737,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
 /* Agents main content — centered */
 .agents-center {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding: var(--space-12, 80px) var(--space-8) var(--space-8);
@@ -2770,6 +3000,52 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   font-weight: 450;
   color: var(--slate-500);
 }
+
+/* Agent card expanded detail */
+.explore-agent-card.expanded {
+  border-color: var(--sage-400);
+  box-shadow: var(--shadow-md);
+}
+
+.explore-agent-detail {
+  display: none;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--slate-100);
+}
+.explore-agent-card.expanded .explore-agent-detail { display: block; }
+
+.explore-agent-detail-section {
+  margin-bottom: var(--space-3);
+}
+
+.explore-agent-detail-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+.explore-agent-detail-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.explore-agent-detail-item {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--sage-50);
+  border: 1px solid var(--sage-100);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--sage-600);
+  font-family: var(--font-body);
+}
+
+.explore-agent-detail-item.command::before { content: '/'; opacity: 0.5; }
 
 .explore-no-results {
   grid-column: 1 / -1;
@@ -3901,7 +4177,11 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app" id="app">
+  <!-- Sidebar expand button (visible when sidebar collapsed) -->
+  <button class="sidebar-expand-btn" id="sidebarExpandBtn" onclick="toggleSidebar()" title="Open sidebar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+  </button>
   <!-- ─── Sidebar ─── -->
   <aside class="sidebar">
     <div class="sidebar-header">
@@ -3912,17 +4192,23 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         </svg>
       </div>
       <span class="sidebar-brand">Sprout</span>
+      <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="Close sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+      </button>
     </div>
 
     <!-- Default sidebar content -->
     <div class="sidebar-default" id="sidebarDefault">
       <div class="sidebar-new-thread" onclick="showHome()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        New thread
+        New Chat
       </div>
 
       <nav class="sidebar-nav">
-        <div class="nav-section-label">Workspace</div>
+        <div class="nav-item" onclick="showDiscover()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          Discover
+        </div>
         <div class="nav-item" onclick="showProjects()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
           Projects
@@ -3951,7 +4237,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         <div class="user-avatar">J</div>
         <div class="user-info">
           <div class="user-name">Jim</div>
-          <div class="user-dept">Healthcare Intelligence</div>
+          <div class="user-dept">jim@email.com</div>
         </div>
       </div>
     </div>
@@ -4545,7 +4831,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                 <div class="ad-shared-avatar a">J</div>
                 <div>
                   <div class="ad-shared-name">Jim</div>
-                  <div class="ad-shared-role">Healthcare Intelligence · Owner</div>
+                  <div class="ad-shared-role">jim@email.com · Owner</div>
                 </div>
               </div>
               <div class="ad-shared-user">
@@ -4630,7 +4916,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         <div class="explore-agents-grid" id="exploreAgentsGrid">
 
           <!-- Legal agents -->
-          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Contract Reviewer','Analyze contracts against your playbook, flag risks, and suggest redlines.','legal')">
+          <div class="explore-agent-card" data-category="legal" onclick="toggleAgentCard(this,'Contract Reviewer','Analyze contracts against your playbook, flag risks, and suggest redlines.','legal')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4642,7 +4928,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Contracts</span><span class="explore-agent-tag">Risk</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('NDA Triage','Triage incoming NDAs, classify risk level, and route for review.','legal')">
+          <div class="explore-agent-card" data-category="legal" onclick="toggleAgentCard(this,'NDA Triage','Triage incoming NDAs, classify risk level, and route for review.','legal')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4654,7 +4940,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">NDA</span><span class="explore-agent-tag">Triage</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Compliance Checker','Check documents and processes against regulatory and internal compliance requirements.','legal')">
+          <div class="explore-agent-card" data-category="legal" onclick="toggleAgentCard(this,'Compliance Checker','Check documents and processes against regulatory and internal compliance requirements.','legal')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4667,7 +4953,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Data agents -->
-          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
+          <div class="explore-agent-card" data-category="data" onclick="toggleAgentCard(this,'Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4679,7 +4965,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Data Quality</span><span class="explore-agent-tag">Profiling</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Dashboard Builder','Build interactive dashboards from raw data with charts and KPIs.','data')">
+          <div class="explore-agent-card" data-category="data" onclick="toggleAgentCard(this,'Dashboard Builder','Build interactive dashboards from raw data with charts and KPIs.','data')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4691,7 +4977,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Dashboard</span><span class="explore-agent-tag">Visualization</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('SQL Assistant','Write, optimize, and explain SQL queries for your data warehouse.','data')">
+          <div class="explore-agent-card" data-category="data" onclick="toggleAgentCard(this,'SQL Assistant','Write, optimize, and explain SQL queries for your data warehouse.','data')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4704,7 +4990,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- HR agents -->
-          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Offer Letter Drafter','Generate professional offer letters with compensation details and terms.','hr')">
+          <div class="explore-agent-card" data-category="hr" onclick="toggleAgentCard(this,'Offer Letter Drafter','Generate professional offer letters with compensation details and terms.','hr')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4716,7 +5002,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Recruiting</span><span class="explore-agent-tag">Offers</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Onboarding Planner','Build structured 30/60/90 day onboarding plans for new team members.','hr')">
+          <div class="explore-agent-card" data-category="hr" onclick="toggleAgentCard(this,'Onboarding Planner','Build structured 30/60/90 day onboarding plans for new team members.','hr')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4728,7 +5014,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Onboarding</span><span class="explore-agent-tag">Planning</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Policy Lookup','Look up company policies and translate them into plain-language answers.','hr')">
+          <div class="explore-agent-card" data-category="hr" onclick="toggleAgentCard(this,'Policy Lookup','Look up company policies and translate them into plain-language answers.','hr')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4741,7 +5027,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Ops agents -->
-          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Vendor Evaluator','Evaluate vendors with cost, risk, and capability scoring.','ops')">
+          <div class="explore-agent-card" data-category="ops" onclick="toggleAgentCard(this,'Vendor Evaluator','Evaluate vendors with cost, risk, and capability scoring.','ops')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4753,7 +5039,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Vendor</span><span class="explore-agent-tag">Procurement</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('SOP Writer','Document business processes as standardized operating procedures.','ops')">
+          <div class="explore-agent-card" data-category="ops" onclick="toggleAgentCard(this,'SOP Writer','Document business processes as standardized operating procedures.','ops')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4765,7 +5051,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">SOP</span><span class="explore-agent-tag">Process</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Status Report Generator','Generate weekly status reports for leadership from project data.','ops')">
+          <div class="explore-agent-card" data-category="ops" onclick="toggleAgentCard(this,'Status Report Generator','Generate weekly status reports for leadership from project data.','ops')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4778,7 +5064,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Productivity agents -->
-          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Document Summarizer','Summarize long documents into key points, decisions, and action items.','prod')">
+          <div class="explore-agent-card" data-category="prod" onclick="toggleAgentCard(this,'Document Summarizer','Summarize long documents into key points, decisions, and action items.','prod')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4790,7 +5076,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Summary</span><span class="explore-agent-tag">Documents</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Email Drafter','Compose professional emails from meeting notes, briefs, or context.','prod')">
+          <div class="explore-agent-card" data-category="prod" onclick="toggleAgentCard(this,'Email Drafter','Compose professional emails from meeting notes, briefs, or context.','prod')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4802,7 +5088,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Email</span><span class="explore-agent-tag">Writing</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Meeting Recap','Generate structured recaps from meeting notes or transcripts.','prod')">
+          <div class="explore-agent-card" data-category="prod" onclick="toggleAgentCard(this,'Meeting Recap','Generate structured recaps from meeting notes or transcripts.','prod')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4815,7 +5101,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Engineering agents -->
-          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Code Reviewer','Review pull requests for bugs, security issues, and best practices.','eng')">
+          <div class="explore-agent-card" data-category="eng" onclick="toggleAgentCard(this,'Code Reviewer','Review pull requests for bugs, security issues, and best practices.','eng')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4827,7 +5113,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Code Review</span><span class="explore-agent-tag">PR</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('API Doc Generator','Generate API documentation from code, endpoints, and schemas.','eng')">
+          <div class="explore-agent-card" data-category="eng" onclick="toggleAgentCard(this,'API Doc Generator','Generate API documentation from code, endpoints, and schemas.','eng')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4839,7 +5125,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">API</span><span class="explore-agent-tag">Documentation</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Incident Responder','Triage production incidents, draft postmortems, and track remediation.','eng')">
+          <div class="explore-agent-card" data-category="eng" onclick="toggleAgentCard(this,'Incident Responder','Triage production incidents, draft postmortems, and track remediation.','eng')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5869,6 +6155,115 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
       </div>
     </div>
 
+    <!-- DISCOVER VIEW -->
+    <div class="view-discover" id="viewDiscover">
+      <div class="discover-container">
+        <div class="discover-header">
+          <h2 class="discover-title">Discover</h2>
+          <p class="discover-subtitle">Trending topics and curated insights from your workspace</p>
+        </div>
+
+        <div class="discover-categories">
+          <div class="discover-cat active">All</div>
+          <div class="discover-cat">Healthcare</div>
+          <div class="discover-cat">Compliance</div>
+          <div class="discover-cat">Clinical Ops</div>
+          <div class="discover-cat">Research</div>
+          <div class="discover-cat">Technology</div>
+          <div class="discover-cat">Policy</div>
+        </div>
+
+        <div class="discover-section">
+          <div class="discover-section-title">Trending Now</div>
+          <div class="discover-grid">
+            <div class="discover-card featured" onclick="showThread()">
+              <div class="discover-card-content">
+                <div class="discover-card-topic">
+                  <span class="discover-card-topic-icon">🏥</span>
+                  <span class="discover-card-topic-label">Healthcare</span>
+                </div>
+                <div class="discover-card-title">FDA Releases Updated Guidelines for AI-Assisted Medical Devices</div>
+                <div class="discover-card-excerpt">New regulatory framework addresses the use of machine learning algorithms in diagnostic tools and treatment planning, with specific requirements for transparency and validation.</div>
+                <div class="discover-card-meta">
+                  <span>4 sources</span>
+                  <span class="discover-card-meta-dot"></span>
+                  <span>2 hours ago</span>
+                </div>
+              </div>
+              <div class="discover-card-image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              </div>
+            </div>
+            <div class="discover-card">
+              <div class="discover-card-topic">
+                <span class="discover-card-topic-icon">📊</span>
+                <span class="discover-card-topic-label">Clinical Ops</span>
+              </div>
+              <div class="discover-card-title">Q4 Adverse Event Trends Signal Improvement in Patient Safety Metrics</div>
+              <div class="discover-card-excerpt">Analysis shows 26% reduction in adverse events quarter-over-quarter, with medication-related incidents down significantly.</div>
+              <div class="discover-card-meta">
+                <span>3 sources</span>
+                <span class="discover-card-meta-dot"></span>
+                <span>5 hours ago</span>
+              </div>
+            </div>
+            <div class="discover-card">
+              <div class="discover-card-topic">
+                <span class="discover-card-topic-icon">🔒</span>
+                <span class="discover-card-topic-label">Compliance</span>
+              </div>
+              <div class="discover-card-title">HIPAA Audit Best Practices for 2025: What's Changed</div>
+              <div class="discover-card-excerpt">Updated compliance requirements and preparation strategies for healthcare organizations navigating the new enforcement landscape.</div>
+              <div class="discover-card-meta">
+                <span>6 sources</span>
+                <span class="discover-card-meta-dot"></span>
+                <span>1 day ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="discover-section">
+          <div class="discover-section-title">From Your Workspace</div>
+          <div class="discover-grid">
+            <div class="discover-card">
+              <div class="discover-card-topic">
+                <span class="discover-card-topic-icon">📋</span>
+                <span class="discover-card-topic-label">Projects</span>
+              </div>
+              <div class="discover-card-title">Vendor Evaluation: Lab Systems Integration Progress Update</div>
+              <div class="discover-card-excerpt">Comparative analysis of laboratory information system vendors narrowed to three finalists based on pricing and compliance certifications.</div>
+              <div class="discover-card-meta">
+                <span>Updated 2 days ago</span>
+              </div>
+            </div>
+            <div class="discover-card">
+              <div class="discover-card-topic">
+                <span class="discover-card-topic-icon">📄</span>
+                <span class="discover-card-topic-label">Policy</span>
+              </div>
+              <div class="discover-card-title">Remote Work Policy Refresh: Key Changes for Healthcare Staff</div>
+              <div class="discover-card-excerpt">Updated guidelines address telehealth practitioner requirements, HIPAA-compliant home office standards, and hybrid scheduling.</div>
+              <div class="discover-card-meta">
+                <span>Updated 3 days ago</span>
+              </div>
+            </div>
+            <div class="discover-card">
+              <div class="discover-card-topic">
+                <span class="discover-card-topic-icon">🔬</span>
+                <span class="discover-card-topic-label">Research</span>
+              </div>
+              <div class="discover-card-title">Patient Engagement Campaign: Outreach Metrics and Optimization</div>
+              <div class="discover-card-excerpt">Multi-channel outreach strategy showing promising results in reducing appointment no-shows and improving satisfaction scores.</div>
+              <div class="discover-card-meta">
+                <span>Updated 4 days ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- PROJECTS VIEW -->
     <div class="view-projects" id="viewProjects">
       <div class="projects-container">
@@ -6268,6 +6663,7 @@ function hideAllViews() {
   document.getElementById('viewProdSkills').classList.remove('active');
   document.getElementById('viewProjectDetail').classList.remove('active');
   document.getElementById('viewNewProject').classList.remove('active');
+  document.getElementById('viewDiscover').classList.remove('active');
   // Clear agent sidebar active states
   document.querySelectorAll('.agents-plugin-item').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.agents-plugin-sub').forEach(el => el.classList.remove('visible'));
@@ -6308,6 +6704,19 @@ function exitAgents() {
   restoreDefaultSidebar();
   document.getElementById('viewHome').classList.remove('hidden');
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+}
+
+function showDiscover() {
+  hideAllViews();
+  restoreDefaultSidebar();
+  document.getElementById('viewDiscover').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    el.classList.toggle('active', i === 0);
+  });
+}
+
+function toggleSidebar() {
+  document.getElementById('app').classList.toggle('sidebar-collapsed');
 }
 
 function showConnectors() {
@@ -7053,6 +7462,72 @@ function filterExploreAgents() {
 }
 
 // Agent Use Modal
+// Agent skills/commands data
+const agentSkillsData = {
+  'Contract Reviewer': { commands: ['review-contract', 'flag-risks', 'suggest-redlines'], skills: ['contract-analysis', 'risk-assessment', 'clause-comparison'] },
+  'NDA Triage': { commands: ['triage-nda', 'classify-risk'], skills: ['nda-parsing', 'risk-scoring', 'routing-logic'] },
+  'Compliance Checker': { commands: ['check-compliance', 'audit-doc'], skills: ['hipaa-validation', 'regulatory-mapping', 'gap-analysis'] },
+  'Data Explorer': { commands: ['profile-data', 'detect-anomalies'], skills: ['data-profiling', 'quality-scoring', 'anomaly-detection'] },
+  'Dashboard Builder': { commands: ['build-dashboard', 'add-chart'], skills: ['chart-generation', 'kpi-extraction', 'layout-design'] },
+  'SQL Assistant': { commands: ['write-query', 'optimize-sql', 'explain-query'], skills: ['sql-generation', 'query-optimization', 'schema-analysis'] },
+  'Offer Letter Drafter': { commands: ['draft-offer', 'comp-template'], skills: ['offer-generation', 'comp-formatting', 'legal-compliance'] },
+  'Onboarding Planner': { commands: ['plan-onboarding', 'create-checklist'], skills: ['30-60-90-plans', 'task-scheduling', 'role-mapping'] },
+  'Policy Lookup': { commands: ['lookup-policy', 'search-handbook'], skills: ['policy-search', 'plain-language', 'section-citation'] },
+  'Vendor Evaluator': { commands: ['evaluate-vendor', 'compare-vendors'], skills: ['cost-analysis', 'risk-scoring', 'capability-matrix'] },
+  'SOP Writer': { commands: ['write-sop', 'update-process'], skills: ['process-documentation', 'step-sequencing', 'compliance-tagging'] },
+  'Status Report Generator': { commands: ['generate-report', 'weekly-summary'], skills: ['data-aggregation', 'narrative-generation', 'metric-tracking'] },
+  'Document Summarizer': { commands: ['summarize-doc', 'extract-key-points'], skills: ['text-summarization', 'key-extraction', 'length-control'] },
+  'Email Drafter': { commands: ['draft-email', 'reply-template'], skills: ['tone-matching', 'context-extraction', 'template-filling'] },
+  'Meeting Recap': { commands: ['recap-meeting', 'extract-actions'], skills: ['transcript-processing', 'action-extraction', 'summary-generation'] },
+};
+
+function toggleAgentCard(card, name, desc, category) {
+  event.stopPropagation();
+  const wasExpanded = card.classList.contains('expanded');
+
+  // Close all expanded cards
+  document.querySelectorAll('.explore-agent-card.expanded').forEach(c => {
+    c.classList.remove('expanded');
+    const detail = c.querySelector('.explore-agent-detail');
+    if (detail) detail.remove();
+  });
+
+  if (wasExpanded) return;
+
+  // Expand this card
+  card.classList.add('expanded');
+
+  // Create detail section
+  const data = agentSkillsData[name] || { commands: ['run'], skills: ['default'] };
+  const detail = document.createElement('div');
+  detail.className = 'explore-agent-detail';
+
+  let html = '';
+  if (data.commands.length) {
+    html += '<div class="explore-agent-detail-section"><div class="explore-agent-detail-label">Commands</div><div class="explore-agent-detail-items">';
+    data.commands.forEach(c => { html += '<span class="explore-agent-detail-item command">' + c + '</span>'; });
+    html += '</div></div>';
+  }
+  if (data.skills.length) {
+    html += '<div class="explore-agent-detail-section"><div class="explore-agent-detail-label">Skills</div><div class="explore-agent-detail-items">';
+    data.skills.forEach(s => { html += '<span class="explore-agent-detail-item">' + s + '</span>'; });
+    html += '</div></div>';
+  }
+  detail.innerHTML = html;
+  card.appendChild(detail);
+}
+
+// Close expanded cards on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.explore-agent-card')) {
+    document.querySelectorAll('.explore-agent-card.expanded').forEach(c => {
+      c.classList.remove('expanded');
+      const detail = c.querySelector('.explore-agent-detail');
+      if (detail) detail.remove();
+    });
+  }
+});
+
 function openAgentUseModal(name, desc, category) {
   document.getElementById('agentUseModalName').textContent = name;
   document.getElementById('agentUseModalDesc').textContent = desc;
@@ -7068,7 +7543,7 @@ function showKnowledgeBase() {
   restoreDefaultSidebar();
   document.getElementById('viewKb').classList.add('active');
   document.querySelectorAll('.nav-item').forEach((el, i) => {
-    el.classList.toggle('active', i === 1);
+    el.classList.toggle('active', i === 2);
   });
 }
 
@@ -7077,7 +7552,7 @@ function showProjects() {
   restoreDefaultSidebar();
   document.getElementById('viewProjects').classList.add('active');
   document.querySelectorAll('.nav-item').forEach((el, i) => {
-    el.classList.toggle('active', i === 0);
+    el.classList.toggle('active', i === 1);
   });
 }
 
@@ -7088,7 +7563,7 @@ function showProjectDetail(name, desc) {
   document.getElementById('projectDetailName').textContent = name;
   document.getElementById('projectDetailDesc').textContent = desc;
   document.querySelectorAll('.nav-item').forEach((el, i) => {
-    el.classList.toggle('active', i === 0);
+    el.classList.toggle('active', i === 1);
   });
 }
 
@@ -7099,7 +7574,7 @@ function showNewProject() {
   document.getElementById('newProjectName').value = '';
   document.getElementById('newProjectDesc').value = '';
   document.querySelectorAll('.nav-item').forEach((el, i) => {
-    el.classList.toggle('active', i === 0);
+    el.classList.toggle('active', i === 1);
   });
   setTimeout(() => document.getElementById('newProjectName').focus(), 100);
 }
