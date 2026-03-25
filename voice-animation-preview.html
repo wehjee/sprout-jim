@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Input Animation Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --sage-600: #2E7D33;
+  --sage-500: #34D25C;
+  --sage-400: #4CAF52;
+  --sage-100: #C8E6CA;
+  --slate-900: #3E2723;
+  --slate-700: #5D4037;
+  --slate-500: #737373;
+  --slate-400: #A1887F;
+  --slate-200: #E0D6C9;
+  --slate-100: #EFEBE9;
+  --slate-50: #F5F0EB;
+  --white: #FFFFFF;
+  --warm-white: #FAF6F2;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Newsreader', Georgia, serif;
+}
+
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: var(--warm-white);
+  color: var(--slate-900);
+  min-height: 100vh;
+  padding: 60px 40px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.page-sub {
+  font-size: 0.88rem;
+  color: var(--slate-500);
+  text-align: center;
+  font-weight: 300;
+  margin-bottom: 60px;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.option-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--sage-100);
+  color: var(--sage-600);
+}
+
+.option-badge.recommended {
+  background: var(--sage-500);
+  color: var(--white);
+}
+
+.option-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.option-desc {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+  font-weight: 300;
+  text-align: center;
+  max-width: 480px;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ─── Shared input box base ─── */
+.demo-input-box {
+  width: 100%;
+  max-width: 640px;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(62, 39, 35, 0.06), 0 1px 2px rgba(62, 39, 35, 0.04);
+  overflow: visible;
+  position: relative;
+}
+
+.demo-input-inner {
+  position: relative;
+  width: 100%;
+}
+
+.demo-textarea {
+  width: 100%;
+  padding: 20px 24px;
+  padding-right: 56px;
+  border: none;
+  border-radius: 16px 16px 0 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--slate-900);
+  background: transparent;
+  outline: none;
+  line-height: 1.5;
+  resize: none;
+  font-weight: 300;
+}
+.demo-textarea::placeholder { color: var(--slate-400); font-weight: 300; }
+
+.demo-send {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: var(--slate-900);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.demo-send svg { width: 16px; height: 16px; }
+
+.demo-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-top: 1px solid var(--slate-100);
+}
+
+.demo-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--slate-500);
+  font-size: 0.78rem;
+}
+.demo-toolbar-left svg { width: 15px; height: 15px; }
+
+.demo-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.demo-voice-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--slate-400);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.demo-voice-btn:hover { background: var(--slate-50); color: var(--slate-700); }
+.demo-voice-btn.recording { color: #AA0008; }
+.demo-voice-btn svg { width: 16px; height: 16px; }
+
+.demo-add {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--slate-400);
+}
+.demo-add svg { width: 16px; height: 16px; }
+
+.demo-web-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--slate-200);
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--slate-500);
+  cursor: default;
+}
+.demo-web-toggle svg { width: 13px; height: 13px; }
+
+/* Click instruction */
+.click-hint {
+  margin-top: 16px;
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.click-hint kbd {
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--slate-200);
+  background: var(--slate-50);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--slate-500);
+}
+
+
+/* ═══════════════════════════════════════════
+   OPTION A — Conic Gradient Sweep
+   ═══════════════════════════════════════════ */
+
+.option-a .demo-input-box {
+  position: relative;
+  z-index: 0;
+}
+
+.option-a .demo-input-box::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: conic-gradient(
+    from var(--sweep-angle, 0deg),
+    transparent 0deg,
+    var(--sage-500) 40deg,
+    var(--sage-400) 80deg,
+    transparent 120deg,
+    transparent 360deg
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.option-a .demo-input-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--white);
+  z-index: -1;
+}
+
+.option-a .demo-input-box.active::before {
+  opacity: 1;
+  animation: conicSweep 2s linear infinite;
+}
+
+@property --sweep-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes conicSweep {
+  to { --sweep-angle: 360deg; }
+}
+
+
+/* ═══════════════════════════════════════════
+   OPTION B — Flowing Border Trail
+   ═══════════════════════════════════════════ */
+
+.option-b .demo-input-box {
+  position: relative;
+  z-index: 0;
+}
+
+.option-b .demo-input-box::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: linear-gradient(
+    var(--trail-angle, 0deg),
+    transparent 0%,
+    var(--sage-400) 15%,
+    var(--sage-500) 25%,
+    transparent 40%,
+    transparent 60%,
+    var(--sage-400) 75%,
+    var(--sage-500) 85%,
+    transparent 100%
+  );
+}
+
+.option-b .demo-input-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--white);
+  z-index: -1;
+}
+
+.option-b .demo-input-box.active::before {
+  opacity: 1;
+  animation: trailFlow 3s linear infinite;
+}
+
+@property --trail-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes trailFlow {
+  to { --trail-angle: 360deg; }
+}
+
+
+/* ═══════════════════════════════════════════
+   OPTION C — Pulse Glow
+   ═══════════════════════════════════════════ */
+
+.option-c .demo-input-box.active {
+  border-color: var(--sage-400);
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow:
+      0 2px 8px rgba(62, 39, 35, 0.06),
+      0 0 0 0px rgba(52, 210, 92, 0),
+      0 0 12px rgba(52, 210, 92, 0);
+  }
+  50% {
+    box-shadow:
+      0 2px 8px rgba(62, 39, 35, 0.06),
+      0 0 0 3px rgba(52, 210, 92, 0.15),
+      0 0 20px rgba(52, 210, 92, 0.08);
+  }
+}
+
+/* ─── Separator ─── */
+.option-divider {
+  width: 100%;
+  max-width: 200px;
+  height: 1px;
+  background: var(--slate-200);
+  margin: 0 auto;
+}
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Voice Input Animation Options</h1>
+<p class="page-sub">Click the microphone icon on each to preview the animation</p>
+
+<div class="options-grid">
+
+  <!-- OPTION A -->
+  <div class="option option-a">
+    <div class="option-label">
+      <h2 class="option-name">Option A — Conic Gradient Sweep</h2>
+      <span class="option-badge recommended">Recommended</span>
+    </div>
+    <p class="option-desc">A single green gradient point rotates around the border like a radar sweep. Focused, alive, premium.</p>
+
+    <div class="demo-input-box" id="boxA">
+      <div class="demo-input-inner">
+        <textarea class="demo-textarea" rows="1" placeholder="What would you like to work on?" readonly></textarea>
+        <button class="demo-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+      <div class="demo-toolbar">
+        <div class="demo-toolbar-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+          <span>Work in a folder</span>
+        </div>
+        <div class="demo-toolbar-right">
+          <div class="demo-web-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>Web Search</span>
+          </div>
+          <button class="demo-voice-btn" onclick="toggleDemo('A')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <div class="demo-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="click-hint">Click <kbd>mic</kbd> to toggle</div>
+  </div>
+
+  <div class="option-divider"></div>
+
+  <!-- OPTION B -->
+  <div class="option option-b">
+    <div class="option-label">
+      <h2 class="option-name">Option B — Flowing Border Trail</h2>
+      <span class="option-badge">Organic</span>
+    </div>
+    <p class="option-desc">Two gradient points chase each other around the perimeter. Slower, more organic — like energy flowing through a vine.</p>
+
+    <div class="demo-input-box" id="boxB">
+      <div class="demo-input-inner">
+        <textarea class="demo-textarea" rows="1" placeholder="What would you like to work on?" readonly></textarea>
+        <button class="demo-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+      <div class="demo-toolbar">
+        <div class="demo-toolbar-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+          <span>Work in a folder</span>
+        </div>
+        <div class="demo-toolbar-right">
+          <div class="demo-web-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>Web Search</span>
+          </div>
+          <button class="demo-voice-btn" onclick="toggleDemo('B')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <div class="demo-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="click-hint">Click <kbd>mic</kbd> to toggle</div>
+  </div>
+
+  <div class="option-divider"></div>
+
+  <!-- OPTION C -->
+  <div class="option option-c">
+    <div class="option-label">
+      <h2 class="option-name">Option C — Pulse Glow</h2>
+      <span class="option-badge">Minimal</span>
+    </div>
+    <p class="option-desc">The entire border breathes with a soft green glow. The simplest option — calm and understated.</p>
+
+    <div class="demo-input-box" id="boxC">
+      <div class="demo-input-inner">
+        <textarea class="demo-textarea" rows="1" placeholder="What would you like to work on?" readonly></textarea>
+        <button class="demo-send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+      <div class="demo-toolbar">
+        <div class="demo-toolbar-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+          <span>Work in a folder</span>
+        </div>
+        <div class="demo-toolbar-right">
+          <div class="demo-web-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>Web Search</span>
+          </div>
+          <button class="demo-voice-btn" onclick="toggleDemo('C')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <div class="demo-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="click-hint">Click <kbd>mic</kbd> to toggle</div>
+  </div>
+
+</div>
+
+<script>
+function toggleDemo(id) {
+  const box = document.getElementById('box' + id);
+  const btn = box.querySelector('.demo-voice-btn');
+  box.classList.toggle('active');
+  btn.classList.toggle('recording');
+}
+</script>
+</body>
+</html>
