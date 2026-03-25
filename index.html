@@ -1391,6 +1391,227 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   font-weight: 300;
 }
 
+/* ─── Rich message types for demo threads ─── */
+
+/* File attachment chip */
+.msg-file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  font-size: 0.78rem;
+  color: var(--slate-700);
+  margin: var(--space-2) 0;
+}
+.msg-file svg { width: 16px; height: 16px; color: var(--slate-400); flex-shrink: 0; }
+.msg-file-size { color: var(--slate-400); font-size: 0.68rem; }
+
+/* Tool-use / thinking block */
+.msg-tool {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-3) 0;
+  border-radius: 8px;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  font-size: 0.78rem;
+  color: var(--slate-500);
+}
+.msg-tool svg { width: 14px; height: 14px; color: var(--sage-500); flex-shrink: 0; }
+.msg-tool-label { color: var(--slate-400); }
+.msg-tool-source { color: var(--slate-600); font-weight: 400; }
+.msg-tool-time { color: var(--slate-400); margin-left: auto; font-size: 0.72rem; }
+
+/* Output / download block */
+.msg-output {
+  margin: var(--space-4) 0;
+  padding: var(--space-5);
+  border-radius: 10px;
+  border: 1px solid var(--sage-100);
+  background: var(--sage-50);
+}
+
+.msg-output-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.msg-output-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--white);
+  border: 1px solid var(--sage-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.msg-output-icon svg { width: 18px; height: 18px; color: var(--sage-600); }
+
+.msg-output-info { flex: 1; }
+.msg-output-name { font-size: 0.85rem; font-weight: 500; color: var(--slate-900); }
+.msg-output-meta { font-size: 0.72rem; color: var(--slate-500); margin-top: 1px; }
+
+.msg-output-download {
+  padding: var(--space-2) var(--space-4);
+  border-radius: 8px;
+  border: 1px solid var(--sage-400);
+  background: var(--white);
+  color: var(--sage-600);
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.msg-output-download:hover { background: var(--sage-50); }
+.msg-output-download svg { width: 14px; height: 14px; }
+
+/* Inline chart placeholder */
+.msg-chart {
+  margin: var(--space-4) 0;
+  border-radius: 10px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  overflow: hidden;
+}
+.msg-chart-header {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--slate-100);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--slate-700);
+}
+.msg-chart-body {
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 140px;
+}
+.msg-chart-bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+.msg-chart-bar:hover { opacity: 0.8; }
+.msg-chart-bar-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  color: var(--slate-400);
+  white-space: nowrap;
+}
+.msg-chart-legend {
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  display: flex;
+  gap: var(--space-4);
+  font-size: 0.68rem;
+  color: var(--slate-500);
+}
+.msg-chart-legend span::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.msg-chart-legend .leg-a::before { background: var(--sage-500); }
+.msg-chart-legend .leg-b::before { background: var(--sage-100); }
+
+/* Comparison table */
+.msg-diff {
+  margin: var(--space-4) 0;
+  border-radius: 10px;
+  border: 1px solid var(--slate-200);
+  overflow: hidden;
+  font-size: 0.8rem;
+}
+.msg-diff-header {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  background: var(--slate-50);
+  font-weight: 500;
+  color: var(--slate-600);
+}
+.msg-diff-header div, .msg-diff-row div {
+  padding: var(--space-2) var(--space-3);
+}
+.msg-diff-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  border-top: 1px solid var(--slate-100);
+  color: var(--slate-700);
+  font-weight: 300;
+}
+.msg-diff-row .diff-changed {
+  background: #FFF8E1;
+  color: var(--gold-500);
+  font-weight: 400;
+}
+.msg-diff-row .diff-added {
+  background: var(--sage-50);
+  color: var(--sage-600);
+  font-weight: 400;
+}
+
+/* Web search results */
+.msg-search-results {
+  margin: var(--space-3) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.msg-search-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 8px;
+  border: 1px solid var(--slate-100);
+  background: var(--white);
+}
+.msg-search-result-favicon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.msg-search-result-title {
+  font-size: 0.82rem;
+  font-weight: 450;
+  color: var(--sage-600);
+  line-height: 1.3;
+}
+.msg-search-result-url {
+  font-size: 0.68rem;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
 /* ─── AUDIT MODE OVERLAY ON SOURCE MARKERS ─── */
 .audit-mode .source-marker {
   background: var(--sage-100);
@@ -4397,13 +4618,29 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         </div>
 
         <div class="nav-section-label" style="margin-top: var(--space-4)">Recent</div>
-        <div class="nav-item" onclick="showThread()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Q4 Adverse Events
+        <div class="nav-item" onclick="showDemoThread('pptx')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Generate Board Deck
         </div>
-        <div class="nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          HIPAA Audit Prep
+        <div class="nav-item" onclick="showDemoThread('excel')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg>
+          Analyze Claims Data
+        </div>
+        <div class="nav-item" onclick="showDemoThread('doccompare')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Compare SOPs
+        </div>
+        <div class="nav-item" onclick="showDemoThread('audio')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
+          Translate Audio Notes
+        </div>
+        <div class="nav-item" onclick="showDemoThread('websearch')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          GLP-1 Market Search
+        </div>
+        <div class="nav-item" onclick="showDemoThread('deepresearch')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          Deep Research: Biosimilars
         </div>
       </nav>
 
@@ -6913,6 +7150,235 @@ function showHome() {
   restoreDefaultSidebar();
   document.getElementById('viewHome').classList.remove('hidden');
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+}
+
+// ─── Demo thread conversations ───
+const demoThreads = {
+  pptx: {
+    title: 'Generate Board Deck from Q4 Data',
+    messages: [
+      { role: 'user', time: '2:14 PM', body: `<p>I need to create a board presentation for Thursday's meeting. Here's the Q4 data and the template we used last quarter.</p>
+        <div class="msg-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Q4_Financial_Data.xlsx <span class="msg-file-size">2.4 MB</span></div>
+        <div class="msg-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Q3_Board_Template.pptx <span class="msg-file-size">8.1 MB</span></div>
+        <p>Please generate a polished deck with: executive summary, financial performance, clinical outcomes, and strategic outlook. Keep the same style as Q3.</p>` },
+      { role: 'assistant', time: '2:14 PM', body: `
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Analyzing</span> <span class="msg-tool-source">Q4_Financial_Data.xlsx — 14 sheets, 2,847 rows</span> <span class="msg-tool-time">3.2s</span></div>
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Parsing template</span> <span class="msg-tool-source">Q3_Board_Template.pptx — 18 slides, brand assets extracted</span> <span class="msg-tool-time">2.1s</span></div>
+        <p>I've analyzed the Q4 data and matched the Q3 template styling. Here's your board deck with 16 slides:</p>
+        <ul>
+          <li><strong>Slides 1-2:</strong> Title & Executive Summary — highlights the 12% revenue growth and three key strategic wins</li>
+          <li><strong>Slides 3-6:</strong> Financial Performance — revenue waterfall, margin analysis, cost breakdown, and YoY comparison</li>
+          <li><strong>Slides 7-10:</strong> Clinical Outcomes — adverse event trends (26% reduction), patient satisfaction scores, readmission rates</li>
+          <li><strong>Slides 11-14:</strong> Strategic Outlook — pipeline updates, market expansion, and 2026 investment priorities</li>
+          <li><strong>Slides 15-16:</strong> Appendix & Q&A</li>
+        </ul>
+        <div class="msg-output">
+          <div class="msg-output-header">
+            <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <div class="msg-output-info"><div class="msg-output-name">Q4_Board_Presentation.pptx</div><div class="msg-output-meta">16 slides · 4.2 MB · Generated just now</div></div>
+            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+          </div>
+        </div>
+        <p>Want me to adjust any slide content, add speaker notes, or change the color scheme?</p>` }
+    ]
+  },
+  excel: {
+    title: 'Analyze Claims Data & Generate Charts',
+    messages: [
+      { role: 'user', time: '10:32 AM', body: `<p>Can you analyze this claims dataset? I need to understand denial patterns and generate charts for the ops review.</p>
+        <div class="msg-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg> Claims_2024_2025.xlsx <span class="msg-file-size">12.7 MB</span></div>` },
+      { role: 'assistant', time: '10:33 AM', body: `
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Processing</span> <span class="msg-tool-source">Claims_2024_2025.xlsx — 47,832 claims across 6 payers</span> <span class="msg-tool-time">5.8s</span></div>
+        <p>Here's what I found across <strong>47,832 claims</strong> from Jan 2024 to Mar 2025:</p>
+        <div class="msg-chart">
+          <div class="msg-chart-header">Denial Rate by Payer (Q4 2024 vs Q1 2025)</div>
+          <div class="msg-chart-body">
+            <div class="msg-chart-bar" style="height:85%;background:var(--sage-500);flex:1"><span class="msg-chart-bar-label">Aetna</span></div>
+            <div class="msg-chart-bar" style="height:65%;background:var(--sage-100);flex:1"></div>
+            <div class="msg-chart-bar" style="height:70%;background:var(--sage-500);flex:1"><span class="msg-chart-bar-label">BCBS</span></div>
+            <div class="msg-chart-bar" style="height:72%;background:var(--sage-100);flex:1"></div>
+            <div class="msg-chart-bar" style="height:45%;background:var(--sage-500);flex:1"><span class="msg-chart-bar-label">Cigna</span></div>
+            <div class="msg-chart-bar" style="height:38%;background:var(--sage-100);flex:1"></div>
+            <div class="msg-chart-bar" style="height:92%;background:var(--sage-500);flex:1"><span class="msg-chart-bar-label">UHC</span></div>
+            <div class="msg-chart-bar" style="height:88%;background:var(--sage-100);flex:1"></div>
+            <div class="msg-chart-bar" style="height:55%;background:var(--sage-500);flex:1"><span class="msg-chart-bar-label">Humana</span></div>
+            <div class="msg-chart-bar" style="height:40%;background:var(--sage-100);flex:1"></div>
+          </div>
+          <div class="msg-chart-legend"><span class="leg-a">Q4 2024</span><span class="leg-b">Q1 2025</span></div>
+        </div>
+        <p><strong>Key findings:</strong></p>
+        <ul>
+          <li>Overall denial rate decreased from <strong>18.3% to 14.7%</strong> — a 20% improvement</li>
+          <li>Top denial reason: <strong>Missing prior authorization</strong> (34% of all denials)</li>
+          <li>UHC remains the highest-denial payer at 22.1%, down from 24.8%</li>
+          <li>Revenue at risk from open denials: <strong>$2.3M</strong></li>
+        </ul>
+        <div class="msg-output">
+          <div class="msg-output-header">
+            <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg></div>
+            <div class="msg-output-info"><div class="msg-output-name">Claims_Analysis_Report.xlsx</div><div class="msg-output-meta">5 sheets · 3 charts · 1.8 MB</div></div>
+            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+          </div>
+        </div>` }
+    ]
+  },
+  doccompare: {
+    title: 'Compare Clinical SOP Versions',
+    messages: [
+      { role: 'user', time: '3:45 PM', body: `<p>Compare these two versions of our clinical SOP and highlight what changed. The compliance team needs to review before we publish.</p>
+        <div class="msg-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> SOP_AdverseEvents_v2.3.docx <span class="msg-file-size">340 KB</span></div>
+        <div class="msg-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> SOP_AdverseEvents_v3.0_DRAFT.docx <span class="msg-file-size">385 KB</span></div>` },
+      { role: 'assistant', time: '3:46 PM', body: `
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Comparing</span> <span class="msg-tool-source">2 documents — 47 sections, 12,400 words each</span> <span class="msg-tool-time">4.1s</span></div>
+        <p>I found <strong>23 changes</strong> across 8 sections. Here's a summary of the most significant modifications:</p>
+        <div class="msg-diff">
+          <div class="msg-diff-header"><div>Section</div><div>v2.3 (Current)</div><div>v3.0 (Draft)</div></div>
+          <div class="msg-diff-row"><div>Reporting Timeline</div><div>72 hours</div><div class="diff-changed">48 hours</div></div>
+          <div class="msg-diff-row"><div>Severity Classification</div><div>3-tier (Low/Med/High)</div><div class="diff-changed">4-tier (+Critical)</div></div>
+          <div class="msg-diff-row"><div>FDA Notification</div><div>MDR only</div><div class="diff-changed">MDR + FAERS</div></div>
+          <div class="msg-diff-row"><div>Root Cause Analysis</div><div>Not required</div><div class="diff-added">Required within 30 days</div></div>
+          <div class="msg-diff-row"><div>Patient Follow-up</div><div>At physician discretion</div><div class="diff-changed">Mandatory 7-day check-in</div></div>
+        </div>
+        <p><strong>Compliance impact:</strong> The reporting timeline change from 72→48 hours and the new RCA requirement will require workflow updates in the incident management system. The new "Critical" severity tier aligns with the updated FDA guidance from January 2026.</p>
+        <div class="msg-output">
+          <div class="msg-output-header">
+            <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div class="msg-output-info"><div class="msg-output-name">SOP_Comparison_Report.pdf</div><div class="msg-output-meta">Full diff with annotations · 890 KB</div></div>
+            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+          </div>
+        </div>` }
+    ]
+  },
+  audio: {
+    title: 'Translate & Summarize Audio Recording',
+    messages: [
+      { role: 'user', time: '11:05 AM', body: `<p>I have a recording from our partner meeting in Tokyo. It's mostly in Japanese with some English. Can you translate and summarize the key points?</p>
+        <div class="msg-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg> Partner_Meeting_Tokyo_Mar2026.m4a <span class="msg-file-size">48.2 MB · 42 min</span></div>` },
+      { role: 'assistant', time: '11:07 AM', body: `
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Transcribing</span> <span class="msg-tool-source">42 min audio — Japanese (78%), English (22%)</span> <span class="msg-tool-time">28.4s</span></div>
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Translating</span> <span class="msg-tool-source">Japanese → English — 4,230 words</span> <span class="msg-tool-time">6.2s</span></div>
+        <p><strong>Meeting Summary — Tanaka Pharmaceutical Partnership Review</strong></p>
+        <p>Participants: Dr. Sato (Tanaka CEO), Yamada-san (Regulatory), Jim (Sprout), Lisa Chen (BD)</p>
+        <p><strong>Key Decisions:</strong></p>
+        <ol>
+          <li><strong>Joint filing timeline moved up</strong> — Tanaka will submit PMDA application by August 2026 instead of Q4, citing favorable pre-submission feedback</li>
+          <li><strong>Manufacturing transfer</strong> — Tech transfer to Osaka facility begins May 2026. Tanaka requests on-site support for 3 weeks</li>
+          <li><strong>Royalty structure revised</strong> — Agreed to 8% tiered royalty (was 6% flat) with volume thresholds at ¥5B and ¥10B</li>
+        </ol>
+        <p><strong>Action Items:</strong></p>
+        <ul>
+          <li>Jim to send updated term sheet by Friday</li>
+          <li>Lisa to coordinate tech transfer team availability</li>
+          <li>Yamada-san to share PMDA pre-submission meeting minutes</li>
+        </ul>
+        <div class="msg-output">
+          <div class="msg-output-header">
+            <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div class="msg-output-info"><div class="msg-output-name">Tokyo_Meeting_Transcript_EN.docx</div><div class="msg-output-meta">Full translation · Timestamped · 14 pages</div></div>
+            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+          </div>
+        </div>` }
+    ]
+  },
+  websearch: {
+    title: 'GLP-1 Competitive Landscape Search',
+    messages: [
+      { role: 'user', time: '9:15 AM', body: `<p>Search the web for the latest GLP-1 drug market developments. I need current competitive intelligence for our strategy meeting this afternoon.</p>` },
+      { role: 'assistant', time: '9:15 AM', body: `
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10"/></svg> <span class="msg-tool-label">Web Search</span> <span class="msg-tool-source">GLP-1 drug market 2026 competitive landscape</span> <span class="msg-tool-time">2.8s</span></div>
+        <div class="msg-search-results">
+          <div class="msg-search-result"><div class="msg-search-result-favicon">R</div><div><div class="msg-search-result-title">Novo Nordisk Q1 2026 earnings: Wegovy revenue surges 54%</div><div class="msg-search-result-url">reuters.com</div></div></div>
+          <div class="msg-search-result"><div class="msg-search-result-favicon">S</div><div><div class="msg-search-result-title">Eli Lilly's tirzepatide gains new indication for sleep apnea</div><div class="msg-search-result-url">statnews.com</div></div></div>
+          <div class="msg-search-result"><div class="msg-search-result-favicon">F</div><div><div class="msg-search-result-title">Amgen's oral GLP-1 MariTide shows promise in Phase 3</div><div class="msg-search-result-url">fiercepharma.com</div></div></div>
+          <div class="msg-search-result"><div class="msg-search-result-favicon">B</div><div><div class="msg-search-result-title">FDA approves first GLP-1 biosimilar from Sandoz</div><div class="msg-search-result-url">biopharmadive.com</div></div></div>
+        </div>
+        <p><strong>GLP-1 Market Update — March 2026</strong></p>
+        <p>The GLP-1 market has reached <strong>$62B annually</strong> and is reshaping the pharmaceutical landscape:</p>
+        <ul>
+          <li><strong>Novo Nordisk</strong> — Wegovy/Ozempic revenue hit $8.2B in Q1 alone. Supply constraints easing with new NC facility online</li>
+          <li><strong>Eli Lilly</strong> — Mounjaro/Zepbound expanding into sleep apnea and MASH. Oral formulation in Phase 3</li>
+          <li><strong>Amgen</strong> — MariTide (monthly injectable) Phase 3 data expected Q3 2026. Oral version in Phase 2</li>
+          <li><strong>Biosimilars</strong> — Sandoz received first GLP-1 biosimilar approval in EU. US filing expected H2 2026</li>
+          <li><strong>New entrants</strong> — Pfizer's danuglipron (oral) and Viking Therapeutics' VK2735 both advancing</li>
+        </ul>
+        <p><strong>Strategic implications:</strong> The biosimilar approval signals price pressure by 2028. Combination therapies (GLP-1 + amylin, GLP-1 + GIP + glucagon) are the next frontier for differentiation.</p>` }
+    ]
+  },
+  deepresearch: {
+    title: 'Deep Research: Biosimilar Market Entry',
+    messages: [
+      { role: 'user', time: '4:30 PM', body: `<p>I need a deep research analysis on the biosimilar market opportunity for our portfolio. Focus on: regulatory pathways, competitive timing, pricing dynamics, and which of our molecules are best positioned. This is for the ELT strategy session next week.</p>` },
+      { role: 'assistant', time: '4:31 PM', body: `
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> <span class="msg-tool-label">Deep Research</span> <span class="msg-tool-source">Biosimilar market entry strategy — analyzing 47 sources</span> <span class="msg-tool-time">45.2s</span></div>
+        <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Cross-referencing</span> <span class="msg-tool-source">FDA Purple Book, patent databases, payer formularies</span> <span class="msg-tool-time">12.3s</span></div>
+        <p><strong>Biosimilar Market Entry Analysis — Executive Brief</strong></p>
+        <p>The US biosimilar market is projected to reach <strong>$45B by 2028</strong>, driven by patent expirations on $120B+ of originator biologics. Here's the strategic analysis:</p>
+        <p><strong>1. Regulatory Landscape</strong></p>
+        <ul>
+          <li>FDA has approved 47 biosimilars to date; 22 are interchangeable</li>
+          <li>Average approval timeline: 4.2 years from BLA filing (down from 5.8 years in 2020)</li>
+          <li>New FDA guidance on interchangeability lowers switching study requirements</li>
+        </ul>
+        <p><strong>2. Competitive Timing Windows</strong></p>
+        <ul>
+          <li><strong>2026-2027:</strong> Humira biosimilars reach peak penetration (projected 65% share). Price erosion at 40-55%</li>
+          <li><strong>2027-2028:</strong> Stelara (ustekinumab) LOE — $10B opportunity. 4 biosimilar applicants in pipeline</li>
+          <li><strong>2028-2029:</strong> Keytruda (pembrolizumab) — largest single opportunity at $25B. First filings expected 2027</li>
+        </ul>
+        <p><strong>3. Portfolio Positioning</strong></p>
+        <ul>
+          <li><strong>Best positioned:</strong> Our adalimumab and rituximab programs — Phase 3 complete, interchangeability data strong</li>
+          <li><strong>High opportunity:</strong> Ustekinumab — start development now to enter in 2028 wave</li>
+          <li><strong>Watch list:</strong> Pembrolizumab — high value but complex manufacturing and patent thicket</li>
+        </ul>
+        <div class="msg-output">
+          <div class="msg-output-header">
+            <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div class="msg-output-info"><div class="msg-output-name">Biosimilar_Strategy_DeepResearch.pdf</div><div class="msg-output-meta">28 pages · 47 sources cited · Exec ready</div></div>
+            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+          </div>
+        </div>
+        <p>Shall I drill deeper into any specific molecule, model the financial projections, or prepare the ELT presentation deck?</p>` }
+    ]
+  }
+};
+
+function showDemoThread(key) {
+  const thread = demoThreads[key];
+  if (!thread) return;
+
+  hideAllViews();
+  restoreDefaultSidebar();
+  document.getElementById('viewThread').classList.add('active');
+
+  // Update header
+  document.querySelector('.thread-header-title').textContent = thread.title;
+
+  // Update messages
+  const container = document.getElementById('threadMessages');
+  let html = '';
+  thread.messages.forEach((msg, i) => {
+    html += '<div class="message ' + msg.role + '" style="animation-delay:' + (i * 0.1) + 's">';
+    html += '<div class="message-sender">';
+    html += '<span class="message-sender-name">' + (msg.role === 'user' ? 'You' : 'Sprout') + '</span>';
+    html += '<span class="message-sender-dot"></span>';
+    html += '<span class="message-sender-time">' + msg.time + '</span>';
+    html += '</div>';
+    html += '<div class="message-body">' + msg.body + '</div>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+
+  // Highlight correct sidebar item
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(el => el.classList.remove('active'));
+  // Find the nav item by matching the thread key
+  const threadLabels = { pptx: 'Generate Board Deck', excel: 'Analyze Claims Data', doccompare: 'Compare SOPs', audio: 'Translate Audio Notes', websearch: 'GLP-1 Market Search', deepresearch: 'Deep Research: Biosimilars' };
+  navItems.forEach(el => {
+    if (el.textContent.trim() === threadLabels[key]) el.classList.add('active');
+  });
+
+  setTimeout(() => { container.scrollTop = container.scrollHeight; }, 100);
 }
 
 function showThread() {
