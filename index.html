@@ -930,8 +930,6 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .shared-avatar.c { background: var(--sage-100); color: var(--sage-600); }
 
 /* ─── THREAD VIEW ─── */
-.view-thread { display: none; flex-direction: column; flex: 1; overflow: hidden; }
-.view-thread.active { display: flex; }
 .view-home.hidden { display: none; }
 
 .thread-header {
@@ -1331,46 +1329,79 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   font-weight: 400;
 }
 
-/* ─── Thread Input ─── */
+/* ─── Thread Input (matches home input box) ─── */
 .thread-input-area {
-  padding: var(--space-5) var(--space-8) var(--space-6);
+  padding: var(--space-4) var(--space-8) var(--space-5);
+  background: transparent;
+}
+
+.thread-input-box {
+  max-width: 820px;
+  margin: 0 auto;
   background: var(--white);
-  border-top: 1px solid var(--slate-100);
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  overflow: visible;
+  position: relative;
+  z-index: 0;
+}
+.thread-input-box:focus-within {
+  border-color: var(--sage-400);
+  box-shadow: var(--shadow-lg), 0 0 0 3px rgba(46,125,51,0.12);
+}
+
+/* Reuse voice-active conic sweep */
+.thread-input-box::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: conic-gradient(from var(--sweep-angle, 0deg), transparent 0deg, var(--sage-500) 40deg, var(--sage-400) 80deg, transparent 120deg, transparent 360deg);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.thread-input-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--white);
+  z-index: -1;
 }
 
 .thread-input-wrapper {
-  max-width: 820px;
-  margin: 0 auto;
   position: relative;
+  width: 100%;
 }
 
 .thread-input {
   width: 100%;
   padding: var(--space-4) var(--space-5);
-  padding-right: 48px;
-  border: 1px solid var(--slate-200);
-  border-radius: 12px;
+  padding-right: 56px;
+  border: none;
+  border-radius: 16px 16px 0 0;
   font-family: var(--font-body);
   font-size: 0.92rem;
   color: var(--slate-900);
-  background: var(--slate-50);
+  background: transparent;
   outline: none;
   resize: none;
   line-height: 1.5;
-  transition: all var(--duration-fast) var(--ease-out);
   font-weight: 300;
 }
 
 .thread-input::placeholder { color: var(--slate-400); font-weight: 300; }
-.thread-input:focus { border-color: var(--slate-300); background: var(--white); box-shadow: var(--shadow-sm); }
 
 .thread-send {
   position: absolute;
   right: var(--space-3);
-  bottom: var(--space-3);
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   border: none;
   background: var(--slate-900);
   color: var(--white);
@@ -1380,15 +1411,178 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out);
 }
-.thread-send:hover { background: var(--slate-800); }
+.thread-send:hover { background: var(--slate-700); transform: translateY(-50%) scale(1.05); }
 .thread-send svg { width: 16px; height: 16px; }
 
+.thread-input-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--slate-100);
+}
+
 .thread-input-hint {
-  text-align: center;
-  margin-top: var(--space-2);
   font-size: 0.7rem;
   color: var(--slate-400);
   font-weight: 300;
+}
+
+/* ─── Artifact Preview Panel ─── */
+.artifact-panel {
+  display: none;
+  width: 420px;
+  flex-shrink: 0;
+  background: var(--white);
+  border-left: 1px solid var(--slate-200);
+  flex-direction: column;
+  overflow: hidden;
+  animation: panelSlideIn 0.3s var(--ease-out) both;
+}
+.artifact-panel.open { display: flex; }
+
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.artifact-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.artifact-panel-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.artifact-panel-title svg { width: 16px; height: 16px; color: var(--sage-500); }
+
+.artifact-panel-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.artifact-panel-close:hover { background: var(--slate-100); color: var(--slate-600); }
+.artifact-panel-close svg { width: 16px; height: 16px; }
+
+.artifact-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5);
+}
+
+/* Slide preview */
+.artifact-slide {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  border-radius: 8px;
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+  aspect-ratio: 16/10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.artifact-slide-num {
+  font-size: 0.65rem;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+}
+.artifact-slide-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  margin-bottom: var(--space-2);
+}
+.artifact-slide-content {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  line-height: 1.5;
+}
+
+/* Table preview */
+.artifact-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  margin-bottom: var(--space-4);
+}
+.artifact-table th {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  background: var(--slate-50);
+  color: var(--slate-600);
+  font-weight: 500;
+  border-bottom: 1px solid var(--slate-200);
+}
+.artifact-table td {
+  padding: var(--space-2) var(--space-3);
+  color: var(--slate-700);
+  border-bottom: 1px solid var(--slate-100);
+  font-weight: 300;
+}
+
+/* PDF preview page */
+.artifact-pdf-page {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 4px;
+  padding: var(--space-6);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+.artifact-pdf-page h4 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  margin-bottom: var(--space-3);
+}
+.artifact-pdf-page p {
+  font-size: 0.72rem;
+  color: var(--slate-600);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.artifact-pdf-page .highlight {
+  background: #FFF8E1;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+
+/* Thread layout with panel */
+.view-thread { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+.view-thread.active { display: flex; }
+
+.thread-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.thread-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
 }
 
 /* ─── Rich message types for demo threads ─── */
@@ -4949,6 +5143,8 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         </div>
       </div>
 
+      <div class="thread-body">
+      <div class="thread-main">
       <div class="thread-messages" id="threadMessages">
         <!-- User message -->
         <div class="message user">
@@ -5097,14 +5293,34 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
       </div>
 
       <div class="thread-input-area">
-        <div class="thread-input-wrapper">
-          <textarea class="thread-input" rows="1" placeholder="Continue the conversation..."></textarea>
-          <button class="thread-send">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <div class="thread-input-box">
+          <div class="thread-input-wrapper">
+            <textarea class="thread-input" rows="1" placeholder="Continue the conversation..."></textarea>
+            <button class="thread-send">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+          <div class="thread-input-toolbar">
+            <span class="thread-input-hint">Sprout has access to your clinical systems. All data interactions are logged.</span>
+          </div>
+        </div>
+      </div>
+      </div><!-- /thread-main -->
+
+      <!-- Artifact Preview Panel -->
+      <div class="artifact-panel" id="artifactPanel">
+        <div class="artifact-panel-header">
+          <span class="artifact-panel-title" id="artifactPanelTitle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Preview
+          </span>
+          <button class="artifact-panel-close" onclick="closeArtifactPanel()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
-        <div class="thread-input-hint">Sprout has access to your clinical systems. All data interactions are logged.</div>
+        <div class="artifact-panel-body" id="artifactPanelBody"></div>
       </div>
+      </div><!-- /thread-body -->
     </div>
 
     <!-- ASSISTANT DETAIL VIEW -->
@@ -7176,7 +7392,7 @@ const demoThreads = {
           <div class="msg-output-header">
             <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
             <div class="msg-output-info"><div class="msg-output-name">Q4_Board_Presentation.pptx</div><div class="msg-output-meta">16 slides · 4.2 MB · Generated just now</div></div>
-            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+            <button class="msg-output-download" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
           </div>
         </div>
         <p>Want me to adjust any slide content, add speaker notes, or change the color scheme?</p>` }
@@ -7217,7 +7433,7 @@ const demoThreads = {
           <div class="msg-output-header">
             <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg></div>
             <div class="msg-output-info"><div class="msg-output-name">Claims_Analysis_Report.xlsx</div><div class="msg-output-meta">5 sheets · 3 charts · 1.8 MB</div></div>
-            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+            <button class="msg-output-download" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
           </div>
         </div>` }
     ]
@@ -7244,7 +7460,7 @@ const demoThreads = {
           <div class="msg-output-header">
             <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             <div class="msg-output-info"><div class="msg-output-name">SOP_Comparison_Report.pdf</div><div class="msg-output-meta">Full diff with annotations · 890 KB</div></div>
-            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+            <button class="msg-output-download" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
           </div>
         </div>` }
     ]
@@ -7275,7 +7491,7 @@ const demoThreads = {
           <div class="msg-output-header">
             <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             <div class="msg-output-info"><div class="msg-output-name">Tokyo_Meeting_Transcript_EN.docx</div><div class="msg-output-meta">Full translation · Timestamped · 14 pages</div></div>
-            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+            <button class="msg-output-download" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
           </div>
         </div>` }
     ]
@@ -7335,13 +7551,99 @@ const demoThreads = {
           <div class="msg-output-header">
             <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             <div class="msg-output-info"><div class="msg-output-name">Biosimilar_Strategy_DeepResearch.pdf</div><div class="msg-output-meta">28 pages · 47 sources cited · Exec ready</div></div>
-            <button class="msg-output-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+            <button class="msg-output-download" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
           </div>
         </div>
         <p>Shall I drill deeper into any specific molecule, model the financial projections, or prepare the ELT presentation deck?</p>` }
     ]
   }
 };
+
+// ─── Artifact preview panel ───
+const artifactPreviews = {
+  pptx: {
+    title: 'Q4_Board_Presentation.pptx',
+    body: `
+      <div class="artifact-slide"><div class="artifact-slide-num">Slide 1</div><div class="artifact-slide-title">Q4 2025 Board Review</div><div class="artifact-slide-content">Sprout Healthcare · Quarterly Performance Update<br>Prepared for the Board of Directors</div></div>
+      <div class="artifact-slide"><div class="artifact-slide-num">Slide 2</div><div class="artifact-slide-title">Executive Summary</div><div class="artifact-slide-content">• Revenue: $142M (+12% YoY)<br>• EBITDA margin: 18.3% (+2.1pp)<br>• Adverse events: Down 26% QoQ<br>• Three strategic wins secured in Q4</div></div>
+      <div class="artifact-slide"><div class="artifact-slide-num">Slide 3</div><div class="artifact-slide-title">Revenue Performance</div><div class="artifact-slide-content">Waterfall chart: Q3 base ($127M) → Organic growth (+$8M) → New contracts (+$5M) → Price adjustments (+$2M) → Q4 total ($142M)</div></div>
+      <div class="artifact-slide"><div class="artifact-slide-num">Slide 7</div><div class="artifact-slide-title">Clinical Outcomes</div><div class="artifact-slide-content">• Adverse events: 23 (down from 31)<br>• FDA-reportable: 2 (both resolved)<br>• Near-miss reporting: +18%<br>• Patient satisfaction: 4.6/5.0</div></div>
+    `
+  },
+  excel: {
+    title: 'Claims_Analysis_Report.xlsx',
+    body: `
+      <table class="artifact-table"><thead><tr><th>Payer</th><th>Claims</th><th>Denied</th><th>Rate</th><th>Trend</th></tr></thead><tbody>
+        <tr><td>Aetna</td><td>8,421</td><td>1,138</td><td>13.5%</td><td style="color:var(--sage-600)">↓ 2.1%</td></tr>
+        <tr><td>BCBS</td><td>12,304</td><td>1,845</td><td>15.0%</td><td style="color:var(--sage-600)">↓ 1.8%</td></tr>
+        <tr><td>Cigna</td><td>6,892</td><td>758</td><td>11.0%</td><td style="color:var(--sage-600)">↓ 3.2%</td></tr>
+        <tr><td>UHC</td><td>14,215</td><td>3,141</td><td>22.1%</td><td style="color:var(--sage-600)">↓ 2.7%</td></tr>
+        <tr><td>Humana</td><td>6,000</td><td>720</td><td>12.0%</td><td style="color:var(--sage-600)">↓ 4.1%</td></tr>
+        <tr style="font-weight:500;border-top:2px solid var(--slate-200)"><td>Total</td><td>47,832</td><td>7,602</td><td>14.7%</td><td style="color:var(--sage-600)">↓ 3.6%</td></tr>
+      </tbody></table>
+      <div style="margin-top:var(--space-4);padding:var(--space-4);background:var(--sage-50);border-radius:8px;font-size:0.75rem;color:var(--sage-600)"><strong>Top Denial Reasons:</strong><br>1. Missing prior auth (34%)<br>2. Coding errors (22%)<br>3. Timely filing (18%)<br>4. Medical necessity (14%)</div>
+    `
+  },
+  doccompare: {
+    title: 'SOP_Comparison_Report.pdf',
+    body: `
+      <div class="artifact-pdf-page"><h4>Document Comparison Summary</h4><p>Comparing: SOP_AdverseEvents_v2.3.docx → v3.0_DRAFT.docx</p><p><strong>Total changes: 23</strong> across 8 of 12 sections</p><p>• 15 text modifications<br>• 5 new additions<br>• 3 structural changes</p></div>
+      <div class="artifact-pdf-page"><h4>Section 3: Reporting Timeline</h4><p>Changed from: <span class="highlight">"All adverse events must be reported within 72 hours of identification"</span></p><p>Changed to: <span class="highlight">"All adverse events must be reported within 48 hours of identification"</span></p><p style="color:var(--gold-500);font-weight:400;margin-top:8px">⚠ Impact: Workflow automation needs updating. Current system triggers at 72h.</p></div>
+      <div class="artifact-pdf-page"><h4>Section 5: Root Cause Analysis</h4><p>New requirement added: <span class="highlight">"A formal root cause analysis must be completed within 30 days for all severity Level 3 and Level 4 events"</span></p><p style="color:var(--sage-600);font-weight:400;margin-top:8px">✓ Aligns with FDA guidance issued January 2026</p></div>
+    `
+  },
+  audio: {
+    title: 'Tokyo_Meeting_Transcript_EN.docx',
+    body: `
+      <div class="artifact-pdf-page"><h4>Meeting Transcript — English Translation</h4><p><strong>Date:</strong> March 18, 2026 · <strong>Duration:</strong> 42 min<br><strong>Location:</strong> Tanaka Pharmaceutical HQ, Tokyo<br><strong>Languages:</strong> Japanese (78%), English (22%)</p></div>
+      <div class="artifact-pdf-page"><h4>[00:00:32] Dr. Sato (CEO, Tanaka)</h4><p>"Thank you for visiting Tokyo. We are very excited about the progress of our joint development program. The PMDA pre-submission meeting went better than expected — they indicated a favorable pathway for our application."</p></div>
+      <div class="artifact-pdf-page"><h4>[00:08:15] Yamada-san (Regulatory)</h4><p>"Based on the PMDA feedback, we believe we can accelerate the filing timeline from Q4 to August 2026. The agency was particularly positive about our clinical data package and manufacturing quality documentation."</p></div>
+      <div class="artifact-pdf-page"><h4>[00:22:41] Jim (Sprout)</h4><p>"That's excellent news on the timeline. For the manufacturing transfer to the Osaka facility, we'll need about three weeks of on-site support from our tech transfer team. Can we schedule that for early May?"</p></div>
+    `
+  },
+  websearch: {
+    title: 'GLP-1 Market Intelligence',
+    body: `
+      <div class="artifact-pdf-page"><h4>GLP-1 Competitive Landscape — March 2026</h4><p><strong>Total addressable market:</strong> $62B (2025 actual)<br><strong>Projected 2028:</strong> $105B (CAGR 19%)<br><strong>Key therapeutic areas:</strong> T2D, Obesity, MASH, Sleep Apnea, CKD</p></div>
+      <div class="artifact-pdf-page"><h4>Market Share by Manufacturer</h4>
+        <table class="artifact-table"><thead><tr><th>Company</th><th>Products</th><th>Revenue</th><th>Share</th></tr></thead><tbody>
+          <tr><td>Novo Nordisk</td><td>Wegovy, Ozempic</td><td>$32.1B</td><td>51.8%</td></tr>
+          <tr><td>Eli Lilly</td><td>Mounjaro, Zepbound</td><td>$22.4B</td><td>36.1%</td></tr>
+          <tr><td>Others</td><td>Various</td><td>$7.5B</td><td>12.1%</td></tr>
+        </tbody></table>
+      </div>
+      <div class="artifact-pdf-page"><h4>Pipeline Threats</h4><p>• <strong>Amgen MariTide:</strong> Monthly injection, Phase 3 readout Q3 2026<br>• <strong>Pfizer danuglipron:</strong> Oral, Phase 3 enrollment complete<br>• <strong>Sandoz biosimilar:</strong> First GLP-1 biosimilar approved EU, US filing H2 2026</p></div>
+    `
+  },
+  deepresearch: {
+    title: 'Biosimilar_Strategy_DeepResearch.pdf',
+    body: `
+      <div class="artifact-pdf-page"><h4>Biosimilar Market Entry Strategy</h4><p><strong>Prepared for:</strong> Executive Leadership Team<br><strong>Sources analyzed:</strong> 47 (FDA, EMA, patent DBs, payer formularies, competitor filings)<br><strong>Classification:</strong> Confidential — Strategy</p></div>
+      <div class="artifact-pdf-page"><h4>Executive Summary</h4><p>The US biosimilar market presents a <strong>$45B opportunity by 2028</strong>, driven by LOE of major biologics. Our portfolio is well-positioned for the 2027-2028 wave, with adalimumab and rituximab programs ready for filing and ustekinumab as a high-value development candidate.</p></div>
+      <div class="artifact-pdf-page"><h4>Recommended Portfolio Prioritization</h4>
+        <table class="artifact-table"><thead><tr><th>Molecule</th><th>Opportunity</th><th>Readiness</th><th>Priority</th></tr></thead><tbody>
+          <tr><td>Adalimumab</td><td>$4.2B</td><td>Phase 3 complete</td><td style="color:var(--sage-600);font-weight:500">File now</td></tr>
+          <tr><td>Rituximab</td><td>$2.8B</td><td>Phase 3 complete</td><td style="color:var(--sage-600);font-weight:500">File now</td></tr>
+          <tr><td>Ustekinumab</td><td>$10B</td><td>Pre-clinical</td><td style="color:var(--gold-500);font-weight:500">Start dev</td></tr>
+          <tr><td>Pembrolizumab</td><td>$25B</td><td>Feasibility</td><td style="color:var(--slate-400);font-weight:500">Monitor</td></tr>
+        </tbody></table>
+      </div>
+    `
+  }
+};
+
+function openArtifactPreview(key) {
+  const preview = artifactPreviews[key];
+  if (!preview) return;
+  const panel = document.getElementById('artifactPanel');
+  document.getElementById('artifactPanelTitle').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ' + preview.title;
+  document.getElementById('artifactPanelBody').innerHTML = preview.body;
+  panel.classList.add('open');
+}
+
+function closeArtifactPanel() {
+  document.getElementById('artifactPanel').classList.remove('open');
+}
 
 function showDemoThread(key) {
   const thread = demoThreads[key];
@@ -7369,10 +7671,18 @@ function showDemoThread(key) {
   });
   container.innerHTML = html;
 
+  // Close any open artifact panel
+  closeArtifactPanel();
+
+  // Make output blocks clickable to open preview
+  container.querySelectorAll('.msg-output').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => openArtifactPreview(key));
+  });
+
   // Highlight correct sidebar item
   const navItems = document.querySelectorAll('.nav-item');
   navItems.forEach(el => el.classList.remove('active'));
-  // Find the nav item by matching the thread key
   const threadLabels = { pptx: 'Generate Board Deck', excel: 'Analyze Claims Data', doccompare: 'Compare SOPs', audio: 'Translate Audio Notes', websearch: 'GLP-1 Market Search', deepresearch: 'Deep Research: Biosimilars' };
   navItems.forEach(el => {
     if (el.textContent.trim() === threadLabels[key]) el.classList.add('active');
