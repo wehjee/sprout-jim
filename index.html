@@ -447,6 +447,67 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .input-add-trigger:hover { background: var(--slate-50); color: var(--slate-700); }
 .input-add-trigger > svg { width: 16px; height: 16px; }
 
+/* Toolbar right group */
+.input-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Voice input button */
+.input-voice-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--slate-400);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.input-voice-btn:hover { background: var(--slate-50); color: var(--slate-700); }
+.input-voice-btn.recording { color: var(--red-500); animation: voicePulse 1.2s ease-in-out infinite; }
+.input-voice-btn svg { width: 16px; height: 16px; }
+
+@keyframes voicePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Web search toggle */
+.input-web-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--slate-200);
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-500);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  user-select: none;
+  white-space: nowrap;
+}
+.input-web-toggle:hover { border-color: var(--slate-300); color: var(--slate-700); background: var(--slate-50); }
+.input-web-toggle.active { border-color: var(--sage-400); background: var(--sage-50); color: var(--sage-600); }
+.input-web-toggle svg { width: 13px; height: 13px; flex-shrink: 0; }
+.input-web-toggle-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--slate-300);
+  transition: all var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.input-web-toggle.active .input-web-toggle-dot { background: var(--sage-500); box-shadow: 0 0 0 2px rgba(46,125,51,0.15); }
+
 /* ─── Dropdown Menus ─── */
 .dropdown-menu {
   position: absolute;
@@ -3822,10 +3883,10 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
       </nav>
 
       <div class="sidebar-footer">
-        <div class="user-avatar">SP</div>
+        <div class="user-avatar">J</div>
         <div class="user-info">
-          <div class="user-name">Dr. Sarah Patel</div>
-          <div class="user-dept">VP, Clinical Operations</div>
+          <div class="user-name">Jim</div>
+          <div class="user-dept">Healthcare Intelligence</div>
         </div>
       </div>
     </div>
@@ -3917,7 +3978,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="home-greeting-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L12 6"/><path d="M12 6C12 6 7 10 7 14C7 17.3 9.2 20 12 20C14.8 20 17 17.3 17 14C17 10 12 6 12 6Z"/></svg>
           </div>
-          <h1 class="home-greeting-text">Good morning, Sarah</h1>
+          <h1 class="home-greeting-text">Good morning, Jim</h1>
         </div>
 
         <div class="home-input-box">
@@ -3958,8 +4019,17 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                 </div>
               </div>
             </div>
-            <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <div class="input-toolbar-right">
+              <button class="input-web-toggle" onclick="toggleWebSearch(this)" title="Toggle web search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span>Web Search</span>
+                <span class="input-web-toggle-dot"></span>
+              </button>
+              <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              </button>
+              <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               <!-- Add dropdown -->
               <div class="dropdown-menu add-dropdown" id="addDropdown">
                 <div class="dropdown-item" onclick="openFilePicker(event)">
@@ -4027,6 +4097,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                 </div>
               </div>
             </div>
+            </div><!-- /input-toolbar-right -->
           </div>
         </div>
 
@@ -4302,7 +4373,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="ad-hero-info">
               <div class="ad-hero-name">Clinical Analyst</div>
               <div class="ad-hero-meta">
-                <span>Created by Dr. Sarah Patel</span>
+                <span>Created by Jim</span>
                 <span class="ad-hero-meta-dot"></span>
                 <span>Clinical Operations</span>
                 <span class="ad-hero-meta-dot"></span>
@@ -4402,10 +4473,10 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="ad-section-title">Shared With</div>
             <div class="ad-shared-users">
               <div class="ad-shared-user">
-                <div class="ad-shared-avatar a">SP</div>
+                <div class="ad-shared-avatar a">J</div>
                 <div>
-                  <div class="ad-shared-name">Dr. Sarah Patel</div>
-                  <div class="ad-shared-role">VP, Clinical Operations · Owner</div>
+                  <div class="ad-shared-name">Jim</div>
+                  <div class="ad-shared-role">Healthcare Intelligence · Owner</div>
                 </div>
               </div>
               <div class="ad-shared-user">
@@ -7087,6 +7158,21 @@ function removeChip(btn) {
   if (!container.querySelector('.input-chip')) {
     container.classList.remove('has-chips');
   }
+}
+
+// ─── Voice input toggle ───
+function toggleVoiceInput(btn) {
+  btn.classList.toggle('recording');
+  if (btn.classList.contains('recording')) {
+    btn.title = 'Stop recording';
+  } else {
+    btn.title = 'Voice input';
+  }
+}
+
+// ─── Web search toggle ───
+function toggleWebSearch(btn) {
+  btn.classList.toggle('active');
 }
 
 // Auto-resize textarea
