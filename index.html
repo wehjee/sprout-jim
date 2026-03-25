@@ -2344,6 +2344,18 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .project-detail-back:hover { color: var(--slate-700); }
 .project-detail-back svg { width: 14px; height: 14px; }
 
+.project-detail-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.project-detail-header-left {
+  flex: 1;
+  min-width: 0;
+}
+
 .project-detail-name {
   font-family: var(--font-display);
   font-size: 1.8rem;
@@ -2358,14 +2370,15 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   font-weight: 300;
   color: var(--slate-500);
   line-height: 1.5;
-  margin-top: calc(var(--space-1) * -1);
+  margin-top: var(--space-2);
 }
 
 .project-detail-actions {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-top: calc(var(--space-1) * -1);
+  flex-shrink: 0;
+  margin-top: var(--space-1);
 }
 
 .project-detail-actions button {
@@ -6364,9 +6377,11 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             All projects
           </div>
 
-          <div>
-            <div class="project-detail-name" id="projectDetailName">Q4 Board Deck</div>
-            <div class="project-detail-desc" id="projectDetailDesc">Quarterly board presentation covering financial performance, clinical outcomes, and strategic initiatives for stakeholder review.</div>
+          <div class="project-detail-header-row">
+            <div class="project-detail-header-left">
+              <div class="project-detail-name" id="projectDetailName">Q4 Board Deck</div>
+              <div class="project-detail-desc" id="projectDetailDesc">Quarterly board presentation covering financial performance, clinical outcomes, and strategic initiatives for stakeholder review.</div>
+            </div>
             <div class="project-detail-actions">
               <button title="More options">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
