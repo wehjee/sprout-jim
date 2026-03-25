@@ -1962,172 +1962,340 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   60% { transform: scale(0.8); opacity: 0.3; }
 }
 
-/* ─── DISCOVER VIEW (Perplexity-inspired) ─── */
+/* ─── DISCOVER VIEW (Editorial / Perplexity-inspired) ─── */
 .view-discover { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .view-discover.active { display: flex; }
 
-.discover-container {
+.discover-scroll {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-10) var(--space-12);
 }
 
-.discover-header {
+.discover-scroll::-webkit-scrollbar { width: 6px; }
+.discover-scroll::-webkit-scrollbar-track { background: transparent; }
+.discover-scroll::-webkit-scrollbar-thumb { background: var(--slate-200); border-radius: 3px; }
+
+/* Header bar */
+.discover-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-8);
+  border-bottom: 1px solid var(--slate-100);
+  background: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.discover-topbar-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  letter-spacing: -0.01em;
+}
+
+.discover-tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.discover-tab {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--slate-400);
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.discover-tab:hover { color: var(--slate-700); }
+.discover-tab.active { color: var(--slate-900); font-weight: 500; border-color: var(--slate-900); }
+
+/* Main layout: feed + sidebar */
+.discover-layout {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  gap: var(--space-10);
+  padding: var(--space-8) var(--space-8) var(--space-16);
+}
+
+.discover-feed { flex: 1; min-width: 0; }
+.discover-aside {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-2);
+}
+
+/* ── Hero article ── */
+.d-hero {
+  display: flex;
+  gap: var(--space-6);
+  cursor: pointer;
   margin-bottom: var(--space-8);
   animation: projFadeUp 0.4s var(--ease-out) both;
 }
+.d-hero:hover .d-hero-title { color: var(--sage-600); }
 
-.discover-title {
+.d-hero-text { flex: 1; min-width: 0; }
+
+.d-hero-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-size: 1.55rem;
+  font-weight: 500;
   color: var(--slate-900);
+  line-height: 1.25;
   letter-spacing: -0.02em;
   margin-bottom: var(--space-2);
+  transition: color var(--duration-fast);
 }
 
-.discover-subtitle {
-  font-size: 0.88rem;
-  color: var(--slate-500);
-  font-weight: 300;
-}
-
-.discover-categories {
-  display: flex;
-  gap: var(--space-2);
-  margin-bottom: var(--space-8);
-  flex-wrap: wrap;
-  animation: projFadeUp 0.4s var(--ease-out) 0.06s both;
-}
-
-.discover-cat {
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--slate-200);
-  background: var(--white);
-  font-family: var(--font-body);
-  font-size: 0.78rem;
+.d-hero-time {
+  font-size: 0.72rem;
+  color: var(--slate-400);
   font-weight: 400;
-  color: var(--slate-600);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-  white-space: nowrap;
-}
-.discover-cat:hover { border-color: var(--slate-300); background: var(--slate-50); }
-.discover-cat.active { border-color: var(--sage-400); background: var(--sage-50); color: var(--sage-600); font-weight: 500; }
-
-.discover-section {
-  margin-bottom: var(--space-10);
-  animation: projFadeUp 0.4s var(--ease-out) 0.12s both;
-}
-
-.discover-section-title {
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--slate-400);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--space-5);
-}
-
-.discover-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-5);
-}
-
-.discover-card {
-  padding: var(--space-6);
-  border: 1px solid var(--slate-100);
-  border-radius: 12px;
-  background: var(--white);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-}
-.discover-card:hover { border-color: var(--slate-200); box-shadow: var(--shadow-md); transform: translateY(-1px); }
-
-.discover-card-topic {
+  margin-bottom: var(--space-3);
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-3);
 }
+.d-hero-time svg { width: 12px; height: 12px; }
 
-.discover-card-topic-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-}
-
-.discover-card-topic-label {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--slate-400);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.discover-card-title {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--slate-900);
-  line-height: 1.35;
-  margin-bottom: var(--space-2);
-}
-
-.discover-card-excerpt {
-  font-size: 0.82rem;
-  color: var(--slate-500);
-  line-height: 1.55;
+.d-hero-excerpt {
+  font-size: 0.88rem;
+  color: var(--slate-600);
+  line-height: 1.6;
   font-weight: 300;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  margin-bottom: var(--space-4);
 }
 
-.discover-card-meta {
+.d-hero-img {
+  width: 340px;
+  height: 220px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--slate-100);
+}
+.d-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ── Source / actions row ── */
+.d-sources {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-top: var(--space-4);
   font-size: 0.72rem;
   color: var(--slate-400);
 }
 
-.discover-card-meta-dot {
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: var(--slate-300);
-}
-
-/* Featured card (larger) */
-.discover-card.featured {
-  grid-column: span 2;
+.d-source-icons {
   display: flex;
-  gap: var(--space-6);
+  align-items: center;
 }
-.discover-card.featured .discover-card-content { flex: 1; }
-.discover-card.featured .discover-card-image {
-  width: 200px;
-  height: 140px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--sage-100), var(--sage-50));
+.d-source-icons span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-right: -4px;
+  border: 1.5px solid var(--white);
+}
+.d-source-icons span:nth-child(1) { background: #4285F4; }
+.d-source-icons span:nth-child(2) { background: #EA4335; }
+.d-source-icons span:nth-child(3) { background: #34A853; }
+
+.d-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.d-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--slate-300);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.d-action-btn:hover { color: var(--slate-600); background: var(--slate-50); }
+.d-action-btn svg { width: 16px; height: 16px; }
+
+/* ── Three-column image cards ── */
+.d-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+  animation: projFadeUp 0.4s var(--ease-out) 0.08s both;
+}
+
+.d-trio-card {
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.d-trio-card:hover .d-trio-title { color: var(--sage-600); }
+
+.d-trio-img {
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+  background: var(--slate-100);
+}
+.d-trio-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.d-trio-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.35;
+  margin-bottom: var(--space-3);
+  transition: color var(--duration-fast);
+}
+
+/* ── Editorial row (image left, text right) ── */
+.d-editorial {
+  display: flex;
+  gap: var(--space-6);
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--slate-100);
+  cursor: pointer;
+  animation: projFadeUp 0.4s var(--ease-out) 0.14s both;
+}
+.d-editorial:hover .d-editorial-title { color: var(--sage-600); }
+.d-editorial:last-child { border-bottom: 1px solid var(--slate-100); }
+
+.d-editorial-img {
+  width: 220px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--slate-100);
+}
+.d-editorial-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.d-editorial-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.d-editorial-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-2);
+  transition: color var(--duration-fast);
+}
+
+.d-editorial-time {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.d-editorial-time svg { width: 12px; height: 12px; }
+
+.d-editorial-excerpt {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+  line-height: 1.55;
+  font-weight: 300;
+  flex: 1;
+}
+
+/* ── Sidebar widgets ── */
+.d-widget {
+  background: var(--white);
+  border: 1px solid var(--slate-100);
+  border-radius: 12px;
+  padding: var(--space-5);
+}
+
+.d-widget-title {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-4);
+}
+
+.d-interest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.d-interest-tag {
+  padding: 4px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--slate-200);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-600);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.d-interest-tag:hover { border-color: var(--sage-400); color: var(--sage-600); }
+.d-interest-tag.active { background: var(--sage-50); border-color: var(--sage-400); color: var(--sage-600); }
+
+.d-trending-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  cursor: pointer;
+}
+.d-trending-item + .d-trending-item { border-top: 1px solid var(--slate-100); }
+.d-trending-item:hover .d-trending-name { color: var(--sage-600); }
+
+.d-trending-rank {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--slate-300);
+  width: 18px;
+  text-align: center;
   flex-shrink: 0;
 }
-.discover-card.featured .discover-card-image svg {
-  width: 48px;
-  height: 48px;
-  color: var(--sage-400);
-  stroke-width: 1.2;
+
+.d-trending-name {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--slate-700);
+  flex: 1;
+  transition: color var(--duration-fast);
+}
+
+.d-trending-badge {
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--sage-50);
+  color: var(--sage-600);
 }
 
 /* ─── PROJECTS VIEW ─── */
@@ -6163,109 +6331,169 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
     <!-- DISCOVER VIEW -->
     <div class="view-discover" id="viewDiscover">
-      <div class="discover-container">
-        <div class="discover-header">
-          <h2 class="discover-title">Discover</h2>
-          <p class="discover-subtitle">Trending topics and curated insights from your workspace</p>
+      <div class="discover-topbar">
+        <span class="discover-topbar-title">Discover</span>
+        <div class="discover-tabs">
+          <span class="discover-tab active">For You</span>
+          <span class="discover-tab">Top</span>
+          <span class="discover-tab">Topics</span>
         </div>
+      </div>
+      <div class="discover-scroll">
+        <div class="discover-layout">
+          <!-- Main feed -->
+          <div class="discover-feed">
 
-        <div class="discover-categories">
-          <div class="discover-cat active">All</div>
-          <div class="discover-cat">Healthcare</div>
-          <div class="discover-cat">Compliance</div>
-          <div class="discover-cat">Clinical Ops</div>
-          <div class="discover-cat">Research</div>
-          <div class="discover-cat">Technology</div>
-          <div class="discover-cat">Policy</div>
-        </div>
-
-        <div class="discover-section">
-          <div class="discover-section-title">Trending Now</div>
-          <div class="discover-grid">
-            <div class="discover-card featured" onclick="showThread()">
-              <div class="discover-card-content">
-                <div class="discover-card-topic">
-                  <span class="discover-card-topic-icon">🏥</span>
-                  <span class="discover-card-topic-label">Healthcare</span>
+            <!-- Hero article -->
+            <div class="d-hero" onclick="showThread()">
+              <div class="d-hero-text">
+                <h2 class="d-hero-title">FDA proposes new framework for AI-powered clinical decision support tools</h2>
+                <div class="d-hero-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Published 3 hours ago
                 </div>
-                <div class="discover-card-title">FDA Releases Updated Guidelines for AI-Assisted Medical Devices</div>
-                <div class="discover-card-excerpt">New regulatory framework addresses the use of machine learning algorithms in diagnostic tools and treatment planning, with specific requirements for transparency and validation.</div>
-                <div class="discover-card-meta">
-                  <span>4 sources</span>
-                  <span class="discover-card-meta-dot"></span>
-                  <span>2 hours ago</span>
+                <p class="d-hero-excerpt">The agency outlined a risk-based classification system for machine learning algorithms used in diagnostics, requiring real-world performance monitoring and algorithmic transparency for high-risk applications.</p>
+                <div class="d-sources">
+                  <div class="d-source-icons"><span>R</span><span>S</span><span>F</span></div>
+                  <span>15 sources</span>
+                  <div class="d-actions">
+                    <button class="d-action-btn" title="Save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="d-action-btn" title="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                  </div>
                 </div>
               </div>
-              <div class="discover-card-image">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              <div class="d-hero-img">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=680&h=440&fit=crop" alt="Medical AI">
               </div>
             </div>
-            <div class="discover-card">
-              <div class="discover-card-topic">
-                <span class="discover-card-topic-icon">📊</span>
-                <span class="discover-card-topic-label">Clinical Ops</span>
-              </div>
-              <div class="discover-card-title">Q4 Adverse Event Trends Signal Improvement in Patient Safety Metrics</div>
-              <div class="discover-card-excerpt">Analysis shows 26% reduction in adverse events quarter-over-quarter, with medication-related incidents down significantly.</div>
-              <div class="discover-card-meta">
-                <span>3 sources</span>
-                <span class="discover-card-meta-dot"></span>
-                <span>5 hours ago</span>
-              </div>
-            </div>
-            <div class="discover-card">
-              <div class="discover-card-topic">
-                <span class="discover-card-topic-icon">🔒</span>
-                <span class="discover-card-topic-label">Compliance</span>
-              </div>
-              <div class="discover-card-title">HIPAA Audit Best Practices for 2025: What's Changed</div>
-              <div class="discover-card-excerpt">Updated compliance requirements and preparation strategies for healthcare organizations navigating the new enforcement landscape.</div>
-              <div class="discover-card-meta">
-                <span>6 sources</span>
-                <span class="discover-card-meta-dot"></span>
-                <span>1 day ago</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="discover-section">
-          <div class="discover-section-title">From Your Workspace</div>
-          <div class="discover-grid">
-            <div class="discover-card">
-              <div class="discover-card-topic">
-                <span class="discover-card-topic-icon">📋</span>
-                <span class="discover-card-topic-label">Projects</span>
+            <!-- Three-column cards -->
+            <div class="d-trio">
+              <div class="d-trio-card">
+                <div class="d-trio-img"><img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&h=320&fit=crop" alt="Lab research"></div>
+                <div class="d-trio-title">Moderna announces Phase 3 results for next-gen mRNA respiratory vaccine</div>
+                <div class="d-sources">
+                  <div class="d-source-icons"><span>N</span><span>B</span></div>
+                  <span>24 sources</span>
+                  <div class="d-actions">
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                  </div>
+                </div>
               </div>
-              <div class="discover-card-title">Vendor Evaluation: Lab Systems Integration Progress Update</div>
-              <div class="discover-card-excerpt">Comparative analysis of laboratory information system vendors narrowed to three finalists based on pricing and compliance certifications.</div>
-              <div class="discover-card-meta">
-                <span>Updated 2 days ago</span>
+              <div class="d-trio-card">
+                <div class="d-trio-img"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&h=320&fit=crop" alt="Hospital"></div>
+                <div class="d-trio-title">CMS finalizes 2026 hospital price transparency enforcement rules</div>
+                <div class="d-sources">
+                  <div class="d-source-icons"><span>C</span><span>H</span></div>
+                  <span>18 sources</span>
+                  <div class="d-actions">
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                  </div>
+                </div>
+              </div>
+              <div class="d-trio-card">
+                <div class="d-trio-img"><img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=400&h=320&fit=crop" alt="Data analytics"></div>
+                <div class="d-trio-title">Epic Systems expands interoperability API, enabling real-time data sharing</div>
+                <div class="d-sources">
+                  <div class="d-source-icons"><span>T</span><span>W</span><span>E</span></div>
+                  <span>42 sources</span>
+                  <div class="d-actions">
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="discover-card">
-              <div class="discover-card-topic">
-                <span class="discover-card-topic-icon">📄</span>
-                <span class="discover-card-topic-label">Policy</span>
-              </div>
-              <div class="discover-card-title">Remote Work Policy Refresh: Key Changes for Healthcare Staff</div>
-              <div class="discover-card-excerpt">Updated guidelines address telehealth practitioner requirements, HIPAA-compliant home office standards, and hybrid scheduling.</div>
-              <div class="discover-card-meta">
-                <span>Updated 3 days ago</span>
+
+            <!-- Editorial rows -->
+            <div class="d-editorial">
+              <div class="d-editorial-img"><img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=440&h=300&fit=crop" alt="Healthcare executive"></div>
+              <div class="d-editorial-text">
+                <h3 class="d-editorial-title">UnitedHealth replaces CEO amid DOJ investigation into Medicare billing practices</h3>
+                <div class="d-editorial-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Published 2 hours ago
+                </div>
+                <p class="d-editorial-excerpt">The board announced an immediate leadership transition as federal prosecutors expand their investigation into the insurer's risk adjustment and coding practices across its Medicare Advantage plans.</p>
+                <div class="d-sources">
+                  <div class="d-source-icons"><span>R</span><span>W</span></div>
+                  <span>100 sources</span>
+                  <div class="d-actions">
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="discover-card">
-              <div class="discover-card-topic">
-                <span class="discover-card-topic-icon">🔬</span>
-                <span class="discover-card-topic-label">Research</span>
-              </div>
-              <div class="discover-card-title">Patient Engagement Campaign: Outreach Metrics and Optimization</div>
-              <div class="discover-card-excerpt">Multi-channel outreach strategy showing promising results in reducing appointment no-shows and improving satisfaction scores.</div>
-              <div class="discover-card-meta">
-                <span>Updated 4 days ago</span>
+
+            <div class="d-editorial">
+              <div class="d-editorial-img"><img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=440&h=300&fit=crop" alt="Pharmacy"></div>
+              <div class="d-editorial-text">
+                <h3 class="d-editorial-title">GLP-1 drug shortage eases as Novo Nordisk ramps up production capacity by 40%</h3>
+                <div class="d-editorial-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Published 5 hours ago
+                </div>
+                <p class="d-editorial-excerpt">The Danish pharmaceutical giant has invested $4.1 billion in new manufacturing facilities, with the first production lines in North Carolina expected to be operational by Q3 2026.</p>
+                <div class="d-sources">
+                  <div class="d-source-icons"><span>B</span><span>F</span><span>N</span></div>
+                  <span>67 sources</span>
+                  <div class="d-actions">
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <div class="d-editorial">
+              <div class="d-editorial-img"><img src="https://images.unsplash.com/photo-1576671081837-49000212a370?w=440&h=300&fit=crop" alt="Medical records"></div>
+              <div class="d-editorial-text">
+                <h3 class="d-editorial-title">HIPAA enforcement actions surge 300% as OCR targets business associate agreements</h3>
+                <div class="d-editorial-time">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Published 12 hours ago
+                </div>
+                <p class="d-editorial-excerpt">The Office for Civil Rights has issued $28M in penalties this quarter alone, with a focus on inadequate vendor risk management and missing breach notification procedures in mid-size health systems.</p>
+                <div class="d-sources">
+                  <div class="d-source-icons"><span>H</span><span>L</span></div>
+                  <span>29 sources</span>
+                  <div class="d-actions">
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+          <!-- Right sidebar -->
+          <aside class="discover-aside">
+            <div class="d-widget">
+              <div class="d-widget-title">Your Interests</div>
+              <div class="d-interest-tags">
+                <span class="d-interest-tag active">Clinical Ops</span>
+                <span class="d-interest-tag active">Compliance</span>
+                <span class="d-interest-tag">Research</span>
+                <span class="d-interest-tag">Policy</span>
+                <span class="d-interest-tag">Technology</span>
+                <span class="d-interest-tag">Pharma</span>
+              </div>
+            </div>
+            <div class="d-widget">
+              <div class="d-widget-title">Trending Topics</div>
+              <div class="d-trending-item"><span class="d-trending-rank">1</span><span class="d-trending-name">AI in Diagnostics</span><span class="d-trending-badge">Hot</span></div>
+              <div class="d-trending-item"><span class="d-trending-rank">2</span><span class="d-trending-name">GLP-1 Drug Market</span></div>
+              <div class="d-trending-item"><span class="d-trending-rank">3</span><span class="d-trending-name">HIPAA 2026 Updates</span></div>
+              <div class="d-trending-item"><span class="d-trending-rank">4</span><span class="d-trending-name">Value-Based Care</span></div>
+              <div class="d-trending-item"><span class="d-trending-rank">5</span><span class="d-trending-name">Telehealth Regulation</span></div>
+              <div class="d-trending-item"><span class="d-trending-rank">6</span><span class="d-trending-name">Nurse Staffing Crisis</span></div>
+              <div class="d-trending-item"><span class="d-trending-rank">7</span><span class="d-trending-name">EHR Interoperability</span></div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
