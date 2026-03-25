@@ -3001,52 +3001,6 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   color: var(--slate-500);
 }
 
-/* Agent card expanded detail */
-.explore-agent-card.expanded {
-  border-color: var(--sage-400);
-  box-shadow: var(--shadow-md);
-}
-
-.explore-agent-detail {
-  display: none;
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--slate-100);
-}
-.explore-agent-card.expanded .explore-agent-detail { display: block; }
-
-.explore-agent-detail-section {
-  margin-bottom: var(--space-3);
-}
-
-.explore-agent-detail-label {
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: var(--slate-400);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: var(--space-2);
-}
-
-.explore-agent-detail-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.explore-agent-detail-item {
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: var(--sage-50);
-  border: 1px solid var(--sage-100);
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--sage-600);
-  font-family: var(--font-body);
-}
-
-.explore-agent-detail-item.command::before { content: '/'; opacity: 0.5; }
-
 .explore-no-results {
   grid-column: 1 / -1;
   text-align: center;
@@ -3119,6 +3073,45 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 }
 .modal-agent-use-close:hover { background: var(--slate-100); color: var(--slate-600); }
 .modal-agent-use-close svg { width: 16px; height: 16px; }
+
+.modal-agent-use-skills {
+  padding: 0 var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.modal-agent-skills-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.modal-agent-skills-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.modal-agent-skills-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.modal-agent-skills-item {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--sage-50);
+  border: 1px solid var(--sage-100);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--sage-600);
+  font-family: var(--font-body);
+}
+.modal-agent-skills-item.command::before { content: '/'; opacity: 0.5; }
 
 .modal-agent-use-divider {
   height: 1px;
@@ -4916,7 +4909,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         <div class="explore-agents-grid" id="exploreAgentsGrid">
 
           <!-- Legal agents -->
-          <div class="explore-agent-card" data-category="legal" onclick="toggleAgentCard(this,'Contract Reviewer','Analyze contracts against your playbook, flag risks, and suggest redlines.','legal')">
+          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Contract Reviewer','Analyze contracts against your playbook, flag risks, and suggest redlines.','legal')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4928,7 +4921,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Contracts</span><span class="explore-agent-tag">Risk</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="legal" onclick="toggleAgentCard(this,'NDA Triage','Triage incoming NDAs, classify risk level, and route for review.','legal')">
+          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('NDA Triage','Triage incoming NDAs, classify risk level, and route for review.','legal')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4940,7 +4933,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">NDA</span><span class="explore-agent-tag">Triage</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="legal" onclick="toggleAgentCard(this,'Compliance Checker','Check documents and processes against regulatory and internal compliance requirements.','legal')">
+          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Compliance Checker','Check documents and processes against regulatory and internal compliance requirements.','legal')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4953,7 +4946,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Data agents -->
-          <div class="explore-agent-card" data-category="data" onclick="toggleAgentCard(this,'Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
+          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4965,7 +4958,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Data Quality</span><span class="explore-agent-tag">Profiling</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="data" onclick="toggleAgentCard(this,'Dashboard Builder','Build interactive dashboards from raw data with charts and KPIs.','data')">
+          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Dashboard Builder','Build interactive dashboards from raw data with charts and KPIs.','data')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4977,7 +4970,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Dashboard</span><span class="explore-agent-tag">Visualization</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="data" onclick="toggleAgentCard(this,'SQL Assistant','Write, optimize, and explain SQL queries for your data warehouse.','data')">
+          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('SQL Assistant','Write, optimize, and explain SQL queries for your data warehouse.','data')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
               <div class="explore-agent-card-info">
@@ -4990,7 +4983,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- HR agents -->
-          <div class="explore-agent-card" data-category="hr" onclick="toggleAgentCard(this,'Offer Letter Drafter','Generate professional offer letters with compensation details and terms.','hr')">
+          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Offer Letter Drafter','Generate professional offer letters with compensation details and terms.','hr')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5002,7 +4995,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Recruiting</span><span class="explore-agent-tag">Offers</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="hr" onclick="toggleAgentCard(this,'Onboarding Planner','Build structured 30/60/90 day onboarding plans for new team members.','hr')">
+          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Onboarding Planner','Build structured 30/60/90 day onboarding plans for new team members.','hr')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5014,7 +5007,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Onboarding</span><span class="explore-agent-tag">Planning</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="hr" onclick="toggleAgentCard(this,'Policy Lookup','Look up company policies and translate them into plain-language answers.','hr')">
+          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Policy Lookup','Look up company policies and translate them into plain-language answers.','hr')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5027,7 +5020,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Ops agents -->
-          <div class="explore-agent-card" data-category="ops" onclick="toggleAgentCard(this,'Vendor Evaluator','Evaluate vendors with cost, risk, and capability scoring.','ops')">
+          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Vendor Evaluator','Evaluate vendors with cost, risk, and capability scoring.','ops')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5039,7 +5032,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Vendor</span><span class="explore-agent-tag">Procurement</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="ops" onclick="toggleAgentCard(this,'SOP Writer','Document business processes as standardized operating procedures.','ops')">
+          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('SOP Writer','Document business processes as standardized operating procedures.','ops')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5051,7 +5044,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">SOP</span><span class="explore-agent-tag">Process</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="ops" onclick="toggleAgentCard(this,'Status Report Generator','Generate weekly status reports for leadership from project data.','ops')">
+          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Status Report Generator','Generate weekly status reports for leadership from project data.','ops')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5064,7 +5057,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Productivity agents -->
-          <div class="explore-agent-card" data-category="prod" onclick="toggleAgentCard(this,'Document Summarizer','Summarize long documents into key points, decisions, and action items.','prod')">
+          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Document Summarizer','Summarize long documents into key points, decisions, and action items.','prod')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5076,7 +5069,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Summary</span><span class="explore-agent-tag">Documents</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="prod" onclick="toggleAgentCard(this,'Email Drafter','Compose professional emails from meeting notes, briefs, or context.','prod')">
+          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Email Drafter','Compose professional emails from meeting notes, briefs, or context.','prod')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5088,7 +5081,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Email</span><span class="explore-agent-tag">Writing</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="prod" onclick="toggleAgentCard(this,'Meeting Recap','Generate structured recaps from meeting notes or transcripts.','prod')">
+          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Meeting Recap','Generate structured recaps from meeting notes or transcripts.','prod')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5101,7 +5094,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <!-- Engineering agents -->
-          <div class="explore-agent-card" data-category="eng" onclick="toggleAgentCard(this,'Code Reviewer','Review pull requests for bugs, security issues, and best practices.','eng')">
+          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Code Reviewer','Review pull requests for bugs, security issues, and best practices.','eng')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5113,7 +5106,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">Code Review</span><span class="explore-agent-tag">PR</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="eng" onclick="toggleAgentCard(this,'API Doc Generator','Generate API documentation from code, endpoints, and schemas.','eng')">
+          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('API Doc Generator','Generate API documentation from code, endpoints, and schemas.','eng')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
               <div class="explore-agent-card-info">
@@ -5125,7 +5118,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <div class="explore-agent-card-tags"><span class="explore-agent-tag">API</span><span class="explore-agent-tag">Documentation</span></div>
           </div>
 
-          <div class="explore-agent-card" data-category="eng" onclick="toggleAgentCard(this,'Incident Responder','Triage production incidents, draft postmortems, and track remediation.','eng')">
+          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Incident Responder','Triage production incidents, draft postmortems, and track remediation.','eng')">
             <div class="explore-agent-card-top">
               <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
               <div class="explore-agent-card-info">
@@ -6607,6 +6600,8 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
+    <!-- Skills & Commands -->
+    <div class="modal-agent-use-skills" id="agentUseModalSkills"></div>
     <div class="modal-agent-use-divider"></div>
     <div class="modal-agent-use-options">
       <div class="modal-agent-use-option" onclick="closeAgentUseModal();showProjects()">
@@ -7481,56 +7476,26 @@ const agentSkillsData = {
   'Meeting Recap': { commands: ['recap-meeting', 'extract-actions'], skills: ['transcript-processing', 'action-extraction', 'summary-generation'] },
 };
 
-function toggleAgentCard(card, name, desc, category) {
-  event.stopPropagation();
-  const wasExpanded = card.classList.contains('expanded');
-
-  // Close all expanded cards
-  document.querySelectorAll('.explore-agent-card.expanded').forEach(c => {
-    c.classList.remove('expanded');
-    const detail = c.querySelector('.explore-agent-detail');
-    if (detail) detail.remove();
-  });
-
-  if (wasExpanded) return;
-
-  // Expand this card
-  card.classList.add('expanded');
-
-  // Create detail section
-  const data = agentSkillsData[name] || { commands: ['run'], skills: ['default'] };
-  const detail = document.createElement('div');
-  detail.className = 'explore-agent-detail';
-
-  let html = '';
-  if (data.commands.length) {
-    html += '<div class="explore-agent-detail-section"><div class="explore-agent-detail-label">Commands</div><div class="explore-agent-detail-items">';
-    data.commands.forEach(c => { html += '<span class="explore-agent-detail-item command">' + c + '</span>'; });
-    html += '</div></div>';
-  }
-  if (data.skills.length) {
-    html += '<div class="explore-agent-detail-section"><div class="explore-agent-detail-label">Skills</div><div class="explore-agent-detail-items">';
-    data.skills.forEach(s => { html += '<span class="explore-agent-detail-item">' + s + '</span>'; });
-    html += '</div></div>';
-  }
-  detail.innerHTML = html;
-  card.appendChild(detail);
-}
-
-// Close expanded cards on outside click
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.explore-agent-card')) {
-    document.querySelectorAll('.explore-agent-card.expanded').forEach(c => {
-      c.classList.remove('expanded');
-      const detail = c.querySelector('.explore-agent-detail');
-      if (detail) detail.remove();
-    });
-  }
-});
-
 function openAgentUseModal(name, desc, category) {
   document.getElementById('agentUseModalName').textContent = name;
   document.getElementById('agentUseModalDesc').textContent = desc;
+
+  // Populate skills & commands
+  const data = agentSkillsData[name] || { commands: [], skills: [] };
+  const container = document.getElementById('agentUseModalSkills');
+  let html = '';
+  if (data.commands.length) {
+    html += '<div class="modal-agent-skills-section"><div class="modal-agent-skills-label">Commands</div><div class="modal-agent-skills-items">';
+    data.commands.forEach(c => { html += '<span class="modal-agent-skills-item command">' + c + '</span>'; });
+    html += '</div></div>';
+  }
+  if (data.skills.length) {
+    html += '<div class="modal-agent-skills-section"><div class="modal-agent-skills-label">Skills</div><div class="modal-agent-skills-items">';
+    data.skills.forEach(s => { html += '<span class="modal-agent-skills-item">' + s + '</span>'; });
+    html += '</div></div>';
+  }
+  container.innerHTML = html;
+
   document.getElementById('agentUseModal').classList.add('active');
 }
 
