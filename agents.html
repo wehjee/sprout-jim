@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprout — Agents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,300;1,14..32,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* Palette — Sprout Earthy Green (tweakcn theme) */
+  --slate-950: #1C2A1F;
+  --slate-900: #3E2723;
+  --slate-800: #4E342E;
+  --slate-700: #5D4037;
+  --slate-600: #6D4C41;
+  --slate-500: #737373;
+  --slate-400: #A1887F;
+  --slate-300: #BCAAA4;
+  --slate-200: #E0D6C9;
+  --slate-100: #EFEBE9;
+  --slate-50: #F5F0EB;
+
+  --sage-600: #2E7D33;
+  --sage-500: #34D25C;
+  --sage-400: #4CAF52;
+  --sage-100: #C8E6CA;
+  --sage-50: #E8F5E9;
+
+  --gold-500: #B8941F;
+  --gold-400: #D4AD2E;
+  --gold-100: #FDF8E8;
+
+  --red-500: #AA0008;
+  --red-100: #FFEBEE;
+
+  --white: #FFFFFF;
+  --warm-white: #FAF6F2;
+
+  /* Typography */
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-display: 'Newsreader', Georgia, serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(62, 39, 35, 0.04);
+  --shadow-md: 0 2px 8px rgba(62, 39, 35, 0.06), 0 1px 2px rgba(62, 39, 35, 0.04);
+  --shadow-lg: 0 8px 24px rgba(62, 39, 35, 0.08), 0 2px 8px rgba(62, 39, 35, 0.04);
+  --shadow-xl: 0 16px 48px rgba(62, 39, 35, 0.1), 0 4px 12px rgba(62, 39, 35, 0.05);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+html { font-size: 15px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-body);
+  color: var(--slate-900);
+  background: var(--warm-white);
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* ─── Page wrapper ─── */
+.page {
+  opacity: 0;
+  animation: fadeIn 0.6s var(--ease-out) 0.1s forwards;
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ─── Chat Input Section ─── */
+.input-section {
+  padding: 48px 24px 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.input-container {
+  width: 100%;
+  max-width: 640px;
+}
+
+/* ─── Home Input Box ─── */
+.home-input-box {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-normal) var(--ease-out);
+  overflow: visible;
+  position: relative;
+  z-index: 0;
+}
+.home-input-box:focus-within {
+  border-color: var(--sage-400);
+  box-shadow: var(--shadow-lg), 0 0 0 3px rgba(46,125,51,0.12);
+}
+
+/* Voice recording — conic gradient sweep border */
+@property --sweep-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.home-input-box::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: conic-gradient(
+    from var(--sweep-angle, 0deg),
+    transparent 0deg,
+    var(--sage-500) 40deg,
+    var(--sage-400) 80deg,
+    transparent 120deg,
+    transparent 360deg
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.home-input-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--white);
+  z-index: -1;
+}
+
+.home-input-box.voice-active {
+  border-color: transparent;
+}
+
+.home-input-box.voice-active::before {
+  opacity: 1;
+  animation: conicSweep 2s linear infinite;
+}
+
+@keyframes conicSweep {
+  to { --sweep-angle: 360deg; }
+}
+
+.home-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.home-input {
+  width: 100%;
+  padding: var(--space-5) var(--space-6);
+  padding-right: 56px;
+  border: none;
+  border-radius: 16px 16px 0 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--slate-900);
+  background: transparent;
+  outline: none;
+  line-height: 1.5;
+  resize: none;
+  font-weight: 300;
+}
+
+.home-input::placeholder { color: var(--slate-400); font-weight: 300; }
+
+.home-send {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: var(--slate-900);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.home-send:hover { background: var(--slate-700); transform: translateY(-50%) scale(1.05); }
+.home-send svg { width: 16px; height: 16px; }
+
+/* Input chips */
+.input-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 var(--space-5);
+  display: none;
+}
+.input-chips.has-chips {
+  display: flex;
+  padding-top: var(--space-4);
+}
+
+.input-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px 4px 10px;
+  border-radius: 8px;
+  background: var(--sage-50);
+  border: 1px solid var(--sage-400);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--sage-600);
+  animation: chipIn 0.2s var(--ease-out) both;
+  white-space: nowrap;
+}
+
+@keyframes chipIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.input-chip-category {
+  font-weight: 500;
+  color: var(--slate-500);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input-chip-remove {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--sage-500);
+  transition: all var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.input-chip-remove:hover { background: rgba(46,125,51,0.15); color: var(--sage-600); }
+.input-chip-remove svg { width: 12px; height: 12px; }
+
+/* Input toolbar */
+.home-input-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--slate-100);
+}
+
+/* Folder selector */
+.input-folder-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--slate-500);
+  font-size: 0.78rem;
+  font-weight: 400;
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+  user-select: none;
+}
+.input-folder-select:hover { background: var(--slate-50); color: var(--slate-700); }
+.input-folder-select svg { width: 15px; height: 15px; flex-shrink: 0; }
+.input-folder-chevron { width: 12px !important; height: 12px !important; opacity: 0.5; }
+
+/* Add trigger (plus icon) */
+.input-add-trigger {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--slate-400);
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+.input-add-trigger:hover { background: var(--slate-50); color: var(--slate-700); }
+.input-add-trigger > svg { width: 16px; height: 16px; }
+
+/* Toolbar right group */
+.input-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Voice input button */
+.input-voice-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--slate-400);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.input-voice-btn:hover { background: var(--slate-50); color: var(--slate-700); }
+.input-voice-btn.recording { color: var(--red-500); animation: voicePulse 1.2s ease-in-out infinite; }
+.input-voice-btn svg { width: 16px; height: 16px; }
+
+@keyframes voicePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Web search switch */
+.input-web-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.input-web-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-500);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.input-web-switch.active .input-web-switch-label { color: var(--sage-600); }
+.input-web-switch-label svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+.input-web-switch-track {
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--slate-200);
+  position: relative;
+  transition: background var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.input-web-switch.active .input-web-switch-track { background: var(--sage-500); }
+
+.input-web-switch-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 1px 3px rgba(62, 39, 35, 0.15);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.input-web-switch.active .input-web-switch-thumb { transform: translateX(14px); }
+
+/* Deep thinking toggle */
+.input-think-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.input-think-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-500);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.input-think-switch.active .input-think-switch-label { color: #7C3AED; }
+.input-think-switch-label svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+.input-think-switch-track {
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--slate-200);
+  position: relative;
+  transition: background var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.input-think-switch.active .input-think-switch-track { background: #7C3AED; }
+
+.input-think-switch-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 1px 3px rgba(62, 39, 35, 0.15);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.input-think-switch.active .input-think-switch-thumb { transform: translateX(14px); }
+
+/* ─── Dropdown Menus ─── */
+.dropdown-menu {
+  position: absolute;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-2);
+  min-width: 200px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: all var(--duration-fast) var(--ease-out);
+  z-index: 200;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.folder-dropdown {
+  top: calc(100% + 6px);
+  left: 0;
+}
+
+.add-dropdown {
+  top: calc(100% + 6px);
+  right: 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--slate-700);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+  position: relative;
+}
+.dropdown-item:hover { background: var(--slate-50); color: var(--slate-900); }
+.dropdown-item svg { width: 16px; height: 16px; opacity: 0.5; flex-shrink: 0; }
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--slate-100);
+  margin: var(--space-1) var(--space-2);
+}
+
+/* ─── Explore Agents ─── */
+.explore-agents {
+  padding: var(--space-8) var(--space-8) var(--space-10);
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.explore-agents-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.explore-agents-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--slate-900);
+}
+
+.explore-agents-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--slate-200);
+  border-radius: 8px;
+  background: var(--white);
+  width: 220px;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+.explore-agents-search:focus-within { border-color: var(--sage-400); box-shadow: 0 0 0 3px rgba(46,125,51,0.12); }
+.explore-agents-search svg { width: 14px; height: 14px; color: var(--slate-400); flex-shrink: 0; }
+.explore-agents-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--slate-900);
+  width: 100%;
+  font-weight: 300;
+}
+.explore-agents-search input::placeholder { color: var(--slate-400); }
+
+.explore-agents-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.explore-filter-tab {
+  padding: var(--space-1) var(--space-3);
+  border-radius: 20px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-500);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.explore-filter-tab:hover { border-color: var(--slate-300); color: var(--slate-700); }
+.explore-filter-tab.active {
+  background: var(--slate-900);
+  border-color: var(--slate-900);
+  color: var(--white);
+}
+
+.explore-agents-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.explore-agent-card {
+  background: var(--white);
+  border: 1px solid var(--slate-100);
+  border-radius: 12px;
+  padding: var(--space-5);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.explore-agent-card:hover {
+  border-color: var(--slate-200);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.explore-agent-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.explore-agent-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.explore-agent-card-icon svg { width: 18px; height: 18px; color: var(--slate-500); }
+
+.explore-agent-card-info { flex: 1; min-width: 0; }
+
+.explore-agent-card-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.3;
+}
+
+.explore-agent-card-author {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-400);
+}
+
+.explore-agent-card-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--slate-500);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.explore-agent-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.explore-agent-tag {
+  padding: 2px var(--space-2);
+  border-radius: 4px;
+  background: var(--slate-50);
+  font-size: 0.68rem;
+  font-weight: 450;
+  color: var(--slate-500);
+}
+
+.explore-no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--space-10) 0;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--slate-400);
+}
+
+/* ─── Modal Overlay ─── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(28, 42, 31, 0.5);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.active {
+  display: flex;
+  animation: modalFadeIn 0.25s var(--ease-out) both;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Agent Use Modal ─── */
+.modal-agent-use {
+  width: 100%;
+  max-width: 440px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideUp 0.3s var(--ease-out) both;
+  overflow: hidden;
+}
+
+.modal-agent-use-header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.modal-agent-use-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.modal-agent-use-icon svg { width: 22px; height: 22px; color: var(--slate-500); }
+
+.modal-agent-use-info { flex: 1; }
+
+.modal-agent-use-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  margin-bottom: 2px;
+}
+
+.modal-agent-use-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--slate-500);
+  line-height: 1.5;
+}
+
+.modal-agent-use-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.modal-agent-use-close:hover { background: var(--slate-100); color: var(--slate-600); }
+.modal-agent-use-close svg { width: 16px; height: 16px; }
+
+.modal-agent-use-skills {
+  padding: 0 var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.modal-agent-skills-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.modal-agent-skills-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.modal-agent-skills-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.modal-agent-skills-item {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--sage-50);
+  border: 1px solid var(--sage-100);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--sage-600);
+  font-family: var(--font-body);
+}
+.modal-agent-skills-item.command::before { content: '/'; opacity: 0.5; }
+
+.modal-agent-use-divider {
+  height: 1px;
+  background: var(--slate-100);
+  margin: 0 var(--space-6);
+}
+
+.modal-agent-use-options {
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.modal-agent-use-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.modal-agent-use-option:hover { background: var(--slate-50); }
+
+.modal-agent-use-option-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.modal-agent-use-option:hover .modal-agent-use-option-icon { background: var(--slate-100); }
+.modal-agent-use-option-icon svg { width: 16px; height: 16px; color: var(--slate-500); }
+
+.modal-agent-use-option-text { flex: 1; }
+
+.modal-agent-use-option-title {
+  font-size: 0.85rem;
+  font-weight: 450;
+  color: var(--slate-900);
+  margin-bottom: 1px;
+}
+
+.modal-agent-use-option-desc {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--slate-400);
+}
+
+.modal-agent-use-option-arrow {
+  color: var(--slate-300);
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.modal-agent-use-option:hover .modal-agent-use-option-arrow { color: var(--slate-500); transform: translateX(2px); }
+.modal-agent-use-option-arrow svg { width: 16px; height: 16px; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .explore-agents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .explore-agents {
+    padding: var(--space-6) var(--space-4) var(--space-8);
+  }
+  .input-section {
+    padding: 32px 16px 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .explore-agents-grid {
+    grid-template-columns: 1fr;
+  }
+  .explore-agents-header {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+  .explore-agents-search {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Chat Input -->
+  <div class="input-section">
+    <div class="input-container">
+      <div class="home-input-box">
+        <div class="home-input-wrapper">
+          <div class="input-chips" id="inputChips"></div>
+          <textarea class="home-input" rows="1" placeholder="What would you like to explore?"></textarea>
+          <button class="home-send">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+        <div class="home-input-toolbar">
+          <div class="input-folder-select" onclick="toggleFolderDropdown(event)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+            <span class="input-folder-name">Work in a folder</span>
+            <svg class="input-folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <!-- Folder dropdown -->
+            <div class="dropdown-menu folder-dropdown" id="folderDropdown">
+              <div class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+                Clinical Ops
+              </div>
+              <div class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+                Board Materials
+              </div>
+              <div class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+                Compliance
+              </div>
+              <div class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+                Marketing
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+                Work in a different folder
+              </div>
+            </div>
+          </div>
+          <div class="input-toolbar-right">
+            <div class="input-web-switch" onclick="toggleWebSearch(this)" title="Toggle web search">
+              <span class="input-web-switch-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Search
+              </span>
+              <div class="input-web-switch-track">
+                <div class="input-web-switch-thumb"></div>
+              </div>
+            </div>
+            <div class="input-think-switch" onclick="toggleDeepThinking(this)" title="Toggle deep thinking">
+              <span class="input-think-switch-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/></svg>
+                Think
+              </span>
+              <div class="input-think-switch-track">
+                <div class="input-think-switch-thumb"></div>
+              </div>
+            </div>
+            <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+            <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <!-- Add dropdown -->
+              <div class="dropdown-menu add-dropdown" id="addDropdown">
+                <div class="dropdown-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Add files or photos
+                </div>
+                <div class="dropdown-item" style="color: var(--slate-300); pointer-events: none;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                  Add Knowledge Base
+                  <span style="font-size:10px;color:var(--slate-300);margin-left:auto;font-weight:500;letter-spacing:0.02em">Coming soon</span>
+                </div>
+              </div>
+            </div>
+          </div><!-- /input-toolbar-right -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Explore Agents -->
+  <div class="explore-agents">
+    <div class="explore-agents-header">
+      <div class="explore-agents-title">Explore Agents</div>
+      <div class="explore-agents-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search agents..." id="exploreAgentSearch" oninput="filterExploreAgents()">
+      </div>
+    </div>
+
+    <div class="explore-agents-filters" id="exploreFilters">
+      <button class="explore-filter-tab active" onclick="setExploreFilter(this, 'all')">All</button>
+      <button class="explore-filter-tab" onclick="setExploreFilter(this, 'legal')">Legal</button>
+      <button class="explore-filter-tab" onclick="setExploreFilter(this, 'data')">Data</button>
+      <button class="explore-filter-tab" onclick="setExploreFilter(this, 'hr')">Human Resources</button>
+      <button class="explore-filter-tab" onclick="setExploreFilter(this, 'ops')">Operations</button>
+      <button class="explore-filter-tab" onclick="setExploreFilter(this, 'prod')">Productivity</button>
+      <button class="explore-filter-tab" onclick="setExploreFilter(this, 'eng')">Engineering</button>
+    </div>
+
+    <div class="explore-agents-grid" id="exploreAgentsGrid">
+
+      <!-- Legal agents -->
+      <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Contract Reviewer','Analyze contracts against your playbook, flag risks, and suggest redlines.','legal')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Contract Reviewer</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Analyze contracts against your playbook, flag risks, and suggest redlines.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Contracts</span><span class="explore-agent-tag">Risk</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('NDA Triage','Triage incoming NDAs, classify risk level, and route for review.','legal')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">NDA Triage</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Triage incoming NDAs, classify risk level, and route for review.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">NDA</span><span class="explore-agent-tag">Triage</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Compliance Checker','Check documents and processes against regulatory and internal compliance requirements.','legal')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Compliance Checker</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Check documents and processes against regulatory and internal compliance requirements.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Compliance</span><span class="explore-agent-tag">HIPAA</span></div>
+      </div>
+
+      <!-- Data agents -->
+      <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Data Explorer</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Profile datasets, detect anomalies, and surface data quality insights.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Data Quality</span><span class="explore-agent-tag">Profiling</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Dashboard Builder','Build interactive dashboards from raw data with charts and KPIs.','data')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Dashboard Builder</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Build interactive dashboards from raw data with charts and KPIs.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Dashboard</span><span class="explore-agent-tag">Visualization</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('SQL Assistant','Write, optimize, and explain SQL queries for your data warehouse.','data')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">SQL Assistant</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Write, optimize, and explain SQL queries for your data warehouse.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">SQL</span><span class="explore-agent-tag">Queries</span></div>
+      </div>
+
+      <!-- HR agents -->
+      <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Offer Letter Drafter','Generate professional offer letters with compensation details and terms.','hr')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Offer Letter Drafter</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Generate professional offer letters with compensation details and terms.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Recruiting</span><span class="explore-agent-tag">Offers</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Onboarding Planner','Build structured 30/60/90 day onboarding plans for new team members.','hr')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Onboarding Planner</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Build structured 30/60/90 day onboarding plans for new team members.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Onboarding</span><span class="explore-agent-tag">Planning</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Policy Lookup','Look up company policies and translate them into plain-language answers.','hr')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Policy Lookup</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Look up company policies and translate them into plain-language answers.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Policy</span><span class="explore-agent-tag">Handbook</span></div>
+      </div>
+
+      <!-- Ops agents -->
+      <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Vendor Evaluator','Evaluate vendors with cost, risk, and capability scoring.','ops')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Vendor Evaluator</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Evaluate vendors with cost, risk, and capability scoring.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Vendor</span><span class="explore-agent-tag">Procurement</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('SOP Writer','Document business processes as standardized operating procedures.','ops')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">SOP Writer</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Document business processes as standardized operating procedures.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">SOP</span><span class="explore-agent-tag">Process</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Status Report Generator','Generate weekly status reports for leadership from project data.','ops')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Status Report Generator</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Generate weekly status reports for leadership from project data.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Reporting</span><span class="explore-agent-tag">Leadership</span></div>
+      </div>
+
+      <!-- Productivity agents -->
+      <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Document Summarizer','Summarize long documents into key points, decisions, and action items.','prod')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Document Summarizer</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Summarize long documents into key points, decisions, and action items.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Summary</span><span class="explore-agent-tag">Documents</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Email Drafter','Compose professional emails from meeting notes, briefs, or context.','prod')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Email Drafter</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Compose professional emails from meeting notes, briefs, or context.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Email</span><span class="explore-agent-tag">Writing</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Meeting Recap','Generate structured recaps from meeting notes or transcripts.','prod')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Meeting Recap</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Generate structured recaps from meeting notes or transcripts.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Meetings</span><span class="explore-agent-tag">Notes</span></div>
+      </div>
+
+      <!-- Engineering agents -->
+      <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Code Reviewer','Review pull requests for bugs, security issues, and best practices.','eng')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Code Reviewer</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Review pull requests for bugs, security issues, and best practices.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Code Review</span><span class="explore-agent-tag">PR</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('API Doc Generator','Generate API documentation from code, endpoints, and schemas.','eng')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">API Doc Generator</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Generate API documentation from code, endpoints, and schemas.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">API</span><span class="explore-agent-tag">Documentation</span></div>
+      </div>
+
+      <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Incident Responder','Triage production incidents, draft postmortems, and track remediation.','eng')">
+        <div class="explore-agent-card-top">
+          <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="explore-agent-card-info">
+            <div class="explore-agent-card-name">Incident Responder</div>
+            <div class="explore-agent-card-author">By Sprout</div>
+          </div>
+        </div>
+        <div class="explore-agent-card-desc">Triage production incidents, draft postmortems, and track remediation.</div>
+        <div class="explore-agent-card-tags"><span class="explore-agent-tag">Incidents</span><span class="explore-agent-tag">On-call</span></div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- Agent Use Modal -->
+<div class="modal-overlay" id="agentUseModal" onclick="if(event.target===this)closeAgentUseModal()">
+  <div class="modal-agent-use">
+    <div class="modal-agent-use-header">
+      <div class="modal-agent-use-icon" id="agentUseModalIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div class="modal-agent-use-info">
+        <div class="modal-agent-use-name" id="agentUseModalName">Contract Reviewer</div>
+        <div class="modal-agent-use-desc" id="agentUseModalDesc">Analyze contracts against your playbook, flag risks, and suggest redlines.</div>
+      </div>
+      <button class="modal-agent-use-close" onclick="closeAgentUseModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <!-- Skills & Commands -->
+    <div class="modal-agent-use-skills" id="agentUseModalSkills"></div>
+    <div class="modal-agent-use-divider"></div>
+    <div class="modal-agent-use-options">
+      <div class="modal-agent-use-option">
+        <div class="modal-agent-use-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+        </div>
+        <div class="modal-agent-use-option-text">
+          <div class="modal-agent-use-option-title">Use in a project</div>
+          <div class="modal-agent-use-option-desc">Add this agent to an existing project</div>
+        </div>
+        <div class="modal-agent-use-option-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="modal-agent-use-option">
+        <div class="modal-agent-use-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="modal-agent-use-option-text">
+          <div class="modal-agent-use-option-title">Create a new project</div>
+          <div class="modal-agent-use-option-desc">Start a new project with this agent</div>
+        </div>
+        <div class="modal-agent-use-option-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="modal-agent-use-option">
+        <div class="modal-agent-use-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="modal-agent-use-option-text">
+          <div class="modal-agent-use-option-title">Start a new chat</div>
+          <div class="modal-agent-use-option-desc">Chat directly with this agent</div>
+        </div>
+        <div class="modal-agent-use-option-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Agent Skills Data ───
+const agentSkillsData = {
+  'Contract Reviewer': { commands: ['review-contract', 'flag-risks', 'suggest-redlines'], skills: ['contract-analysis', 'risk-assessment', 'clause-comparison'] },
+  'NDA Triage': { commands: ['triage-nda', 'classify-risk'], skills: ['nda-parsing', 'risk-scoring', 'routing-logic'] },
+  'Compliance Checker': { commands: ['check-compliance', 'audit-doc'], skills: ['hipaa-validation', 'regulatory-mapping', 'gap-analysis'] },
+  'Data Explorer': { commands: ['profile-data', 'detect-anomalies'], skills: ['data-profiling', 'quality-scoring', 'anomaly-detection'] },
+  'Dashboard Builder': { commands: ['build-dashboard', 'add-chart'], skills: ['chart-generation', 'kpi-extraction', 'layout-design'] },
+  'SQL Assistant': { commands: ['write-query', 'optimize-sql', 'explain-query'], skills: ['sql-generation', 'query-optimization', 'schema-analysis'] },
+  'Offer Letter Drafter': { commands: ['draft-offer', 'comp-template'], skills: ['offer-generation', 'comp-formatting', 'legal-compliance'] },
+  'Onboarding Planner': { commands: ['plan-onboarding', 'create-checklist'], skills: ['30-60-90-plans', 'task-scheduling', 'role-mapping'] },
+  'Policy Lookup': { commands: ['lookup-policy', 'search-handbook'], skills: ['policy-search', 'plain-language', 'section-citation'] },
+  'Vendor Evaluator': { commands: ['evaluate-vendor', 'compare-vendors'], skills: ['cost-analysis', 'risk-scoring', 'capability-matrix'] },
+  'SOP Writer': { commands: ['write-sop', 'update-process'], skills: ['process-documentation', 'step-sequencing', 'compliance-tagging'] },
+  'Status Report Generator': { commands: ['generate-report', 'weekly-summary'], skills: ['data-aggregation', 'narrative-generation', 'metric-tracking'] },
+  'Document Summarizer': { commands: ['summarize-doc', 'extract-key-points'], skills: ['text-summarization', 'key-extraction', 'length-control'] },
+  'Email Drafter': { commands: ['draft-email', 'reply-template'], skills: ['tone-matching', 'context-extraction', 'template-filling'] },
+  'Meeting Recap': { commands: ['recap-meeting', 'extract-actions'], skills: ['transcript-processing', 'action-extraction', 'summary-generation'] },
+  'Code Reviewer': { commands: ['review-pr', 'check-security'], skills: ['code-analysis', 'bug-detection', 'best-practices'] },
+  'API Doc Generator': { commands: ['generate-docs', 'document-endpoint'], skills: ['schema-parsing', 'doc-generation', 'example-creation'] },
+  'Incident Responder': { commands: ['triage-incident', 'draft-postmortem'], skills: ['incident-classification', 'timeline-generation', 'remediation-tracking'] },
+};
+
+// ─── Agent Use Modal ───
+function openAgentUseModal(name, desc, category) {
+  document.getElementById('agentUseModalName').textContent = name;
+  document.getElementById('agentUseModalDesc').textContent = desc;
+
+  // Populate skills & commands
+  const data = agentSkillsData[name] || { commands: [], skills: [] };
+  const container = document.getElementById('agentUseModalSkills');
+  let html = '';
+  if (data.commands.length) {
+    html += '<div class="modal-agent-skills-section"><div class="modal-agent-skills-label">Commands</div><div class="modal-agent-skills-items">';
+    data.commands.forEach(c => { html += '<span class="modal-agent-skills-item command">' + c + '</span>'; });
+    html += '</div></div>';
+  }
+  if (data.skills.length) {
+    html += '<div class="modal-agent-skills-section"><div class="modal-agent-skills-label">Skills</div><div class="modal-agent-skills-items">';
+    data.skills.forEach(s => { html += '<span class="modal-agent-skills-item">' + s + '</span>'; });
+    html += '</div></div>';
+  }
+  container.innerHTML = html;
+
+  document.getElementById('agentUseModal').classList.add('active');
+}
+
+function closeAgentUseModal() {
+  document.getElementById('agentUseModal').classList.remove('active');
+}
+
+// ─── Explore Agents Filter ───
+let currentExploreFilter = 'all';
+
+function setExploreFilter(btn, category) {
+  currentExploreFilter = category;
+  document.querySelectorAll('.explore-filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  filterExploreAgents();
+}
+
+function filterExploreAgents() {
+  const search = (document.getElementById('exploreAgentSearch').value || '').toLowerCase();
+  const cards = document.querySelectorAll('.explore-agent-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const cat = card.dataset.category;
+    const text = card.textContent.toLowerCase();
+    const matchCat = currentExploreFilter === 'all' || cat === currentExploreFilter;
+    const matchSearch = !search || text.includes(search);
+    const show = matchCat && matchSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  // Show/hide no results
+  let noResults = document.getElementById('exploreNoResults');
+  if (visible === 0) {
+    if (!noResults) {
+      noResults = document.createElement('div');
+      noResults.id = 'exploreNoResults';
+      noResults.className = 'explore-no-results';
+      noResults.textContent = 'No agents found matching your search.';
+      document.getElementById('exploreAgentsGrid').appendChild(noResults);
+    }
+    noResults.style.display = '';
+  } else if (noResults) {
+    noResults.style.display = 'none';
+  }
+}
+
+// ─── Toolbar Toggles ───
+function toggleWebSearch(el) {
+  el.classList.toggle('active');
+}
+
+function toggleDeepThinking(el) {
+  el.classList.toggle('active');
+}
+
+function toggleVoiceInput(btn) {
+  const box = btn.closest('.home-input-box');
+  btn.classList.toggle('recording');
+  if (btn.classList.contains('recording')) {
+    btn.title = 'Stop recording';
+    box.classList.add('voice-active');
+  } else {
+    btn.title = 'Voice input';
+    box.classList.remove('voice-active');
+  }
+}
+
+// ─── Dropdown Toggles ───
+function toggleFolderDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('folderDropdown');
+  dropdown.classList.toggle('open');
+  // Close add dropdown if open
+  const addDropdown = document.getElementById('addDropdown');
+  if (addDropdown) addDropdown.classList.remove('open');
+}
+
+function toggleAddDropdown(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('addDropdown');
+  dropdown.classList.toggle('open');
+  // Close folder dropdown if open
+  const folderDropdown = document.getElementById('folderDropdown');
+  if (folderDropdown) folderDropdown.classList.remove('open');
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', () => {
+  document.querySelectorAll('.dropdown-menu').forEach(d => d.classList.remove('open'));
+});
+
+// Auto-resize textarea
+document.querySelectorAll('textarea').forEach(el => {
+  el.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 160) + 'px';
+  });
+});
+</script>
+</body>
+</html>
