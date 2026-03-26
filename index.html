@@ -5338,6 +5338,208 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   font-style: italic;
 }
 
+/* ─── Chat Share Modal ─── */
+.chat-share-option-group {
+  padding: var(--space-3) var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.chat-share-option-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-1);
+}
+.chat-share-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  border: 1px solid var(--slate-200);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.chat-share-option:hover { border-color: var(--slate-300); background: var(--slate-50); }
+.chat-share-option.selected { border-color: var(--sage-400); background: var(--sage-50); }
+
+.chat-share-option-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--slate-300);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+}
+.chat-share-option.selected .chat-share-option-radio {
+  border-color: var(--sage-500);
+}
+.chat-share-option.selected .chat-share-option-radio::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sage-500);
+}
+
+.chat-share-option-text { flex: 1; }
+.chat-share-option-title { font-size: 0.82rem; font-weight: 450; color: var(--slate-900); }
+.chat-share-option-desc { font-size: 0.72rem; color: var(--slate-400); font-weight: 300; margin-top: 1px; }
+
+.chat-share-option svg { width: 18px; height: 18px; color: var(--slate-400); flex-shrink: 0; }
+.chat-share-option.selected svg { color: var(--sage-500); }
+
+/* Final Product button in share modal */
+.chat-share-final-product {
+  margin: 0 var(--space-6) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  border: 1px dashed var(--slate-200);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  font-size: 0.82rem;
+  color: var(--slate-600);
+  font-weight: 400;
+}
+.chat-share-final-product:hover { border-color: var(--sage-400); background: var(--sage-50); color: var(--sage-600); }
+.chat-share-final-product svg { width: 16px; height: 16px; color: var(--slate-400); flex-shrink: 0; }
+.chat-share-final-product:hover svg { color: var(--sage-500); }
+.chat-share-final-product-text { flex: 1; }
+.chat-share-final-product-arrow { color: var(--slate-300); }
+.chat-share-final-product-arrow svg { width: 14px; height: 14px; }
+
+/* ─── Final Product View ─── */
+.final-product-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(28, 42, 31, 0.6);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+}
+.final-product-overlay.active { display: flex; }
+
+.final-product-panel {
+  background: var(--white);
+  border-radius: 16px;
+  width: 680px;
+  max-width: 90vw;
+  max-height: 85vh;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideUp 0.3s var(--ease-out) both;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.final-product-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.final-product-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.final-product-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--sage-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.final-product-icon svg { width: 18px; height: 18px; color: var(--sage-500); }
+
+.final-product-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--slate-900);
+}
+.final-product-subtitle {
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  font-weight: 300;
+}
+
+.final-product-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+}
+.final-product-close:hover { background: var(--slate-100); color: var(--slate-600); }
+.final-product-close svg { width: 16px; height: 16px; }
+
+.final-product-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+}
+
+.final-product-content {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--slate-700);
+  font-weight: 300;
+}
+.final-product-content h2 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; color: var(--slate-900); margin: var(--space-6) 0 var(--space-3); }
+.final-product-content h3 { font-size: 0.95rem; font-weight: 500; color: var(--slate-800); margin: var(--space-5) 0 var(--space-2); }
+.final-product-content p { margin-bottom: var(--space-3); }
+.final-product-content ul, .final-product-content ol { padding-left: var(--space-6); margin-bottom: var(--space-4); }
+.final-product-content li { margin-bottom: var(--space-2); }
+.final-product-content table { width: 100%; border-collapse: collapse; margin: var(--space-4) 0; }
+.final-product-content th { text-align: left; padding: var(--space-2) var(--space-3); font-size: 0.75rem; font-weight: 500; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--slate-200); }
+.final-product-content td { padding: var(--space-3); font-size: 0.82rem; border-bottom: 1px solid var(--slate-100); }
+
+.final-product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--slate-100);
+}
+
+.final-product-footer button {
+  padding: var(--space-2) var(--space-5);
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 450;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.fp-btn-secondary { border: 1px solid var(--slate-200); background: var(--white); color: var(--slate-700); }
+.fp-btn-secondary:hover { background: var(--slate-50); border-color: var(--slate-300); }
+.fp-btn-primary { border: none; background: var(--sage-500); color: var(--white); }
+.fp-btn-primary:hover { background: var(--sage-600); }
+
 /* ─── Instructions Edit Modal ─── */
 .instructions-modal-overlay {
   display: none;
@@ -5844,7 +6046,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <span class="thread-header-title">Q4 Adverse Event Summary for Board Meeting</span>
         </div>
         <div class="thread-header-right">
-          <button class="thread-action-btn">
+          <button class="thread-action-btn" onclick="openChatShareModal()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12V20C4 20.55 4.45 21 5 21H19C19.55 21 20 20.55 20 20V12"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
             Share
           </button>
@@ -8422,6 +8624,132 @@ Deliverables: Slide deck (PPTX), executive brief (1-page), supporting data appen
   </div>
 </div>
 
+<!-- Chat Share Modal -->
+<div class="share-modal-overlay" id="chatShareModal" onclick="if(event.target===this)closeChatShareModal()">
+  <div class="share-modal">
+    <div class="share-modal-header">
+      <div class="share-modal-title">Share Chat</div>
+      <button class="share-modal-close" onclick="closeChatShareModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="chat-share-option-group">
+      <div class="chat-share-option-label">What to share</div>
+      <div class="chat-share-option selected" onclick="selectShareOption(this)">
+        <div class="chat-share-option-radio"></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div class="chat-share-option-text">
+          <div class="chat-share-option-title">Chat history only</div>
+          <div class="chat-share-option-desc">Share the full conversation thread</div>
+        </div>
+      </div>
+      <div class="chat-share-option" onclick="selectShareOption(this)">
+        <div class="chat-share-option-radio"></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="M9 15l3-3 3 3"/></svg>
+        <div class="chat-share-option-text">
+          <div class="chat-share-option-title">Chat history + documents</div>
+          <div class="chat-share-option-desc">Include all uploaded files and generated artifacts</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="share-modal-divider"></div>
+
+    <div class="share-modal-input-row">
+      <input type="email" placeholder="Add people by email...">
+      <select>
+        <option>Can view</option>
+        <option>Can edit</option>
+      </select>
+      <button>Invite</button>
+    </div>
+
+    <div class="share-modal-section-label">People with access</div>
+    <div class="share-modal-list">
+      <div class="share-modal-person">
+        <div class="share-modal-avatar" style="background: #5D4037;">J</div>
+        <div class="share-modal-person-info">
+          <div class="share-modal-person-name">Jim</div>
+          <div class="share-modal-person-email">jim@email.com</div>
+        </div>
+        <span class="share-modal-person-role" style="background: var(--sage-50); color: var(--sage-600);">Owner</span>
+      </div>
+    </div>
+
+    <div class="share-modal-divider"></div>
+    <div style="padding: var(--space-3) var(--space-6) var(--space-1);">
+      <div class="chat-share-option-label">Preview</div>
+    </div>
+    <div class="chat-share-final-product" onclick="closeChatShareModal(); openFinalProduct()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <div class="chat-share-final-product-text">View final product</div>
+      <div class="chat-share-final-product-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Final Product View -->
+<div class="final-product-overlay" id="finalProductOverlay" onclick="if(event.target===this)closeFinalProduct()">
+  <div class="final-product-panel">
+    <div class="final-product-header">
+      <div class="final-product-header-left">
+        <div class="final-product-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div>
+          <div class="final-product-title" id="finalProductTitle">Q4 Board Deck — Executive Summary</div>
+          <div class="final-product-subtitle">Generated from chat · Last updated 2 hours ago</div>
+        </div>
+      </div>
+      <button class="final-product-close" onclick="closeFinalProduct()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="final-product-body">
+      <div class="final-product-content" id="finalProductContent">
+        <h2>Q4 Adverse Event Summary — Executive Brief</h2>
+        <p>Prepared for the Board of Directors · Q4 FY2025</p>
+
+        <h3>Overall Position</h3>
+        <p>We recorded <strong>23 adverse events</strong> in Q4, down from 31 in Q3 — a <strong>26% reduction</strong>. No events resulted in patient mortality. Three required extended hospitalization, compared to five in Q3. This continues our downward trend for the third consecutive quarter.</p>
+
+        <h3>Key Metrics</h3>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Q3</th><th>Q4</th><th>Change</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total adverse events</td><td>31</td><td>23</td><td style="color: var(--sage-600);">↓ 26%</td></tr>
+            <tr><td>Medication-related</td><td>8</td><td>5</td><td style="color: var(--sage-600);">↓ 38%</td></tr>
+            <tr><td>Device-related</td><td>6</td><td>6</td><td>—</td></tr>
+            <tr><td>Falls & procedural</td><td>10</td><td>6</td><td style="color: var(--sage-600);">↓ 40%</td></tr>
+            <tr><td>Near-miss reports</td><td>42</td><td>50</td><td style="color: var(--sage-600);">↑ 18%</td></tr>
+            <tr><td>FDA-reportable</td><td>1</td><td>2</td><td style="color: var(--red-500);">↑</td></tr>
+          </tbody>
+        </table>
+
+        <h3>FDA-Reportable Incidents</h3>
+        <p>Two incidents met FDA reporting thresholds under MDR requirements. Both were filed within the 30-day window. One involved a device malfunction (infusion pump, since recalled). The second was a medication-related event flagged during post-market surveillance. Both have completed root cause analysis.</p>
+
+        <h3>Recommended Talking Points</h3>
+        <ol>
+          <li><strong>Lead with trajectory.</strong> Three consecutive quarters of reduction signals systemic improvement.</li>
+          <li><strong>Address FDA reports directly.</strong> Both were handled proactively within regulatory timelines.</li>
+          <li><strong>Credit the protocol revision.</strong> The October procedural safety update is delivering measurable results.</li>
+          <li><strong>Frame near-miss data positively.</strong> Higher voluntary reporting reflects a maturing safety culture.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="final-product-footer">
+      <button class="fp-btn-secondary" onclick="closeFinalProduct()">Close</button>
+      <button class="fp-btn-primary">Download PDF</button>
+    </div>
+  </div>
+</div>
+
 <input type="file" id="folderPicker" webkitdirectory directory multiple style="display:none" onchange="handleFolderSelected(this)">
 <input type="file" id="filePicker" multiple accept="image/*,.pdf,.doc,.docx,.txt,.csv,.xls,.xlsx,.ppt,.pptx" style="display:none" onchange="handleFilesSelected(this)">
 
@@ -9947,6 +10275,26 @@ function toggleVoiceInput(btn) {
     btn.title = 'Voice input';
     box.classList.remove('voice-active');
   }
+}
+
+// ─── Chat Share Modal ───
+function openChatShareModal() {
+  document.getElementById('chatShareModal').classList.add('active');
+}
+function closeChatShareModal() {
+  document.getElementById('chatShareModal').classList.remove('active');
+}
+function selectShareOption(el) {
+  el.parentElement.querySelectorAll('.chat-share-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ─── Final Product View ───
+function openFinalProduct() {
+  document.getElementById('finalProductOverlay').classList.add('active');
+}
+function closeFinalProduct() {
+  document.getElementById('finalProductOverlay').classList.remove('active');
 }
 
 // ─── Web search toggle ───
