@@ -7334,6 +7334,18 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>
+      <div class="modal-agent-use-option" onclick="closeAgentUseModal();showHome()">
+        <div class="modal-agent-use-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="modal-agent-use-option-text">
+          <div class="modal-agent-use-option-title">Start a new chat</div>
+          <div class="modal-agent-use-option-desc">Chat directly with this agent</div>
+        </div>
+        <div class="modal-agent-use-option-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -7717,10 +7729,11 @@ function showThread() {
 
 function showAgents() {
   hideAllViews();
+  restoreDefaultSidebar();
   document.getElementById('viewAgents').classList.add('active');
-  // Swap sidebar content
-  document.getElementById('sidebarDefault').classList.add('hidden');
-  document.getElementById('sidebarAgents').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    el.classList.toggle('active', i === 3);
+  });
 }
 
 function exitAgents() {
