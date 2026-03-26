@@ -3204,7 +3204,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   background: linear-gradient(135deg, var(--sage-500), var(--sage-400));
 }
 
-.gc-msg-body { flex: 1; min-width: 0; }
+.gc-msg-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
 .gc-msg-header {
   display: flex;
@@ -3230,6 +3230,25 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   line-height: 1.6;
   font-weight: 300;
 }
+/* Jim's messages — right-aligned like iMessage */
+.gc-msg.self {
+  flex-direction: row-reverse;
+}
+.gc-msg.self .gc-msg-body {
+  align-items: flex-end;
+}
+.gc-msg.self .gc-msg-header {
+  flex-direction: row-reverse;
+}
+.gc-msg.self .gc-msg-content {
+  background: var(--sage-50);
+  border: 1px solid var(--sage-100);
+  border-radius: 16px 4px 16px 16px;
+  padding: var(--space-3) var(--space-4);
+  display: inline-block;
+  max-width: 85%;
+}
+
 .gc-msg-content strong { font-weight: 500; color: var(--slate-900); }
 .gc-msg-content ul, .gc-msg-content ol { margin: var(--space-2) 0; padding-left: var(--space-5); }
 .gc-msg-content li { margin-bottom: var(--space-1); }
@@ -7834,7 +7853,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
             <div class="project-chat-messages">
               <!-- Jim starts the thread -->
-              <div class="gc-msg">
+              <div class="gc-msg self">
                 <div class="gc-msg-avatar" style="background:var(--sage-500)">J</div>
                 <div class="gc-msg-body">
                   <div class="gc-msg-header"><span class="gc-msg-name">Jim</span><span class="gc-msg-time">2:10 PM</span></div>
@@ -7881,7 +7900,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               </div>
 
               <!-- Jim responds -->
-              <div class="gc-msg">
+              <div class="gc-msg self">
                 <div class="gc-msg-avatar" style="background:var(--sage-500)">J</div>
                 <div class="gc-msg-body">
                   <div class="gc-msg-header"><span class="gc-msg-name">Jim</span><span class="gc-msg-time">2:20 PM</span></div>
