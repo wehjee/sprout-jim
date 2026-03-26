@@ -635,6 +635,53 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 }
 .input-web-switch.active .input-web-switch-thumb { transform: translateX(14px); }
 
+/* Deep thinking toggle — reuses switch pattern */
+.input-think-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.input-think-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-500);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.input-think-switch.active .input-think-switch-label { color: #7C3AED; }
+.input-think-switch-label svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+.input-think-switch-track {
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--slate-200);
+  position: relative;
+  transition: background var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+.input-think-switch.active .input-think-switch-track { background: #7C3AED; }
+
+.input-think-switch-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 1px 3px rgba(62, 39, 35, 0.15);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.input-think-switch.active .input-think-switch-thumb { transform: translateX(14px); }
+
 /* ─── Dropdown Menus ─── */
 .dropdown-menu {
   position: absolute;
@@ -5658,6 +5705,13 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                   <div class="input-web-switch-thumb"></div>
                 </div>
               </div>
+              <div class="input-think-switch" onclick="toggleDeepThinking(this)" title="Toggle deep thinking">
+                <span class="input-think-switch-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Think
+                </span>
+                <div class="input-think-switch-track"><div class="input-think-switch-thumb"></div></div>
+              </div>
               <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
               </button>
@@ -5988,6 +6042,13 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                 <div class="input-web-switch-track">
                   <div class="input-web-switch-thumb"></div>
                 </div>
+              </div>
+              <div class="input-think-switch" onclick="toggleDeepThinking(this)" title="Toggle deep thinking">
+                <span class="input-think-switch-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  Think
+                </span>
+                <div class="input-think-switch-track"><div class="input-think-switch-thumb"></div></div>
               </div>
               <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
@@ -7965,7 +8026,14 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                       </span>
                       <div class="input-web-switch-track"><div class="input-web-switch-thumb"></div></div>
                     </div>
-                    <button class="input-voice-btn" title="Voice input">
+                    <div class="input-think-switch" onclick="toggleDeepThinking(this)" title="Toggle deep thinking">
+                      <span class="input-think-switch-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                        Think
+                      </span>
+                      <div class="input-think-switch-track"><div class="input-think-switch-thumb"></div></div>
+                    </div>
+                    <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
                     </button>
                     <div class="input-add-trigger">
@@ -9841,6 +9909,11 @@ function toggleVoiceInput(btn) {
 
 // ─── Web search toggle ───
 function toggleWebSearch(el) {
+  el.classList.toggle('active');
+}
+
+// ─── Deep thinking toggle ───
+function toggleDeepThinking(el) {
   el.classList.toggle('active');
 }
 
