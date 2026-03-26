@@ -3986,6 +3986,236 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .modal-agent-use-option:hover .modal-agent-use-option-arrow { color: var(--slate-500); transform: translateX(2px); }
 .modal-agent-use-option-arrow svg { width: 16px; height: 16px; }
 
+/* Learn more link in agent modal */
+.modal-agent-learn-more {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  font-size: 0.82rem;
+  color: var(--sage-600);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.modal-agent-learn-more:hover { background: var(--sage-50); color: var(--sage-600); }
+.modal-agent-learn-more svg { width: 16px; height: 16px; flex-shrink: 0; }
+.modal-agent-learn-arrow { margin-left: auto; color: var(--slate-300); }
+.modal-agent-learn-more:hover .modal-agent-learn-arrow { color: var(--sage-400); transform: translateX(2px); }
+
+/* ─── Agent Learn More View ─── */
+.view-agent-learn {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+.view-agent-learn.active { display: flex; }
+
+.agent-learn-container {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.agent-learn-hero {
+  padding: var(--space-12) var(--space-12) var(--space-8);
+  max-width: 800px;
+  margin: 0 auto;
+  animation: projFadeUp 0.4s var(--ease-out) both;
+}
+
+.agent-learn-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  margin-bottom: var(--space-6);
+}
+.agent-learn-breadcrumb a {
+  color: var(--sage-600);
+  text-decoration: none;
+  cursor: pointer;
+}
+.agent-learn-breadcrumb a:hover { text-decoration: underline; }
+.agent-learn-breadcrumb svg { width: 12px; height: 12px; }
+
+.agent-learn-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+.agent-learn-meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 450;
+  background: var(--slate-50);
+  color: var(--slate-600);
+  border: 1px solid var(--slate-100);
+}
+.agent-learn-meta-tag svg { width: 12px; height: 12px; opacity: 0.6; }
+
+.agent-learn-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+}
+
+.agent-learn-subtitle {
+  font-size: 1.05rem;
+  color: var(--slate-500);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: var(--space-6);
+}
+
+.agent-learn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: 10px;
+  border: none;
+  background: var(--sage-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.agent-learn-cta:hover { background: var(--sage-600); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.agent-learn-cta svg { width: 16px; height: 16px; }
+
+/* Steps section */
+.agent-learn-steps {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--space-12) var(--space-12);
+}
+
+.agent-learn-step {
+  padding: var(--space-8) 0;
+  border-top: 1px solid var(--slate-100);
+  animation: projFadeUp 0.4s var(--ease-out) both;
+}
+
+.agent-learn-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sage-50);
+  color: var(--sage-600);
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--sage-100);
+}
+
+.agent-learn-step-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.01em;
+}
+
+.agent-learn-step-body {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--slate-600);
+  font-weight: 300;
+}
+.agent-learn-step-body p { margin-bottom: var(--space-3); }
+.agent-learn-step-body strong { font-weight: 500; color: var(--slate-800); }
+
+/* Prompt card */
+.agent-learn-prompt {
+  margin: var(--space-5) 0;
+  padding: var(--space-5) var(--space-6);
+  border-radius: 12px;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--slate-700);
+  font-weight: 300;
+  position: relative;
+}
+.agent-learn-prompt-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+/* Output preview */
+.agent-learn-output {
+  margin: var(--space-5) 0;
+  padding: var(--space-5) var(--space-6);
+  border-radius: 12px;
+  background: var(--white);
+  border: 1px solid var(--sage-100);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--slate-700);
+  font-weight: 300;
+}
+.agent-learn-output-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--sage-600);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.agent-learn-output-label svg { width: 14px; height: 14px; }
+
+/* Follow-up prompts */
+.agent-learn-followups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.agent-learn-followup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: 10px;
+  border: 1px solid var(--slate-100);
+  background: var(--white);
+  font-size: 0.85rem;
+  color: var(--slate-700);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.agent-learn-followup:hover { border-color: var(--sage-400); background: var(--sage-50); }
+.agent-learn-followup svg { width: 16px; height: 16px; color: var(--slate-400); flex-shrink: 0; }
+.agent-learn-followup:hover svg { color: var(--sage-500); }
+
 /* ─── CONNECTORS VIEW (Coming Soon) ─── */
 .view-connectors { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .view-connectors.active { display: flex; }
@@ -7716,6 +7946,115 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
       </div>
     </div>
 
+    <!-- AGENT LEARN MORE VIEW -->
+    <div class="view-agent-learn" id="viewAgentLearn">
+      <div class="agent-learn-container">
+        <div class="agent-learn-hero">
+          <div class="agent-learn-breadcrumb">
+            <a onclick="showAgents()">Agents</a>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span>Data Explorer</span>
+          </div>
+
+          <div class="agent-learn-meta">
+            <div class="agent-learn-meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+              Data
+            </div>
+            <div class="agent-learn-meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              By Sprout
+            </div>
+            <div class="agent-learn-meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              Extended Thinking
+            </div>
+          </div>
+
+          <h1 class="agent-learn-title">Profile datasets, detect anomalies, and surface data quality insights</h1>
+          <p class="agent-learn-subtitle">The Data Explorer agent helps you understand your data at a glance — profiling columns, detecting outliers, summarizing distributions, and flagging quality issues before they reach production.</p>
+
+          <button class="agent-learn-cta" onclick="closeAgentLearnMore(); openAgentUseModal('Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Try Data Explorer
+          </button>
+        </div>
+
+        <div class="agent-learn-steps">
+          <div class="agent-learn-step" style="animation-delay: 0.1s">
+            <div class="agent-learn-step-number">1</div>
+            <div class="agent-learn-step-title">Describe the task</div>
+            <div class="agent-learn-step-body">
+              <p>Start by telling the agent what dataset you want to explore and what you're looking for. Be specific about the type of analysis — profiling, anomaly detection, quality checks, or all three.</p>
+              <div class="agent-learn-prompt">
+                <div class="agent-learn-prompt-label">Example prompt</div>
+                I have a claims dataset with 50,000 rows covering Q1–Q4 2024. I need a full data profile — column types, null rates, distributions — plus flag any anomalies in the billing amounts and identify records where diagnosis codes don't match procedure codes. Summarize everything in a format I can share with the analytics team.
+              </div>
+            </div>
+          </div>
+
+          <div class="agent-learn-step" style="animation-delay: 0.15s">
+            <div class="agent-learn-step-number">2</div>
+            <div class="agent-learn-step-title">Give the agent context</div>
+            <div class="agent-learn-step-body">
+              <p>Upload your dataset (CSV, Excel, or connect to a data source). The agent works best when you also provide:</p>
+              <ul style="margin: var(--space-3) 0; padding-left: var(--space-6);">
+                <li><strong>Data dictionary</strong> — column names, expected types, valid ranges</li>
+                <li><strong>Business rules</strong> — what constitutes an anomaly in your domain</li>
+                <li><strong>Prior reports</strong> — previous data quality assessments for comparison</li>
+              </ul>
+              <p>Enable <strong>Extended Thinking</strong> for complex datasets with many columns or nuanced quality rules.</p>
+            </div>
+          </div>
+
+          <div class="agent-learn-step" style="animation-delay: 0.2s">
+            <div class="agent-learn-step-number">3</div>
+            <div class="agent-learn-step-title">What the agent creates</div>
+            <div class="agent-learn-step-body">
+              <p>The Data Explorer will produce a comprehensive analysis including:</p>
+              <div class="agent-learn-output">
+                <div class="agent-learn-output-label">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                  Sample output
+                </div>
+                <strong>Data Profile Summary</strong><br>
+                • 50,247 rows × 23 columns analyzed<br>
+                • 3 columns with >10% null rate (flagged)<br>
+                • Billing amounts: mean $2,340 · median $1,890 · 47 outliers detected (>3σ)<br>
+                • 312 records with diagnosis-procedure mismatch (0.6%)<br><br>
+                <strong>Key Findings</strong><br>
+                • Billing anomalies cluster in Q3, suggesting a system migration issue<br>
+                • Null rates in the provider_id field increased from 2% to 14% in December<br>
+                • 89% of mismatched records involve outpatient procedure codes
+              </div>
+            </div>
+          </div>
+
+          <div class="agent-learn-step" style="animation-delay: 0.25s">
+            <div class="agent-learn-step-number">4</div>
+            <div class="agent-learn-step-title">Follow-up prompts</div>
+            <div class="agent-learn-step-body">
+              <p>Continue the conversation to refine the analysis:</p>
+              <div class="agent-learn-followups">
+                <div class="agent-learn-followup">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Generate visualizations for the billing anomaly patterns by quarter
+                </div>
+                <div class="agent-learn-followup">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Create a data quality scorecard I can present to the team
+                </div>
+                <div class="agent-learn-followup">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Compare this quarter's null rates against the Q2 baseline
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CONNECTORS VIEW -->
     <div class="view-connectors" id="viewConnectors">
       <div class="conn-coming-soon">
@@ -8621,6 +8960,14 @@ Deliverables: Slide deck (PPTX), executive brief (1-page), supporting data appen
         </div>
       </div>
     </div>
+    <div class="modal-agent-use-footer" id="agentUseModalFooter" style="display:none">
+      <div class="modal-agent-use-divider"></div>
+      <div class="modal-agent-learn-more" onclick="closeAgentUseModal(); showAgentLearnMore()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Learn more about this agent</span>
+        <svg class="modal-agent-learn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -8777,6 +9124,7 @@ function hideAllViews() {
   document.getElementById('viewProjectDetail').classList.remove('active');
   document.getElementById('viewNewProject').classList.remove('active');
   document.getElementById('viewDiscover').classList.remove('active');
+  document.getElementById('viewAgentLearn').classList.remove('active');
   // Clear agent sidebar active states
   document.querySelectorAll('.agents-plugin-item').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.agents-plugin-sub').forEach(el => el.classList.remove('visible'));
@@ -9938,6 +10286,11 @@ function openAgentUseModal(name, desc, category) {
   }
   container.innerHTML = html;
 
+  // Show "Learn more" only for agents that have a learn page
+  currentAgentForLearnMore = name;
+  const learnFooter = document.getElementById('agentUseModalFooter');
+  learnFooter.style.display = (name === 'Data Explorer') ? 'block' : 'none';
+
   document.getElementById('agentUseModal').classList.add('active');
 }
 
@@ -10275,6 +10628,21 @@ function toggleVoiceInput(btn) {
     btn.title = 'Voice input';
     box.classList.remove('voice-active');
   }
+}
+
+// ─── Agent Learn More ───
+let currentAgentForLearnMore = '';
+
+function showAgentLearnMore() {
+  hideAllViews();
+  restoreDefaultSidebar();
+  document.getElementById('viewAgentLearn').classList.add('active');
+}
+
+function closeAgentLearnMore() {
+  hideAllViews();
+  restoreDefaultSidebar();
+  document.getElementById('viewHome').classList.remove('hidden');
 }
 
 // ─── Chat Share Modal ───
