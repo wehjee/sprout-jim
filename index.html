@@ -7334,7 +7334,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>
-      <div class="modal-agent-use-option" onclick="closeAgentUseModal();showHome()">
+      <div class="modal-agent-use-option" onclick="startChatWithAgent()">
         <div class="modal-agent-use-option-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
@@ -8543,6 +8543,24 @@ function openAgentUseModal(name, desc, category) {
 
 function closeAgentUseModal() {
   document.getElementById('agentUseModal').classList.remove('active');
+}
+
+function startChatWithAgent() {
+  const name = document.getElementById('agentUseModalName').textContent;
+  const data = agentSkillsData[name] || { commands: [], skills: [] };
+  closeAgentUseModal();
+  showHome();
+  // Prefill the first command into the home input
+  if (data.commands.length) {
+    const input = document.querySelector('.home-input');
+    if (input) {
+      input.value = '/' + data.commands[0] + ' ';
+      input.focus();
+      // Trigger auto-resize
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 160) + 'px';
+    }
+  }
 }
 
 function showKnowledgeBase() {
