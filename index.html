@@ -4656,22 +4656,35 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .view-new-project {
   display: none;
   height: 100%;
-  align-items: center;
-  justify-content: center;
+  overflow-y: auto;
 }
-.view-new-project.active { display: flex; }
+.view-new-project.active { display: flex; align-items: flex-start; justify-content: center; padding: var(--space-10) var(--space-8); }
 
 .new-project-form {
   width: 100%;
-  max-width: 520px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
+  animation: projFadeUp 0.4s var(--ease-out) both;
 }
+
+.new-project-back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--slate-500);
+  font-size: 0.82rem;
+  cursor: pointer;
+  width: fit-content;
+  transition: color var(--duration-fast);
+}
+.new-project-back:hover { color: var(--slate-700); }
+.new-project-back svg { width: 14px; height: 14px; }
 
 .new-project-title {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 500;
   color: var(--slate-900);
   line-height: 1.2;
@@ -4687,6 +4700,11 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   font-size: 0.82rem;
   font-weight: 450;
   color: var(--slate-700);
+}
+
+.new-project-label-hint {
+  font-weight: 300;
+  color: var(--slate-400);
 }
 
 .new-project-input {
@@ -4715,12 +4733,197 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   background: var(--white);
   outline: none;
   resize: vertical;
-  min-height: 100px;
+  min-height: 80px;
   line-height: 1.5;
   transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
 }
 .new-project-textarea::placeholder { color: var(--slate-400); }
 .new-project-textarea:focus { border-color: var(--sage-400); box-shadow: 0 0 0 3px rgba(46,125,51,0.12); }
+
+/* Collaborators section */
+.new-project-collab-input-row {
+  display: flex;
+  gap: var(--space-2);
+}
+.new-project-collab-input-row input {
+  flex: 1;
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--slate-900);
+  background: var(--white);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.new-project-collab-input-row input:focus { border-color: var(--sage-400); }
+
+.new-project-collab-input-row select {
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--slate-700);
+  background: var(--white);
+  outline: none;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.new-project-collab-add {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 10px;
+  border: 1px solid var(--sage-400);
+  background: var(--sage-50);
+  color: var(--sage-600);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.new-project-collab-add:hover { background: var(--sage-100); }
+
+.new-project-collab-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.new-project-collab-person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+}
+
+.new-project-collab-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.new-project-collab-info {
+  flex: 1;
+  min-width: 0;
+}
+.new-project-collab-name {
+  font-size: 0.82rem;
+  font-weight: 450;
+  color: var(--slate-900);
+}
+.new-project-collab-email {
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  font-weight: 300;
+}
+
+.new-project-collab-role {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.new-project-collab-role.owner { background: var(--sage-50); color: var(--sage-600); }
+.new-project-collab-role.edit { background: #EEF2FF; color: #6366F1; }
+.new-project-collab-role.view { background: var(--slate-100); color: var(--slate-500); }
+
+.new-project-collab-remove {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: none;
+  background: none;
+  color: var(--slate-300);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+  flex-shrink: 0;
+}
+.new-project-collab-remove:hover { color: var(--red-500); background: var(--red-100); }
+.new-project-collab-remove svg { width: 12px; height: 12px; }
+
+/* Instructions section */
+.new-project-instructions-box {
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.new-project-instructions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--sage-50);
+  border-bottom: 1px solid var(--sage-100);
+}
+
+.new-project-instructions-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--sage-600);
+}
+.new-project-instructions-badge svg { width: 14px; height: 14px; }
+
+.new-project-instructions-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.new-project-instructions-btn {
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--sage-400);
+  background: var(--white);
+  color: var(--sage-600);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.new-project-instructions-btn:hover { background: var(--sage-50); }
+.new-project-instructions-btn.accept { background: var(--sage-500); color: var(--white); border-color: var(--sage-500); }
+.new-project-instructions-btn.accept:hover { background: var(--sage-600); }
+
+.new-project-instructions-content {
+  padding: var(--space-4);
+  font-size: 0.82rem;
+  color: var(--slate-700);
+  line-height: 1.6;
+  font-weight: 300;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.new-project-instructions-content strong { font-weight: 500; color: var(--slate-900); }
+
+.new-project-divider {
+  height: 1px;
+  background: var(--slate-100);
+}
 
 .new-project-actions {
   display: flex;
@@ -7194,15 +7397,71 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
     <!-- NEW PROJECT VIEW -->
     <div class="view-new-project" id="viewNewProject">
       <div class="new-project-form">
-        <div class="new-project-title">Create a personal project</div>
-        <div class="new-project-field">
-          <label class="new-project-label">What are you working on?</label>
-          <input type="text" class="new-project-input" id="newProjectName" placeholder="Name your project">
+        <div class="new-project-back" onclick="showProjects()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to projects
         </div>
+
+        <div class="new-project-title">Create a new project</div>
+
+        <!-- Name -->
         <div class="new-project-field">
-          <label class="new-project-label">What are you trying to achieve?</label>
-          <textarea class="new-project-textarea" id="newProjectDesc" placeholder="Describe your project, goals, subject, etc..."></textarea>
+          <label class="new-project-label">Project name</label>
+          <input type="text" class="new-project-input" id="newProjectName" placeholder="e.g. Q1 Board Deck, Vendor Evaluation...">
         </div>
+
+        <!-- Description -->
+        <div class="new-project-field">
+          <label class="new-project-label">Description <span class="new-project-label-hint">— helps the AI tailor its instructions</span></label>
+          <textarea class="new-project-textarea" id="newProjectDesc" placeholder="Describe the goal, scope, and expected deliverables..." oninput="generateProjectInstructions(this.value)"></textarea>
+        </div>
+
+        <!-- Collaborators -->
+        <div class="new-project-field">
+          <label class="new-project-label">Collaborators</label>
+          <div class="new-project-collab-input-row">
+            <input type="email" id="newCollabEmail" placeholder="Add by email address...">
+            <select id="newCollabRole">
+              <option value="edit">Can edit</option>
+              <option value="view">View only</option>
+              <option value="owner">Owner</option>
+            </select>
+            <button class="new-project-collab-add" onclick="addCollaborator()">Add</button>
+          </div>
+          <div class="new-project-collab-list" id="collabList">
+            <div class="new-project-collab-person">
+              <div class="new-project-collab-avatar" style="background: var(--sage-500)">J</div>
+              <div class="new-project-collab-info">
+                <div class="new-project-collab-name">Jim</div>
+                <div class="new-project-collab-email">jim@email.com</div>
+              </div>
+              <span class="new-project-collab-role owner">Owner</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="new-project-divider"></div>
+
+        <!-- AI-generated Instructions -->
+        <div class="new-project-field">
+          <label class="new-project-label">Project instructions <span class="new-project-label-hint">— AI-generated, you can edit</span></label>
+          <div class="new-project-instructions-box" id="projectInstructionsBox">
+            <div class="new-project-instructions-header">
+              <span class="new-project-instructions-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                AI-recommended instructions
+              </span>
+              <div class="new-project-instructions-actions">
+                <button class="new-project-instructions-btn" onclick="editProjectInstructions()">Edit</button>
+                <button class="new-project-instructions-btn accept" onclick="acceptProjectInstructions()">Accept</button>
+              </div>
+            </div>
+            <div class="new-project-instructions-content" id="projectInstructionsContent">
+              <p>Start typing a project description above and AI will generate tailored instructions for your project.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="new-project-actions">
           <button class="new-project-cancel" onclick="showProjects()">Cancel</button>
           <button class="new-project-submit" onclick="createNewProject()">Create project</button>
@@ -8608,6 +8867,74 @@ function createNewProject() {
   const name = document.getElementById('newProjectName').value.trim() || 'Untitled project';
   const desc = document.getElementById('newProjectDesc').value.trim() || '';
   showProjectDetail(name, desc);
+}
+
+// Collaborator management
+const collaboratorColors = ['#6366F1', '#EA580C', '#0891B2', '#7C3AED', '#DC2626'];
+let collabIndex = 0;
+
+function addCollaborator() {
+  const email = document.getElementById('newCollabEmail').value.trim();
+  if (!email) return;
+  const role = document.getElementById('newCollabRole').value;
+  const name = email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const initial = name.charAt(0).toUpperCase();
+  const color = collaboratorColors[collabIndex % collaboratorColors.length];
+  collabIndex++;
+
+  const roleLabels = { owner: 'Owner', edit: 'Can edit', view: 'View only' };
+  const roleClass = role === 'owner' ? 'owner' : role === 'edit' ? 'edit' : 'view';
+
+  const el = document.createElement('div');
+  el.className = 'new-project-collab-person';
+  el.innerHTML = `
+    <div class="new-project-collab-avatar" style="background:${color}">${initial}</div>
+    <div class="new-project-collab-info">
+      <div class="new-project-collab-name">${name}</div>
+      <div class="new-project-collab-email">${email}</div>
+    </div>
+    <span class="new-project-collab-role ${roleClass}">${roleLabels[role]}</span>
+    <button class="new-project-collab-remove" onclick="this.parentElement.remove()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>`;
+  document.getElementById('collabList').appendChild(el);
+  document.getElementById('newCollabEmail').value = '';
+}
+
+// AI-generated instructions based on description
+const instructionTemplates = {
+  'board': `<p><strong>Project Purpose:</strong> Prepare materials for board-level review and governance oversight.</p><p><strong>Guidelines:</strong></p><ul><li>All outputs should be executive-level — concise, data-driven, and action-oriented</li><li>Use the approved board deck template and brand guidelines</li><li>Include source citations for all data claims</li><li>Flag any metrics that show negative trends with recommended talking points</li><li>Financial figures must reconcile with the latest audited numbers</li></ul><p><strong>Deliverables:</strong> Slide deck (PPTX), executive brief (1-page), supporting data appendix</p>`,
+  'vendor': `<p><strong>Project Purpose:</strong> Evaluate and compare vendors against defined criteria for procurement decision.</p><p><strong>Guidelines:</strong></p><ul><li>Score vendors on: capability, pricing, compliance, integration, and support</li><li>Use a weighted scoring matrix — compliance and security are non-negotiable</li><li>Include total cost of ownership (TCO) over 3 years, not just license fees</li><li>Document all vendor communications and reference checks</li></ul><p><strong>Deliverables:</strong> Comparison matrix (XLSX), recommendation memo, risk assessment</p>`,
+  'compliance': `<p><strong>Project Purpose:</strong> Ensure organizational compliance with regulatory requirements and prepare for audit readiness.</p><p><strong>Guidelines:</strong></p><ul><li>Map all requirements to current policies and identify gaps</li><li>Prioritize findings by severity: Critical > High > Medium > Low</li><li>Include remediation timelines and responsible parties</li><li>All documentation must be version-controlled with clear audit trails</li></ul><p><strong>Deliverables:</strong> Gap analysis report, remediation plan, compliance checklist</p>`,
+  'default': `<p><strong>Project Purpose:</strong> Collaborate on research, analysis, and deliverable creation with AI-assisted workflows.</p><p><strong>Guidelines:</strong></p><ul><li>Maintain clear version history for all generated documents</li><li>Cite sources when referencing external data or research</li><li>Use consistent formatting across all project outputs</li><li>Flag assumptions and uncertainties clearly in analysis</li><li>All sensitive data should be handled per organizational data policies</li></ul><p><strong>Deliverables:</strong> As defined by the project scope and team requirements</p>`
+};
+
+function generateProjectInstructions(desc) {
+  const lower = desc.toLowerCase();
+  let template = instructionTemplates['default'];
+  if (lower.includes('board') || lower.includes('deck') || lower.includes('presentation')) template = instructionTemplates['board'];
+  else if (lower.includes('vendor') || lower.includes('evaluat') || lower.includes('procur')) template = instructionTemplates['vendor'];
+  else if (lower.includes('compliance') || lower.includes('hipaa') || lower.includes('audit') || lower.includes('regulat')) template = instructionTemplates['compliance'];
+
+  if (desc.length > 20) {
+    document.getElementById('projectInstructionsContent').innerHTML = template;
+  }
+}
+
+function editProjectInstructions() {
+  const content = document.getElementById('projectInstructionsContent');
+  content.contentEditable = 'true';
+  content.focus();
+  content.style.border = '2px solid var(--sage-400)';
+  content.style.borderRadius = '0';
+}
+
+function acceptProjectInstructions() {
+  const content = document.getElementById('projectInstructionsContent');
+  content.contentEditable = 'false';
+  content.style.border = 'none';
+  const badge = document.querySelector('.new-project-instructions-badge');
+  badge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Instructions accepted';
 }
 
 function toggleAudit() {
