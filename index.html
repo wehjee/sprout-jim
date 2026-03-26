@@ -4960,6 +4960,350 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   transition: all var(--duration-fast) var(--ease-out);
 }
 .new-project-submit:hover { background: var(--slate-800); }
+
+/* ─── Share Modal (Figma-style) ─── */
+.share-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(28, 42, 31, 0.5);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+}
+.share-modal-overlay.active { display: flex; }
+
+.share-modal {
+  background: var(--white);
+  border-radius: 16px;
+  width: 480px;
+  max-width: 90vw;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideUp 0.3s var(--ease-out) both;
+  overflow: hidden;
+}
+
+.share-modal-header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.share-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--slate-900);
+}
+
+.share-modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+}
+.share-modal-close:hover { background: var(--slate-100); color: var(--slate-600); }
+.share-modal-close svg { width: 16px; height: 16px; }
+
+.share-modal-input-row {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--space-6) var(--space-4);
+}
+.share-modal-input-row input {
+  flex: 1;
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--slate-900);
+  outline: none;
+}
+.share-modal-input-row input:focus { border-color: var(--sage-400); }
+.share-modal-input-row select {
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--slate-700);
+  outline: none;
+  cursor: pointer;
+}
+.share-modal-input-row button {
+  padding: var(--space-2) var(--space-4);
+  border-radius: 10px;
+  border: none;
+  background: var(--sage-500);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+.share-modal-input-row button:hover { background: var(--sage-600); }
+
+.share-modal-divider { height: 1px; background: var(--slate-100); }
+
+.share-modal-section-label {
+  padding: var(--space-3) var(--space-6) var(--space-2);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.share-modal-list {
+  padding: 0 var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.share-modal-person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--slate-100);
+}
+.share-modal-person:last-child { border-bottom: none; }
+
+.share-modal-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.share-modal-person-info { flex: 1; min-width: 0; }
+.share-modal-person-name { font-size: 0.85rem; font-weight: 450; color: var(--slate-900); }
+.share-modal-person-email { font-size: 0.72rem; color: var(--slate-400); font-weight: 300; }
+
+.share-modal-person-role {
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.share-modal-person-status {
+  font-size: 0.65rem;
+  color: var(--slate-400);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* ─── Instructions Edit Modal ─── */
+.instructions-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(28, 42, 31, 0.5);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+}
+.instructions-modal-overlay.active { display: flex; }
+
+.instructions-modal {
+  background: var(--white);
+  border-radius: 16px;
+  width: 580px;
+  max-width: 90vw;
+  max-height: 80vh;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideUp 0.3s var(--ease-out) both;
+  display: flex;
+  flex-direction: column;
+}
+
+.instructions-modal-header {
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--slate-100);
+}
+.instructions-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--slate-900);
+}
+
+.instructions-modal-body {
+  flex: 1;
+  padding: var(--space-5) var(--space-6);
+  overflow-y: auto;
+}
+
+.instructions-modal-textarea {
+  width: 100%;
+  min-height: 280px;
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  padding: var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--slate-900);
+  line-height: 1.6;
+  outline: none;
+  resize: vertical;
+}
+.instructions-modal-textarea:focus { border-color: var(--sage-400); box-shadow: 0 0 0 3px rgba(46,125,51,0.12); }
+
+.instructions-modal-footer {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--slate-100);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* ─── Instructions panel redesign ─── */
+.pd-instructions-card {
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.pd-instructions-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, var(--sage-50), var(--white));
+  border-bottom: 1px solid var(--slate-100);
+}
+.pd-instructions-top svg { width: 14px; height: 14px; color: var(--sage-500); }
+.pd-instructions-top span {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--sage-600);
+  flex: 1;
+}
+.pd-instructions-edit {
+  padding: 2px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-600);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.pd-instructions-edit:hover { border-color: var(--slate-300); background: var(--slate-50); }
+
+.pd-instructions-body {
+  padding: var(--space-4);
+  font-size: 0.78rem;
+  color: var(--slate-600);
+  line-height: 1.6;
+  font-weight: 300;
+  max-height: 160px;
+  overflow-y: auto;
+}
+.pd-instructions-body strong { font-weight: 500; color: var(--slate-800); }
+.pd-instructions-body ul { padding-left: var(--space-4); margin: var(--space-2) 0; }
+.pd-instructions-body li { margin-bottom: 2px; }
+
+/* ─── Artifacts Generated section ─── */
+.pd-artifact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: 8px;
+  border: 1px solid var(--slate-100);
+  background: var(--white);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  margin-bottom: var(--space-2);
+}
+.pd-artifact-item:hover { border-color: var(--slate-200); box-shadow: var(--shadow-sm); }
+
+.pd-artifact-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pd-artifact-icon.pptx { background: #FFF3E0; color: #E65100; }
+.pd-artifact-icon.xlsx { background: #E8F5E9; color: var(--sage-600); }
+.pd-artifact-icon.pdf { background: #FFEBEE; color: var(--red-500); }
+.pd-artifact-icon svg { width: 16px; height: 16px; }
+
+.pd-artifact-info { flex: 1; min-width: 0; }
+.pd-artifact-name { font-size: 0.78rem; font-weight: 450; color: var(--slate-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pd-artifact-meta { font-size: 0.65rem; color: var(--slate-400); font-weight: 300; margin-top: 1px; }
+
+.pd-share-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  border-radius: 10px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-700);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  justify-content: center;
+}
+.pd-share-btn:hover { border-color: var(--slate-300); background: var(--slate-50); }
+.pd-share-btn svg { width: 16px; height: 16px; color: var(--slate-500); }
+
+.pd-share-avatars {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-2);
+}
+.pd-share-avatars .new-project-collab-avatar {
+  width: 24px;
+  height: 24px;
+  font-size: 0.55rem;
+  margin-right: -6px;
+  border: 2px solid var(--white);
+}
+.pd-share-count {
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  margin-left: var(--space-3);
+}
 </style>
 </head>
 <body>
@@ -7362,73 +7706,40 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="project-detail-section">
             <div class="project-detail-section-header">
               <div class="project-detail-section-title">Instructions</div>
-              <div class="project-detail-section-add" onclick="document.getElementById('pdInstructionsContent').contentEditable='true';document.getElementById('pdInstructionsContent').focus()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              </div>
             </div>
-            <div class="new-project-instructions-box">
-              <div class="new-project-instructions-header">
-                <span class="new-project-instructions-badge">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  Instructions accepted
-                </span>
+            <div class="pd-instructions-card">
+              <div class="pd-instructions-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>AI-generated</span>
+                <button class="pd-instructions-edit" onclick="openInstructionsModal()">Edit</button>
               </div>
-              <div class="new-project-instructions-content" id="pdInstructionsContent">
+              <div class="pd-instructions-body" id="pdInstructionsBody">
                 <p><strong>Project Purpose:</strong> Prepare materials for board-level review and governance oversight.</p>
-                <p><strong>Guidelines:</strong></p>
                 <ul>
-                  <li>All outputs should be executive-level — concise, data-driven, and action-oriented</li>
-                  <li>Use the approved board deck template and brand guidelines</li>
+                  <li>All outputs should be executive-level — concise, data-driven</li>
+                  <li>Use approved board deck template and brand guidelines</li>
                   <li>Include source citations for all data claims</li>
-                  <li>Flag any metrics that show negative trends with recommended talking points</li>
+                  <li>Flag negative trends with recommended talking points</li>
                 </ul>
-                <p><strong>Deliverables:</strong> Slide deck (PPTX), executive brief (1-page), supporting data appendix</p>
+                <p><strong>Deliverables:</strong> Slide deck, executive brief, data appendix</p>
               </div>
             </div>
           </div>
 
-          <!-- Share / Collaborators -->
+          <!-- Share -->
           <div class="project-detail-section">
             <div class="project-detail-section-header">
               <div class="project-detail-section-title">Share</div>
-              <div class="project-detail-section-add" onclick="document.getElementById('pdCollabInput').focus()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-              </div>
             </div>
-            <div class="new-project-collab-input-row" style="margin-bottom:var(--space-2)">
-              <input type="email" id="pdCollabEmail" placeholder="Add by email..." style="font-size:0.78rem">
-              <select id="pdCollabRole" style="font-size:0.72rem">
-                <option value="edit">Can edit</option>
-                <option value="view">View only</option>
-                <option value="owner">Owner</option>
-              </select>
-              <button class="new-project-collab-add" onclick="addPdCollaborator()" style="font-size:0.72rem;padding:4px 8px">Add</button>
-            </div>
-            <div class="new-project-collab-list" id="pdCollabList">
-              <div class="new-project-collab-person">
-                <div class="new-project-collab-avatar" style="background:var(--sage-500)">J</div>
-                <div class="new-project-collab-info">
-                  <div class="new-project-collab-name">Jim</div>
-                  <div class="new-project-collab-email">jim@email.com</div>
-                </div>
-                <span class="new-project-collab-role owner">Owner</span>
-              </div>
-              <div class="new-project-collab-person">
-                <div class="new-project-collab-avatar" style="background:#6366F1">S</div>
-                <div class="new-project-collab-info">
-                  <div class="new-project-collab-name">Sarah Chen</div>
-                  <div class="new-project-collab-email">sarah.chen@sprout.com</div>
-                </div>
-                <span class="new-project-collab-role edit">Can edit</span>
-              </div>
-              <div class="new-project-collab-person">
-                <div class="new-project-collab-avatar" style="background:#EA580C">M</div>
-                <div class="new-project-collab-info">
-                  <div class="new-project-collab-name">Mike Ross</div>
-                  <div class="new-project-collab-email">mike.ross@sprout.com</div>
-                </div>
-                <span class="new-project-collab-role view">View only</span>
-              </div>
+            <button class="pd-share-btn" onclick="openShareModal()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+              Share project
+            </button>
+            <div class="pd-share-avatars">
+              <div class="new-project-collab-avatar" style="background:var(--sage-500)">J</div>
+              <div class="new-project-collab-avatar" style="background:#6366F1">S</div>
+              <div class="new-project-collab-avatar" style="background:#EA580C">M</div>
+              <span class="pd-share-count">3 people</span>
             </div>
           </div>
 
@@ -7455,6 +7766,102 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <div class="project-detail-files-text">Add PDFs, documents, or other text to<br>reference in this project.</div>
             </div>
           </div>
+
+          <!-- Artifacts Generated -->
+          <div class="project-detail-section">
+            <div class="project-detail-section-header">
+              <div class="project-detail-section-title">Artifacts generated</div>
+            </div>
+            <div class="pd-artifact-item">
+              <div class="pd-artifact-icon pptx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+              <div class="pd-artifact-info"><div class="pd-artifact-name">Q4_Board_Presentation.pptx</div><div class="pd-artifact-meta">16 slides · 4.2 MB · 2h ago</div></div>
+            </div>
+            <div class="pd-artifact-item">
+              <div class="pd-artifact-icon xlsx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg></div>
+              <div class="pd-artifact-info"><div class="pd-artifact-name">Financial_Data_Appendix.xlsx</div><div class="pd-artifact-meta">5 sheets · 1.8 MB · 3h ago</div></div>
+            </div>
+            <div class="pd-artifact-item">
+              <div class="pd-artifact-icon pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+              <div class="pd-artifact-info"><div class="pd-artifact-name">Executive_Brief_Q4.pdf</div><div class="pd-artifact-meta">2 pages · 340 KB · 2h ago</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share Modal (Figma-style) -->
+    <div class="share-modal-overlay" id="shareModalOverlay" onclick="if(event.target===this)closeShareModal()">
+      <div class="share-modal">
+        <div class="share-modal-header">
+          <span class="share-modal-title">Share project</span>
+          <button class="share-modal-close" onclick="closeShareModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="share-modal-input-row">
+          <input type="email" id="shareModalEmail" placeholder="Invite by email address...">
+          <select id="shareModalRole">
+            <option value="edit">Can edit</option>
+            <option value="view">View only</option>
+            <option value="owner">Owner</option>
+          </select>
+          <button onclick="addSharePerson()">Invite</button>
+        </div>
+        <div class="share-modal-divider"></div>
+        <div class="share-modal-section-label">People with access</div>
+        <div class="share-modal-list" id="shareModalList">
+          <div class="share-modal-person">
+            <div class="share-modal-avatar" style="background:var(--sage-500)">J</div>
+            <div class="share-modal-person-info">
+              <div class="share-modal-person-name">Jim <span class="share-modal-person-status">(you)</span></div>
+              <div class="share-modal-person-email">jim@email.com</div>
+            </div>
+            <span class="new-project-collab-role owner">Owner</span>
+          </div>
+          <div class="share-modal-person">
+            <div class="share-modal-avatar" style="background:#6366F1">S</div>
+            <div class="share-modal-person-info">
+              <div class="share-modal-person-name">Sarah Chen</div>
+              <div class="share-modal-person-email">sarah.chen@sprout.com</div>
+            </div>
+            <span class="new-project-collab-role edit">Can edit</span>
+          </div>
+          <div class="share-modal-person">
+            <div class="share-modal-avatar" style="background:#EA580C">M</div>
+            <div class="share-modal-person-info">
+              <div class="share-modal-person-name">Mike Ross</div>
+              <div class="share-modal-person-email">mike.ross@sprout.com</div>
+            </div>
+            <span class="new-project-collab-role view">View only</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions Edit Modal -->
+    <div class="instructions-modal-overlay" id="instructionsModalOverlay" onclick="if(event.target===this)closeInstructionsModal()">
+      <div class="instructions-modal">
+        <div class="instructions-modal-header">
+          <span class="instructions-modal-title">Edit instructions</span>
+          <button class="share-modal-close" onclick="closeInstructionsModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="instructions-modal-body">
+          <textarea class="instructions-modal-textarea" id="instructionsModalTextarea">Project Purpose: Prepare materials for board-level review and governance oversight.
+
+Guidelines:
+• All outputs should be executive-level — concise, data-driven, and action-oriented
+• Use the approved board deck template and brand guidelines
+• Include source citations for all data claims
+• Flag any metrics that show negative trends with recommended talking points
+• Financial figures must reconcile with the latest audited numbers
+
+Deliverables: Slide deck (PPTX), executive brief (1-page), supporting data appendix</textarea>
+        </div>
+        <div class="instructions-modal-footer">
+          <button class="new-project-cancel" onclick="closeInstructionsModal()">Cancel</button>
+          <button class="new-project-submit" onclick="saveInstructions()">Save changes</button>
         </div>
       </div>
     </div>
@@ -8891,6 +9298,45 @@ function createNewProject() {
 // Collaborator management
 const collaboratorColors = ['#6366F1', '#EA580C', '#0891B2', '#7C3AED', '#DC2626'];
 let collabIndex = 0;
+
+// ─── Share modal ───
+function openShareModal() {
+  document.getElementById('shareModalOverlay').classList.add('active');
+}
+function closeShareModal() {
+  document.getElementById('shareModalOverlay').classList.remove('active');
+}
+function addSharePerson() {
+  const email = document.getElementById('shareModalEmail').value.trim();
+  if (!email) return;
+  const role = document.getElementById('shareModalRole').value;
+  const name = email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const initial = name.charAt(0).toUpperCase();
+  const color = collaboratorColors[collabIndex % collaboratorColors.length];
+  collabIndex++;
+  const roleLabels = { owner: 'Owner', edit: 'Can edit', view: 'View only' };
+  const roleClass = role === 'owner' ? 'owner' : role === 'edit' ? 'edit' : 'view';
+  const el = document.createElement('div');
+  el.className = 'share-modal-person';
+  el.innerHTML = '<div class="share-modal-avatar" style="background:' + color + '">' + initial + '</div><div class="share-modal-person-info"><div class="share-modal-person-name">' + name + ' <span class="share-modal-person-status">(pending)</span></div><div class="share-modal-person-email">' + email + '</div></div><span class="new-project-collab-role ' + roleClass + '">' + roleLabels[role] + '</span>';
+  document.getElementById('shareModalList').appendChild(el);
+  document.getElementById('shareModalEmail').value = '';
+}
+
+// ─── Instructions modal ───
+function openInstructionsModal() {
+  document.getElementById('instructionsModalOverlay').classList.add('active');
+  document.getElementById('instructionsModalTextarea').focus();
+}
+function closeInstructionsModal() {
+  document.getElementById('instructionsModalOverlay').classList.remove('active');
+}
+function saveInstructions() {
+  const text = document.getElementById('instructionsModalTextarea').value;
+  const html = text.replace(/\n/g, '<br>');
+  document.getElementById('pdInstructionsBody').innerHTML = '<p>' + html + '</p>';
+  closeInstructionsModal();
+}
 
 function addPdCollaborator() {
   const email = document.getElementById('pdCollabEmail').value.trim();
