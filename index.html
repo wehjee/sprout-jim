@@ -4062,20 +4062,22 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
 .agent-learn-title {
   font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 500;
+  font-size: 2.4rem;
+  font-weight: 400;
   color: var(--slate-900);
   letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin-bottom: var(--space-4);
+  line-height: 1.15;
+  margin-bottom: var(--space-5);
 }
 
 .agent-learn-subtitle {
-  font-size: 1.05rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
   color: var(--slate-500);
   font-weight: 300;
-  line-height: 1.6;
-  max-width: 600px;
+  line-height: 1.65;
+  font-style: italic;
+  max-width: 640px;
   margin-bottom: var(--space-6);
 }
 
@@ -4096,6 +4098,35 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 }
 .agent-learn-cta:hover { background: var(--sage-600); transform: translateY(-1px); box-shadow: var(--shadow-md); }
 .agent-learn-cta svg { width: 16px; height: 16px; }
+
+/* Section nav — horizontal buttons */
+.agent-learn-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-12);
+  max-width: 800px;
+  margin: 0 auto;
+  border-top: 1px solid var(--slate-100);
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.agent-learn-nav-btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: 8px;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--slate-500);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.agent-learn-nav-btn:hover { background: var(--slate-50); color: var(--slate-800); }
+.agent-learn-nav-btn.active { background: var(--sage-50); color: var(--sage-600); font-weight: 500; border: 1px solid var(--sage-100); }
 
 /* Steps section */
 .agent-learn-steps {
@@ -4127,18 +4158,21 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
 .agent-learn-step-title {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 400;
   color: var(--slate-900);
-  margin-bottom: var(--space-3);
-  letter-spacing: -0.01em;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
 .agent-learn-step-body {
-  font-size: 0.9rem;
-  line-height: 1.7;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.75;
   color: var(--slate-600);
   font-weight: 300;
+  font-style: italic;
 }
 .agent-learn-step-body p { margin-bottom: var(--space-3); }
 .agent-learn-step-body strong { font-weight: 500; color: var(--slate-800); }
@@ -7974,14 +8008,21 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <h1 class="agent-learn-title">Profile datasets, detect anomalies, and surface data quality insights</h1>
           <p class="agent-learn-subtitle">The Data Explorer agent helps you understand your data at a glance — profiling columns, detecting outliers, summarizing distributions, and flagging quality issues before they reach production.</p>
 
-          <button class="agent-learn-cta" onclick="closeAgentLearnMore(); openAgentUseModal('Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
+          <button class="agent-learn-cta" onclick="openAgentUseModal('Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             Try Data Explorer
           </button>
         </div>
 
+        <div class="agent-learn-nav">
+          <button class="agent-learn-nav-btn active" onclick="scrollToLearnSection('learnStep1', this)">1. Describe the task</button>
+          <button class="agent-learn-nav-btn" onclick="scrollToLearnSection('learnStep2', this)">2. Give context</button>
+          <button class="agent-learn-nav-btn" onclick="scrollToLearnSection('learnStep3', this)">3. What it creates</button>
+          <button class="agent-learn-nav-btn" onclick="scrollToLearnSection('learnStep4', this)">4. Follow-up prompts</button>
+        </div>
+
         <div class="agent-learn-steps">
-          <div class="agent-learn-step" style="animation-delay: 0.1s">
+          <div class="agent-learn-step" id="learnStep1" style="animation-delay: 0.1s">
             <div class="agent-learn-step-number">1</div>
             <div class="agent-learn-step-title">Describe the task</div>
             <div class="agent-learn-step-body">
@@ -7993,7 +8034,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="agent-learn-step" style="animation-delay: 0.15s">
+          <div class="agent-learn-step" id="learnStep2" style="animation-delay: 0.15s">
             <div class="agent-learn-step-number">2</div>
             <div class="agent-learn-step-title">Give the agent context</div>
             <div class="agent-learn-step-body">
@@ -8007,7 +8048,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="agent-learn-step" style="animation-delay: 0.2s">
+          <div class="agent-learn-step" id="learnStep3" style="animation-delay: 0.2s">
             <div class="agent-learn-step-number">3</div>
             <div class="agent-learn-step-title">What the agent creates</div>
             <div class="agent-learn-step-body">
@@ -8030,7 +8071,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="agent-learn-step" style="animation-delay: 0.25s">
+          <div class="agent-learn-step" id="learnStep4" style="animation-delay: 0.25s">
             <div class="agent-learn-step-number">4</div>
             <div class="agent-learn-step-title">Follow-up prompts</div>
             <div class="agent-learn-step-body">
@@ -10637,6 +10678,12 @@ function showAgentLearnMore() {
   hideAllViews();
   restoreDefaultSidebar();
   document.getElementById('viewAgentLearn').classList.add('active');
+}
+
+function scrollToLearnSection(id, btn) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.agent-learn-nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 }
 
 function closeAgentLearnMore() {
