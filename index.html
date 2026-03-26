@@ -3121,6 +3121,119 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   margin-top: 4px;
 }
 
+/* ─── Project Group Chat ─── */
+.project-chat-view {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.project-chat-view.active { display: flex; }
+
+.project-chat-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.project-chat-back {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--slate-400);
+  transition: all var(--duration-fast);
+  flex-shrink: 0;
+}
+.project-chat-back:hover { background: var(--slate-100); color: var(--slate-600); }
+.project-chat-back svg { width: 16px; height: 16px; }
+
+.project-chat-title {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  flex: 1;
+}
+
+.project-chat-participants {
+  display: flex;
+  align-items: center;
+}
+.project-chat-participants .new-project-collab-avatar {
+  width: 24px;
+  height: 24px;
+  font-size: 0.55rem;
+  margin-right: -6px;
+  border: 2px solid var(--white);
+}
+
+.project-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6) 0;
+}
+
+/* Group chat message — shows avatar + name for each person */
+.gc-msg {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-6);
+  animation: messageIn 0.35s var(--ease-out) both;
+}
+.gc-msg + .gc-msg { margin-top: var(--space-2); }
+
+.gc-msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--white);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.gc-msg-avatar.ai {
+  background: linear-gradient(135deg, var(--sage-500), var(--sage-400));
+}
+
+.gc-msg-body { flex: 1; min-width: 0; }
+
+.gc-msg-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+.gc-msg-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--slate-700);
+}
+.gc-msg-name.ai { color: var(--sage-600); }
+.gc-msg-time {
+  font-size: 0.68rem;
+  color: var(--slate-400);
+  font-weight: 300;
+}
+
+.gc-msg-content {
+  font-size: 0.88rem;
+  color: var(--slate-700);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.gc-msg-content strong { font-weight: 500; color: var(--slate-900); }
+.gc-msg-content ul, .gc-msg-content ol { margin: var(--space-2) 0; padding-left: var(--space-5); }
+.gc-msg-content li { margin-bottom: var(--space-1); }
+
 /* Project Detail Sidebar */
 .project-detail-sidebar {
   width: 320px;
@@ -7610,6 +7723,8 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
     <div class="view-project-detail" id="viewProjectDetail">
       <div class="project-detail-layout">
         <div class="project-detail-main">
+          <!-- Default project content -->
+          <div id="pdMainContent">
           <div class="project-detail-back" onclick="showProjects()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
             All projects
@@ -7655,7 +7770,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
 
           <div class="project-detail-threads">
-            <div class="project-detail-thread" onclick="showThread()">
+            <div class="project-detail-thread" onclick="openProjectGroupChat()">
               <div class="project-detail-thread-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
               </div>
@@ -7699,6 +7814,150 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <div class="project-detail-thread-time">2d ago</div>
             </div>
           </div>
+          </div><!-- /pdMainContent -->
+
+          <!-- Group Chat View (replaces main content when a thread is opened) -->
+          <div class="project-chat-view" id="projectChatView">
+            <div class="project-chat-header">
+              <div class="project-chat-back" onclick="closeProjectGroupChat()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </div>
+              <span class="project-chat-title">Draft executive summary slide</span>
+              <div class="project-chat-participants">
+                <div class="new-project-collab-avatar" style="background:var(--sage-500)">J</div>
+                <div class="new-project-collab-avatar" style="background:#6366F1">S</div>
+                <div class="new-project-collab-avatar" style="background:linear-gradient(135deg,var(--sage-500),var(--sage-400))">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:12px;height:12px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-chat-messages">
+              <!-- Jim starts the thread -->
+              <div class="gc-msg">
+                <div class="gc-msg-avatar" style="background:var(--sage-500)">J</div>
+                <div class="gc-msg-body">
+                  <div class="gc-msg-header"><span class="gc-msg-name">Jim</span><span class="gc-msg-time">2:10 PM</span></div>
+                  <div class="gc-msg-content">Can we get the executive summary slide drafted? I need it to lead with the revenue trajectory and patient safety wins. The board cares about confidence in risk management — make that the headline.</div>
+                </div>
+              </div>
+
+              <!-- Sprout responds -->
+              <div class="gc-msg">
+                <div class="gc-msg-avatar ai">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:14px;height:14px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div class="gc-msg-body">
+                  <div class="gc-msg-header"><span class="gc-msg-name ai">Sprout</span><span class="gc-msg-time">2:11 PM</span></div>
+                  <div class="gc-msg-content">
+                    <div class="msg-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> <span class="msg-tool-label">Analyzing</span> <span class="msg-tool-source">Q4 financial data + clinical outcomes</span> <span class="msg-tool-time">2.4s</span></div>
+                    <p>Here's the executive summary slide draft:</p>
+                    <p><strong>Q4 2025: Sustained Growth, Strengthened Safety</strong></p>
+                    <ul>
+                      <li><strong>Revenue:</strong> $142M (+12% YoY) — third consecutive quarter of double-digit growth</li>
+                      <li><strong>EBITDA margin:</strong> 18.3%, up 2.1 percentage points from Q3</li>
+                      <li><strong>Adverse events:</strong> Down 26% QoQ (23 vs 31), zero patient mortality events</li>
+                      <li><strong>FDA compliance:</strong> Both reportable incidents resolved within regulatory timelines</li>
+                      <li><strong>Strategic wins:</strong> Three new partnerships secured, Tanaka JV accelerated to Aug 2026</li>
+                    </ul>
+                    <div class="msg-output">
+                      <div class="msg-output-header">
+                        <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                        <div class="msg-output-info"><div class="msg-output-name">Exec_Summary_Slide_v1.pptx</div><div class="msg-output-meta">1 slide · Draft · Just now</div></div>
+                        <button class="msg-output-download" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sarah comments -->
+              <div class="gc-msg">
+                <div class="gc-msg-avatar" style="background:#6366F1">S</div>
+                <div class="gc-msg-body">
+                  <div class="gc-msg-header"><span class="gc-msg-name">Sarah Chen</span><span class="gc-msg-time">2:18 PM</span></div>
+                  <div class="gc-msg-content">This looks solid. Two things — can we add the near-miss reporting increase as a positive signal? Also, the EBITDA margin number should say "excluding one-time restructuring costs" so the board doesn't ask about it.</div>
+                </div>
+              </div>
+
+              <!-- Jim responds -->
+              <div class="gc-msg">
+                <div class="gc-msg-avatar" style="background:var(--sage-500)">J</div>
+                <div class="gc-msg-body">
+                  <div class="gc-msg-header"><span class="gc-msg-name">Jim</span><span class="gc-msg-time">2:20 PM</span></div>
+                  <div class="gc-msg-content">Good catch on both. @Sprout please incorporate Sarah's feedback — add the near-miss data point and the EBITDA qualifier.</div>
+                </div>
+              </div>
+
+              <!-- Sprout updates -->
+              <div class="gc-msg">
+                <div class="gc-msg-avatar ai">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:14px;height:14px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div class="gc-msg-body">
+                  <div class="gc-msg-header"><span class="gc-msg-name ai">Sprout</span><span class="gc-msg-time">2:21 PM</span></div>
+                  <div class="gc-msg-content">
+                    <p>Updated. Two changes made:</p>
+                    <ul>
+                      <li>Added: <strong>"Near-miss reporting up 18%"</strong> — positioned as a maturing safety culture indicator</li>
+                      <li>EBITDA line now reads: <strong>"18.3% (excl. one-time restructuring)"</strong></li>
+                    </ul>
+                    <div class="msg-output">
+                      <div class="msg-output-header">
+                        <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                        <div class="msg-output-info"><div class="msg-output-name">Exec_Summary_Slide_v2.pptx</div><div class="msg-output-meta">1 slide · Updated · Just now</div></div>
+                        <button class="msg-output-download" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
+                      </div>
+                    </div>
+                    <p>Ready for review. Want me to proceed to the financial performance slides next?</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sarah approves -->
+              <div class="gc-msg">
+                <div class="gc-msg-avatar" style="background:#6366F1">S</div>
+                <div class="gc-msg-body">
+                  <div class="gc-msg-header"><span class="gc-msg-name">Sarah Chen</span><span class="gc-msg-time">2:24 PM</span></div>
+                  <div class="gc-msg-content">Looks great. The near-miss framing is perfect — exactly how we want to position it to the board. Let's move to financial performance.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Group chat input -->
+            <div class="thread-input-area">
+              <div class="thread-input-box">
+                <div class="thread-input-wrapper">
+                  <textarea class="thread-input" rows="1" placeholder="Reply to this thread..."></textarea>
+                  <button class="thread-send">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  </button>
+                </div>
+                <div class="thread-input-toolbar">
+                  <div class="input-folder-select">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+                    <span class="input-folder-name">Q4 Board Deck</span>
+                  </div>
+                  <div class="input-toolbar-right">
+                    <div class="input-web-switch" onclick="toggleWebSearch(this)">
+                      <span class="input-web-switch-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        Search
+                      </span>
+                      <div class="input-web-switch-track"><div class="input-web-switch-thumb"></div></div>
+                    </div>
+                    <button class="input-voice-btn" title="Voice input">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                    </button>
+                    <div class="input-add-trigger">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div class="project-detail-sidebar">
@@ -9298,6 +9557,16 @@ function createNewProject() {
 // Collaborator management
 const collaboratorColors = ['#6366F1', '#EA580C', '#0891B2', '#7C3AED', '#DC2626'];
 let collabIndex = 0;
+
+// ─── Project group chat ───
+function openProjectGroupChat() {
+  document.getElementById('pdMainContent').style.display = 'none';
+  document.getElementById('projectChatView').classList.add('active');
+}
+function closeProjectGroupChat() {
+  document.getElementById('projectChatView').classList.remove('active');
+  document.getElementById('pdMainContent').style.display = '';
+}
 
 // ─── Share modal ───
 function openShareModal() {
