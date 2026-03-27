@@ -6103,7 +6103,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         <div class="nav-section-label" style="margin-top: var(--space-4)">Recent</div>
         <div class="nav-item" onclick="showDemoThread('pptx')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          Generate Board Deck
+          Q1 2026 Updates
         </div>
         <div class="nav-item" onclick="showDemoThread('excel')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg>
@@ -9272,7 +9272,7 @@ function showHome() {
 // ─── Demo thread conversations ───
 const demoThreads = {
   pptx: {
-    title: 'Generate Board Deck from Q4 Data',
+    title: 'Q1 2026 Updates',
     messages: [
       { role: 'user', time: '2:14 PM', body: `<p>I need to create a board presentation for Thursday's meeting. Here's the Q4 data and the template we used last quarter.</p>
         <div class="msg-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Q4_Financial_Data.xlsx <span class="msg-file-size">2.4 MB</span></div>
@@ -9584,7 +9584,7 @@ function showDemoThread(key) {
   // Highlight correct sidebar item
   const navItems = document.querySelectorAll('.nav-item');
   navItems.forEach(el => el.classList.remove('active'));
-  const threadLabels = { pptx: 'Generate Board Deck', excel: 'Analyze Claims Data', doccompare: 'Compare SOPs', audio: 'Translate Audio Notes', websearch: 'GLP-1 Market Search', deepresearch: 'Deep Research: Biosimilars' };
+  const threadLabels = { pptx: 'Q1 2026 Updates', excel: 'Analyze Claims Data', doccompare: 'Compare SOPs', audio: 'Translate Audio Notes', websearch: 'GLP-1 Market Search', deepresearch: 'Deep Research: Biosimilars' };
   navItems.forEach(el => {
     if (el.textContent.trim() === threadLabels[key]) el.classList.add('active');
   });
