@@ -6050,20 +6050,63 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .pd-instructions-body li { margin-bottom: 2px; }
 
 .pd-instructions-footer {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding-top: var(--space-3);
+  padding: 3px 10px;
   margin-top: var(--space-3);
-  border-top: 1px solid var(--slate-100);
+  background: var(--sage-50);
+  border: 1px solid var(--sage-100);
+  border-radius: 12px;
 }
 .pd-instructions-footer svg { width: 12px; height: 12px; color: var(--sage-400); }
 .pd-instructions-footer span {
   font-size: 0.68rem;
   font-weight: 450;
-  color: var(--slate-400);
+  color: var(--sage-600);
   letter-spacing: 0.02em;
 }
+
+/* Project detail more dropdown */
+.pd-more-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-1);
+  min-width: 170px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: all var(--duration-fast) var(--ease-out);
+  z-index: 200;
+}
+.pd-more-dropdown.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.pd-more-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--slate-700);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.pd-more-option:hover { background: var(--slate-50); }
+.pd-more-option svg { width: 15px; height: 15px; opacity: 0.5; flex-shrink: 0; }
+.pd-more-option.danger { color: var(--red-500); }
+.pd-more-option.danger:hover { background: var(--red-100); }
+.pd-more-option.danger svg { opacity: 0.7; }
+.pd-more-divider { height: 1px; background: var(--slate-100); margin: var(--space-1) var(--space-2); }
 
 /* ─── Artifacts Generated section ─── */
 .pd-artifact-item {
@@ -8584,9 +8627,22 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <div class="project-detail-desc" id="projectDetailDesc">Quarterly board presentation covering financial performance, clinical outcomes, and strategic initiatives for stakeholder review.</div>
             </div>
             <div class="project-detail-actions">
-              <button title="More options">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-              </button>
+              <div class="pd-more-wrapper" style="position:relative">
+                <button title="More options" onclick="togglePdMoreDropdown(event)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+                <div class="pd-more-dropdown" id="pdMoreDropdown">
+                  <div class="pd-more-option" onclick="closePdMoreDropdown(); openInstructionsModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Edit details
+                  </div>
+                  <div class="pd-more-divider"></div>
+                  <div class="pd-more-option danger" onclick="closePdMoreDropdown(); showProjects()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                    Delete project
+                  </div>
+                </div>
+              </div>
               <button title="Favorite">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               </button>
@@ -10529,6 +10585,14 @@ function showKnowledgeBase() {
   });
 }
 
+function togglePdMoreDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('pdMoreDropdown').classList.toggle('open');
+}
+function closePdMoreDropdown() {
+  document.getElementById('pdMoreDropdown').classList.remove('open');
+}
+
 function toggleProjectSort(e) {
   e.stopPropagation();
   const dd = document.getElementById('projectSortDropdown');
@@ -10816,6 +10880,9 @@ document.addEventListener('click', function(e) {
   // Also close project sort dropdown
   const sortDD = document.getElementById('projectSortDropdown');
   if (sortDD && !e.target.closest('.projects-sort')) sortDD.classList.remove('open');
+  // Close project detail more dropdown
+  const pdMore = document.getElementById('pdMoreDropdown');
+  if (pdMore && !e.target.closest('.pd-more-wrapper')) pdMore.classList.remove('open');
 });
 
 // Folder selection
