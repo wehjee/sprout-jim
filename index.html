@@ -2956,23 +2956,29 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .kb-grid.list-view .kb-vault-card {
   flex-direction: row;
   align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4) var(--space-5);
+  gap: 0;
+  padding: 0;
   border: 1px solid var(--slate-100);
   border-radius: 12px;
+  overflow: hidden;
 }
 .kb-grid.list-view .kb-vault-thumb {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+  width: 56px;
+  height: 56px;
+  border-radius: 0;
   flex-shrink: 0;
   aspect-ratio: auto;
+  border-right: 1px solid var(--slate-100);
 }
 .kb-grid.list-view .kb-vault-thumb svg { width: 24px; height: 24px; }
 .kb-grid.list-view .kb-vault-footer {
   flex: 1;
-  padding: 0;
+  padding: var(--space-3) var(--space-4);
+  flex-direction: row;
+  align-items: center;
 }
+.kb-grid.list-view .kb-vault-footer > div { flex: 1; }
+.kb-grid.list-view .kb-vault-more { align-self: center; }
 
 .kb-empty-state {
   text-align: center;
