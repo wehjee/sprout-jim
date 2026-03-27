@@ -276,9 +276,83 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   flex-shrink: 0;
 }
 
+.sidebar-footer {
+  cursor: pointer;
+  position: relative;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.sidebar-footer:hover { background: rgba(255,255,255,0.04); }
+
 .user-info { flex: 1; min-width: 0; }
 .user-name { font-size: 0.85rem; color: var(--slate-200); font-weight: 400; }
 .user-dept { font-size: 0.72rem; color: var(--slate-500); margin-top: 1px; }
+
+/* User menu popover */
+.user-menu {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: var(--space-3);
+  right: var(--space-3);
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+  z-index: 1000;
+  animation: userMenuSlideUp 0.2s var(--ease-out) both;
+}
+.user-menu.open { display: block; }
+
+@keyframes userMenuSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.user-menu-header {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--slate-100);
+}
+.user-menu-header-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--slate-900);
+}
+.user-menu-header-email {
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  margin-top: 1px;
+}
+
+.user-menu-items {
+  padding: var(--space-1) 0;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--slate-700);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+  border: none;
+  background: none;
+  width: 100%;
+  font-family: var(--font-body);
+}
+.user-menu-item:hover { background: var(--slate-50); }
+.user-menu-item svg { width: 16px; height: 16px; color: var(--slate-400); flex-shrink: 0; }
+
+.user-menu-divider {
+  height: 1px;
+  background: var(--slate-100);
+  margin: var(--space-1) 0;
+}
+
+.user-menu-item.logout { color: var(--slate-500); }
+.user-menu-item.logout svg { color: var(--slate-400); }
 
 /* ─── Main Content ─── */
 .main {
@@ -6249,11 +6323,32 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         <div class="nav-item" onclick="showDemoThread('deepresearch')">Deep Research: Biosimilars</div>
       </nav>
 
-      <div class="sidebar-footer">
+      <div class="sidebar-footer" onclick="toggleUserMenu(event)">
         <div class="user-avatar">J</div>
         <div class="user-info">
           <div class="user-name">Jim</div>
           <div class="user-dept">jim@email.com</div>
+        </div>
+        <div class="user-menu" id="userMenu">
+          <div class="user-menu-header">
+            <div class="user-menu-header-name">Jim</div>
+            <div class="user-menu-header-email">jim@email.com</div>
+          </div>
+          <div class="user-menu-items">
+            <button class="user-menu-item" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+              Settings
+            </button>
+            <button class="user-menu-item" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Get help
+            </button>
+            <div class="user-menu-divider"></div>
+            <button class="user-menu-item logout" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Log out
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -10728,6 +10823,16 @@ function openProjectArtifactPreview(key) {
   document.getElementById('projectArtifactPanelBody').innerHTML = preview.body;
   panel.classList.add('open');
 }
+function toggleUserMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('userMenu');
+  menu.classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  const menu = document.getElementById('userMenu');
+  if (menu) menu.classList.remove('open');
+});
+
 function closeProjectArtifactPanel() {
   document.getElementById('projectArtifactPanel').classList.remove('open');
 }
