@@ -5448,6 +5448,65 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 }
 .new-project-submit:hover { background: var(--slate-800); }
 
+/* New Project Modal (overlay version for home/chat context) */
+.new-project-modal-content {
+  width: 100%;
+  max-width: 520px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideUp 0.3s var(--ease-out) both;
+  overflow: hidden;
+}
+
+.new-project-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-6) 0;
+}
+
+.new-project-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  letter-spacing: -0.02em;
+}
+
+.new-project-modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.new-project-modal-close:hover { background: var(--slate-100); color: var(--slate-600); }
+.new-project-modal-close svg { width: 16px; height: 16px; }
+
+.new-project-modal-body {
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.new-project-modal-body .new-project-field { margin: 0; }
+
+.new-project-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+
 /* ─── Share Modal (Figma-style) ─── */
 .share-modal-overlay {
   display: none;
@@ -6199,7 +6258,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                   Marketing
                 </div>
                 <div class="dropdown-divider"></div>
-                <div class="dropdown-item" onclick="closeAllDropdowns(); showNewProject()">
+                <div class="dropdown-item" onclick="closeAllDropdowns(); openNewProjectModal()">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   Work in a new project
                 </div>
@@ -9012,6 +9071,32 @@ Deliverables: Slide deck (PPTX), executive brief (1-page), supporting data appen
   </div>
 </div>
 
+<!-- New Project Modal (overlay for home/chat context) -->
+<div class="modal-overlay" id="newProjectModal" onclick="if(event.target===this)closeNewProjectModal()">
+  <div class="new-project-modal-content">
+    <div class="new-project-modal-header">
+      <div class="new-project-modal-title">Create a new project</div>
+      <button class="new-project-modal-close" onclick="closeNewProjectModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="new-project-modal-body">
+      <div class="new-project-field">
+        <label class="new-project-label">Project name</label>
+        <input type="text" class="new-project-input" id="newProjectModalName" placeholder="e.g. Q1 Board Deck, Vendor Evaluation...">
+      </div>
+      <div class="new-project-field">
+        <label class="new-project-label">Description <span class="new-project-label-hint">— helps the AI tailor its instructions</span></label>
+        <textarea class="new-project-textarea" id="newProjectModalDesc" rows="3" placeholder="Describe the goal, scope, and expected deliverables..."></textarea>
+      </div>
+      <div class="new-project-modal-actions">
+        <button class="new-project-cancel" onclick="closeNewProjectModal()">Cancel</button>
+        <button class="new-project-submit" onclick="createNewProjectFromModal()">Create project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Chat Share Modal -->
 <div class="share-modal-overlay" id="chatShareModal" onclick="if(event.target===this)closeChatShareModal()">
   <div class="share-modal">
@@ -10384,6 +10469,24 @@ function showProjectDetail(name, desc) {
   document.querySelectorAll('.nav-item').forEach((el, i) => {
     el.classList.toggle('active', i === 1);
   });
+}
+
+function openNewProjectModal() {
+  document.getElementById('newProjectModalName').value = '';
+  document.getElementById('newProjectModalDesc').value = '';
+  document.getElementById('newProjectModal').classList.add('active');
+  setTimeout(() => document.getElementById('newProjectModalName').focus(), 100);
+}
+
+function closeNewProjectModal() {
+  document.getElementById('newProjectModal').classList.remove('active');
+}
+
+function createNewProjectFromModal() {
+  const name = document.getElementById('newProjectModalName').value.trim() || 'Untitled project';
+  const desc = document.getElementById('newProjectModalDesc').value.trim() || '';
+  closeNewProjectModal();
+  showProjectDetail(name, desc);
 }
 
 function showNewProject() {
