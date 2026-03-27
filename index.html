@@ -2419,132 +2419,241 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .view-kb { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .view-kb.active { display: flex; }
 
-.kb-coming-soon {
+/* ─── Knowledge Base Page ─── */
+.kb-page {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  padding: var(--space-8) var(--space-10);
 }
 
-.kb-emoji {
-  font-size: 3.5rem;
-  position: relative;
-  height: 64px;
+.kb-topbar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
 }
 
-.kb-emoji-stage {
-  position: absolute;
-  opacity: 0;
-  transform: scale(1);
+.kb-topbar-left {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
 }
 
-.kb-emoji-stage:nth-child(1) { animation: kbSeedStage 2.4s ease-in-out 0.2s both; }
-.kb-emoji-stage:nth-child(2) { animation: kbSeedStage 2.4s ease-in-out 2.4s both; }
-.kb-emoji-stage:nth-child(3) { animation: kbSeedStage 2.4s ease-in-out 4.6s both; }
-.kb-emoji-stage:nth-child(4) { animation: kbFinalStage 1.8s ease-in-out 6.8s both; }
-
-@keyframes kbSeedStage {
-  0% { opacity: 0; }
-  15% { opacity: 1; }
-  75% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes kbFinalStage {
-  0% { opacity: 0; }
-  40% { opacity: 1; }
-  100% { opacity: 1; }
-}
-
-@keyframes kbBounce {
-  0% { transform: translateY(20px) scale(0.3); opacity: 0; }
-  60% { transform: translateY(-10px) scale(1.1); opacity: 1; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.kb-title {
+.kb-topbar-title {
   font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 400;
+  font-size: 1.4rem;
+  font-weight: 500;
   color: var(--slate-900);
   letter-spacing: -0.02em;
-  margin-top: var(--space-5);
-  animation: kbFadeUp 0.5s var(--ease-out) 0.25s both;
 }
 
-.kb-desc {
-  font-size: 0.92rem;
-  color: var(--slate-500);
-  font-weight: 300;
-  text-align: center;
-  line-height: 1.5;
-  max-width: 340px;
-  margin-top: var(--space-3);
-  animation: kbFadeUp 0.5s var(--ease-out) 0.35s both;
+.kb-topbar-count {
+  font-size: 0.78rem;
+  color: var(--slate-400);
+  font-weight: 400;
 }
 
-@keyframes kbFadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.kb-features {
+.kb-topbar-search {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin-top: var(--space-8);
-  animation: kbFadeUp 0.5s var(--ease-out) 0.5s both;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--slate-200);
+  border-radius: 8px;
+  background: var(--white);
+  width: 220px;
+}
+.kb-topbar-search svg { width: 14px; height: 14px; color: var(--slate-400); flex-shrink: 0; }
+.kb-topbar-search input {
+  border: none;
+  outline: none;
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  color: var(--slate-700);
+  width: 100%;
+  background: transparent;
+}
+.kb-topbar-search input::placeholder { color: var(--slate-400); }
+
+/* New vault card */
+.kb-new-vault {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border: 1px dashed var(--slate-200);
+  border-radius: 12px;
+  background: var(--white);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  margin-bottom: var(--space-8);
+  max-width: 400px;
+}
+.kb-new-vault:hover { border-color: var(--sage-400); background: var(--sage-50); }
+
+.kb-new-vault-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.kb-new-vault-icon svg { width: 24px; height: 24px; color: var(--slate-300); }
+
+.kb-new-vault-info { flex: 1; }
+.kb-new-vault-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--slate-900);
+}
+.kb-new-vault-desc {
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  margin-top: 2px;
 }
 
-.kb-feature {
+/* Filters and controls */
+.kb-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+}
+
+.kb-filters {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.kb-filter-tab {
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  border-radius: 6px;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--slate-400);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.kb-filter-tab:hover { color: var(--slate-600); }
+.kb-filter-tab.active {
+  color: var(--slate-900);
+  font-weight: 500;
+  background: var(--slate-50);
+}
+
+.kb-controls-right {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-5);
-  border-radius: 10px;
-  border: 1px solid var(--slate-100);
+}
+
+.kb-sort-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--slate-200);
+  border-radius: 8px;
   background: var(--white);
-  font-size: 0.82rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
   color: var(--slate-600);
-  font-weight: 400;
-  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
 }
-.kb-feature:hover { border-color: var(--slate-200); box-shadow: var(--shadow-sm); }
-.kb-feature svg { width: 16px; height: 16px; color: var(--sage-500); flex-shrink: 0; }
+.kb-sort-btn svg { width: 12px; height: 12px; color: var(--slate-400); }
 
-/* KB sparkles */
-.kb-sparkles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+.kb-view-toggle {
+  display: flex;
+  gap: var(--space-1);
+}
+.kb-view-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--slate-200);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast);
+}
+.kb-view-btn:hover { color: var(--slate-600); }
+.kb-view-btn.active { background: var(--slate-50); color: var(--slate-700); border-color: var(--slate-300); }
+.kb-view-btn svg { width: 16px; height: 16px; }
+
+/* Vault grid */
+.kb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+.kb-vault-card {
+  background: var(--white);
+  border: 1px solid var(--slate-100);
+  border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+.kb-vault-card:hover {
+  border-color: var(--slate-200);
+  box-shadow: var(--shadow-md);
 }
 
-.kb-sparkle {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--sage-400);
-  opacity: 0;
+.kb-vault-thumb {
+  height: 140px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kb-vault-thumb svg { width: 40px; height: 40px; color: var(--slate-200); }
+.kb-vault-thumb.has-icon svg { color: var(--slate-300); }
+
+.kb-vault-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-4) var(--space-4);
 }
 
-.view-kb.active .kb-sparkle {
-  animation: kbSparkle 1.8s var(--ease-out) both infinite;
+.kb-vault-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.3;
+}
+.kb-vault-meta {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  margin-top: 2px;
 }
 
-.kb-sparkle:nth-child(1) { width: 6px; height: 6px; top: 20%; left: 15%; animation-delay: 0s; }
-.kb-sparkle:nth-child(2) { width: 5px; height: 5px; top: 25%; right: 18%; animation-delay: 0.3s; background: var(--gold-400); }
-.kb-sparkle:nth-child(3) { width: 7px; height: 7px; bottom: 28%; left: 20%; animation-delay: 0.6s; background: var(--gold-400); }
-.kb-sparkle:nth-child(4) { width: 5px; height: 5px; bottom: 22%; right: 15%; animation-delay: 0.2s; }
-.kb-sparkle:nth-child(5) { width: 4px; height: 4px; top: 38%; left: 10%; animation-delay: 0.8s; }
-.kb-sparkle:nth-child(6) { width: 4px; height: 4px; top: 32%; right: 10%; animation-delay: 1.0s; background: var(--gold-400); }
-.kb-sparkle:nth-child(7) { width: 6px; height: 6px; bottom: 38%; left: 28%; animation-delay: 0.4s; background: var(--gold-400); }
-.kb-sparkle:nth-child(8) { width: 5px; height: 5px; bottom: 35%; right: 25%; animation-delay: 0.7s; }
+.kb-vault-more {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--slate-300);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast);
+}
+.kb-vault-more:hover { background: var(--slate-50); color: var(--slate-500); }
+.kb-vault-more svg { width: 16px; height: 16px; }
 
 @keyframes kbSparkle {
   0%, 100% { transform: scale(0); opacity: 0; }
@@ -8414,37 +8523,101 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
     <!-- KNOWLEDGE BASE VIEW -->
     <div class="view-kb" id="viewKb">
-      <div class="kb-coming-soon">
-        <div class="kb-sparkles">
-          <div class="kb-sparkle"></div>
-          <div class="kb-sparkle"></div>
-          <div class="kb-sparkle"></div>
-          <div class="kb-sparkle"></div>
-          <div class="kb-sparkle"></div>
-          <div class="kb-sparkle"></div>
-          <div class="kb-sparkle"></div>
-          <div class="kb-sparkle"></div>
-        </div>
-        <div class="kb-emoji">
-          <span class="kb-emoji-stage">🌰</span>
-          <span class="kb-emoji-stage">🌱</span>
-          <span class="kb-emoji-stage">🌿</span>
-          <span class="kb-emoji-stage">🪴</span>
-        </div>
-        <h2 class="kb-title">Coming Soon</h2>
-        <p class="kb-desc">We're planting the seeds for something special.</p>
-        <div class="kb-features">
-          <div class="kb-feature">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <span>Upload documents, policies, and protocols</span>
+      <div class="kb-page">
+        <!-- Top bar -->
+        <div class="kb-topbar">
+          <div class="kb-topbar-left">
+            <span class="kb-topbar-title">Knowledge Base</span>
+            <span class="kb-topbar-count">3 vaults, 1 knowledge base</span>
           </div>
-          <div class="kb-feature">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>Search across all your organization's knowledge</span>
+          <div class="kb-topbar-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search">
           </div>
-          <div class="kb-feature">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-7.07-15.07 2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg>
-            <span>Auto-connected to your assistants and agents</span>
+        </div>
+
+        <!-- New vault -->
+        <div class="kb-new-vault">
+          <div class="kb-new-vault-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+          </div>
+          <div class="kb-new-vault-info">
+            <div class="kb-new-vault-title">New vault</div>
+            <div class="kb-new-vault-desc">Each vault can contain up to 100,000 files</div>
+          </div>
+        </div>
+
+        <!-- Filters and controls -->
+        <div class="kb-controls">
+          <div class="kb-filters">
+            <button class="kb-filter-tab active">All</button>
+            <button class="kb-filter-tab">Private</button>
+            <button class="kb-filter-tab">Shared</button>
+          </div>
+          <div class="kb-controls-right">
+            <button class="kb-sort-btn">
+              Recently viewed
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="7 15 12 20 17 15"/><polyline points="7 9 12 4 17 9"/></svg>
+            </button>
+            <div class="kb-view-toggle">
+              <button class="kb-view-btn active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
+              <button class="kb-view-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vault grid -->
+        <div class="kb-grid">
+          <div class="kb-vault-card">
+            <div class="kb-vault-thumb has-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+            </div>
+            <div class="kb-vault-footer">
+              <div>
+                <div class="kb-vault-name">Clinical SOPs</div>
+                <div class="kb-vault-meta">Knowledge base · Shared</div>
+              </div>
+              <button class="kb-vault-more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+            </div>
+          </div>
+
+          <div class="kb-vault-card">
+            <div class="kb-vault-thumb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+            </div>
+            <div class="kb-vault-footer">
+              <div>
+                <div class="kb-vault-name">Board Materials</div>
+                <div class="kb-vault-meta">12 files · 4.2 MB · 3 queries</div>
+              </div>
+              <button class="kb-vault-more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+            </div>
+          </div>
+
+          <div class="kb-vault-card">
+            <div class="kb-vault-thumb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+            </div>
+            <div class="kb-vault-footer">
+              <div>
+                <div class="kb-vault-name">Regulatory Filings</div>
+                <div class="kb-vault-meta">No files uploaded</div>
+              </div>
+              <button class="kb-vault-more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+            </div>
+          </div>
+
+          <div class="kb-vault-card">
+            <div class="kb-vault-thumb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+            </div>
+            <div class="kb-vault-footer">
+              <div>
+                <div class="kb-vault-name">Commercial Contracts</div>
+                <div class="kb-vault-meta">102 files · 79.28 MB</div>
+              </div>
+              <button class="kb-vault-more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+            </div>
           </div>
         </div>
       </div>
