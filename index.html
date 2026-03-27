@@ -8649,21 +8649,41 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-detail-input-box">
-            <textarea rows="1" placeholder="Reply..."></textarea>
-            <div class="project-detail-input-toolbar">
-              <div class="project-detail-input-left">
-                <button title="Add attachment">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                </button>
-              </div>
-              <div class="project-detail-input-right">
-                <div class="project-detail-model">
-                  Opus 4.6
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <div class="home-input-box">
+            <div class="home-input-wrapper">
+              <textarea class="home-input" rows="1" placeholder="What would you like to work on?"></textarea>
+              <button class="home-send">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+            <div class="home-input-toolbar">
+              <div style="flex:1"></div>
+              <div class="input-toolbar-right">
+                <div class="input-web-switch" onclick="toggleWebSearch(this)" title="Toggle web search">
+                  <span class="input-web-switch-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    Search
+                  </span>
+                  <div class="input-web-switch-track"><div class="input-web-switch-thumb"></div></div>
                 </div>
-                <div class="project-detail-voice">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                <div class="input-think-switch" onclick="toggleDeepThinking(this)" title="Toggle deep thinking">
+                  <span class="input-think-switch-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    Think
+                  </span>
+                  <div class="input-think-switch-track"><div class="input-think-switch-thumb"></div></div>
+                </div>
+                <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                </button>
+                <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <div class="dropdown-menu add-dropdown" id="pdAddDropdown">
+                    <div class="dropdown-item" onclick="event.stopPropagation()">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      Upload files or documents
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
