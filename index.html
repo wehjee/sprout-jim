@@ -9616,6 +9616,12 @@ const demoThreads = {
 
 // ─── Artifact preview panel ───
 const artifactPreviews = {
+  execsummary: {
+    title: 'Exec_Summary_Slide_v1.pptx',
+    body: `
+      <div class="artifact-slide"><div class="artifact-slide-num">Slide 1</div><div class="artifact-slide-title">Q4 2025: Sustained Growth, Strengthened Safety</div><div class="artifact-slide-content">• Revenue: $142M (+12% YoY) — third consecutive quarter of double-digit growth<br>• EBITDA margin: 18.3%, up 2.1 percentage points from Q3<br>• Adverse events: Down 26% QoQ (23 vs 31), zero patient mortality events<br>• FDA compliance: Both reportable incidents resolved within regulatory timelines<br>• Strategic wins: Three new partnerships secured, Tanaka JV accelerated to Aug 2026</div></div>
+    `
+  },
   pptx: {
     title: 'Q4_Board_Presentation.pptx',
     body: `
@@ -10690,6 +10696,11 @@ let collabIndex = 0;
 function openProjectGroupChat() {
   document.getElementById('pdMainContent').style.display = 'none';
   document.getElementById('projectChatView').classList.add('active');
+  // Make output blocks clickable to open preview
+  document.querySelectorAll('#projectChatView .msg-output').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => openArtifactPreview('execsummary'));
+  });
   // Hide the right sidebar and expand layout when in chat view
   const sidebar = document.querySelector('.project-detail-sidebar');
   if (sidebar) sidebar.style.display = 'none';
