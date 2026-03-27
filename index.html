@@ -1438,7 +1438,9 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 /* ─── Thread Input (matches home input box) ─── */
 .thread-input-area {
   padding: var(--space-4) var(--space-8) var(--space-5);
-  background: transparent;
+  background: var(--warm-white);
+  border-top: 1px solid var(--slate-100);
+  flex-shrink: 0;
 }
 
 .thread-input-box {
@@ -3280,6 +3282,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 .project-chat-view.active { display: flex; }
 
@@ -3329,6 +3332,9 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   flex: 1;
   overflow-y: auto;
   padding: var(--space-6) 0;
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* Group chat message — shows avatar + name for each person */
