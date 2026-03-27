@@ -3278,12 +3278,19 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 /* ─── Project Group Chat ─── */
 .project-chat-view {
   display: none;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
   min-width: 0;
   overflow: hidden;
 }
 .project-chat-view.active { display: flex; }
+.project-chat-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
 
 .project-chat-header {
   display: flex;
@@ -8742,6 +8749,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
           <!-- Group Chat View (replaces main content when a thread is opened) -->
           <div class="project-chat-view" id="projectChatView">
+            <div class="project-chat-main">
             <div class="project-chat-header">
               <div class="project-chat-back" onclick="closeProjectGroupChat()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -8784,7 +8792,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                       <li><strong>FDA compliance:</strong> Both reportable incidents resolved within regulatory timelines</li>
                       <li><strong>Strategic wins:</strong> Three new partnerships secured, Tanaka JV accelerated to Aug 2026</li>
                     </ul>
-                    <div class="msg-output">
+                    <div class="msg-output" style="cursor:pointer" onclick="openProjectArtifactPreview('execsummary')">
                       <div class="msg-output-header">
                         <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
                         <div class="msg-output-info"><div class="msg-output-name">Exec_Summary_Slide_v1.pptx</div><div class="msg-output-meta">1 slide · Draft · Just now</div></div>
@@ -8879,6 +8887,19 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                   </div>
                 </div>
               </div>
+            </div>
+            </div><!-- /project-chat-main -->
+            <div class="artifact-panel" id="projectArtifactPanel">
+              <div class="artifact-panel-header">
+                <span class="artifact-panel-title" id="projectArtifactPanelTitle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  Preview
+                </span>
+                <button class="artifact-panel-close" onclick="closeProjectArtifactPanel()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              <div class="artifact-panel-body" id="projectArtifactPanelBody"></div>
             </div>
           </div>
 
@@ -10693,14 +10714,20 @@ const collaboratorColors = ['#6366F1', '#EA580C', '#0891B2', '#7C3AED', '#DC2626
 let collabIndex = 0;
 
 // ─── Project group chat ───
+function openProjectArtifactPreview(key) {
+  const preview = artifactPreviews[key];
+  if (!preview) return;
+  const panel = document.getElementById('projectArtifactPanel');
+  document.getElementById('projectArtifactPanelTitle').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ' + preview.title;
+  document.getElementById('projectArtifactPanelBody').innerHTML = preview.body;
+  panel.classList.add('open');
+}
+function closeProjectArtifactPanel() {
+  document.getElementById('projectArtifactPanel').classList.remove('open');
+}
 function openProjectGroupChat() {
   document.getElementById('pdMainContent').style.display = 'none';
   document.getElementById('projectChatView').classList.add('active');
-  // Make output blocks clickable to open preview
-  document.querySelectorAll('#projectChatView .msg-output').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', () => openArtifactPreview('execsummary'));
-  });
   // Hide the right sidebar and expand layout when in chat view
   const sidebar = document.querySelector('.project-detail-sidebar');
   if (sidebar) sidebar.style.display = 'none';
@@ -10708,6 +10735,7 @@ function openProjectGroupChat() {
   if (layout) layout.classList.add('chat-active');
 }
 function closeProjectGroupChat() {
+  closeProjectArtifactPanel();
   document.getElementById('projectChatView').classList.remove('active');
   document.getElementById('pdMainContent').style.display = '';
   // Restore the right sidebar and layout
