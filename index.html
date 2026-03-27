@@ -8834,7 +8834,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                       <li>Added: <strong>"Near-miss reporting up 18%"</strong> — positioned as a maturing safety culture indicator</li>
                       <li>EBITDA line now reads: <strong>"18.3% (excl. one-time restructuring)"</strong></li>
                     </ul>
-                    <div class="msg-output">
+                    <div class="msg-output" style="cursor:pointer" onclick="openProjectArtifactPreview('execsummaryv2')">
                       <div class="msg-output-header">
                         <div class="msg-output-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
                         <div class="msg-output-info"><div class="msg-output-name">Exec_Summary_Slide_v2.pptx</div><div class="msg-output-meta">1 slide · Updated · Just now</div></div>
@@ -9641,6 +9641,12 @@ const artifactPreviews = {
     title: 'Exec_Summary_Slide_v1.pptx',
     body: `
       <div class="artifact-slide"><div class="artifact-slide-num">Slide 1</div><div class="artifact-slide-title">Q4 2025: Sustained Growth, Strengthened Safety</div><div class="artifact-slide-content">• Revenue: $142M (+12% YoY) — third consecutive quarter of double-digit growth<br>• EBITDA margin: 18.3%, up 2.1 percentage points from Q3<br>• Adverse events: Down 26% QoQ (23 vs 31), zero patient mortality events<br>• FDA compliance: Both reportable incidents resolved within regulatory timelines<br>• Strategic wins: Three new partnerships secured, Tanaka JV accelerated to Aug 2026</div></div>
+    `
+  },
+  execsummaryv2: {
+    title: 'Exec_Summary_Slide_v2.pptx',
+    body: `
+      <div class="artifact-slide"><div class="artifact-slide-num">Slide 1</div><div class="artifact-slide-title">Q4 2025: Sustained Growth, Strengthened Safety</div><div class="artifact-slide-content">• Revenue: $142M (+12% YoY) — third consecutive quarter of double-digit growth<br>• EBITDA margin: 18.3% (excl. one-time restructuring), up 2.1 percentage points from Q3<br>• Adverse events: Down 26% QoQ (23 vs 31), zero patient mortality events<br>• Near-miss reporting: Up 18% — positioned as a maturing safety culture indicator<br>• FDA compliance: Both reportable incidents resolved within regulatory timelines<br>• Strategic wins: Three new partnerships secured, Tanaka JV accelerated to Aug 2026</div></div>
     `
   },
   pptx: {
