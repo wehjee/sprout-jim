@@ -6049,6 +6049,22 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .pd-instructions-body ul { padding-left: var(--space-4); margin: var(--space-2) 0; }
 .pd-instructions-body li { margin-bottom: 2px; }
 
+.pd-instructions-footer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-top: var(--space-3);
+  margin-top: var(--space-3);
+  border-top: 1px solid var(--slate-100);
+}
+.pd-instructions-footer svg { width: 12px; height: 12px; color: var(--sage-400); }
+.pd-instructions-footer span {
+  font-size: 0.68rem;
+  font-weight: 450;
+  color: var(--slate-400);
+  letter-spacing: 0.02em;
+}
+
 /* ─── Artifacts Generated section ─── */
 .pd-artifact-item {
   display: flex;
@@ -8789,30 +8805,6 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         </div>
 
         <div class="project-detail-sidebar">
-          <!-- Instructions -->
-          <div class="project-detail-section">
-            <div class="project-detail-section-header">
-              <div class="project-detail-section-title">Instructions</div>
-            </div>
-            <div class="pd-instructions-card">
-              <div class="pd-instructions-top">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                <span>AI-generated</span>
-                <button class="pd-instructions-edit" onclick="openInstructionsModal()">Edit</button>
-              </div>
-              <div class="pd-instructions-body" id="pdInstructionsBody">
-                <p><strong>Project Purpose:</strong> Prepare materials for board-level review and governance oversight.</p>
-                <ul>
-                  <li>All outputs should be executive-level — concise, data-driven</li>
-                  <li>Use approved board deck template and brand guidelines</li>
-                  <li>Include source citations for all data claims</li>
-                  <li>Flag negative trends with recommended talking points</li>
-                </ul>
-                <p><strong>Deliverables:</strong> Slide deck, executive brief, data appendix</p>
-              </div>
-            </div>
-          </div>
-
           <!-- Share -->
           <div class="project-detail-section">
             <div class="project-detail-section-header">
@@ -8827,6 +8819,30 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <div class="new-project-collab-avatar" style="background:#6366F1">S</div>
               <div class="new-project-collab-avatar" style="background:#EA580C">M</div>
               <span class="pd-share-count">3 people</span>
+            </div>
+          </div>
+
+          <!-- Instructions -->
+          <div class="project-detail-section">
+            <div class="project-detail-section-header">
+              <div class="project-detail-section-title">Instructions</div>
+              <button class="pd-instructions-edit" onclick="openInstructionsModal()">Edit</button>
+            </div>
+            <div class="pd-instructions-card">
+              <div class="pd-instructions-body" id="pdInstructionsBody">
+                <p><strong>Project Purpose:</strong> Prepare materials for board-level review and governance oversight.</p>
+                <ul>
+                  <li>All outputs should be executive-level — concise, data-driven</li>
+                  <li>Use approved board deck template and brand guidelines</li>
+                  <li>Include source citations for all data claims</li>
+                  <li>Flag negative trends with recommended talking points</li>
+                </ul>
+                <p><strong>Deliverables:</strong> Slide deck, executive brief, data appendix</p>
+              </div>
+              <div class="pd-instructions-footer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>AI-generated</span>
+              </div>
             </div>
           </div>
 
