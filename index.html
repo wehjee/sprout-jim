@@ -6393,12 +6393,6 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               <!-- Add dropdown -->
               <div class="dropdown-menu add-dropdown" id="addDropdown">
-                <div class="dropdown-toggle-item" onclick="event.stopPropagation(); this.classList.toggle('active')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/></svg>
-                  Deep Thinking
-                  <div class="dropdown-toggle-switch"><div class="dropdown-toggle-knob"></div></div>
-                </div>
-                <div class="dropdown-divider"></div>
                 <div class="dropdown-item" onclick="openFilePicker(event)">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                   Upload files or documents
@@ -6729,12 +6723,6 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 <div class="dropdown-menu add-dropdown">
-                  <div class="dropdown-toggle-item" onclick="event.stopPropagation(); this.classList.toggle('active')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/></svg>
-                    Deep Thinking
-                    <div class="dropdown-toggle-switch"><div class="dropdown-toggle-knob"></div></div>
-                  </div>
-                  <div class="dropdown-divider"></div>
                   <div class="dropdown-item" onclick="openFilePicker(event)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                     Upload files or documents
@@ -8666,22 +8654,31 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                   </span>
                   <div class="input-web-switch-track"><div class="input-web-switch-thumb"></div></div>
                 </div>
-                <div class="input-think-switch" onclick="toggleDeepThinking(this)" title="Toggle deep thinking">
-                  <span class="input-think-switch-label">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-                    Think
-                  </span>
-                  <div class="input-think-switch-track"><div class="input-think-switch-thumb"></div></div>
-                </div>
                 <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
                 </button>
                 <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   <div class="dropdown-menu add-dropdown" id="pdAddDropdown">
-                    <div class="dropdown-item" onclick="event.stopPropagation()">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div class="dropdown-item" onclick="openFilePicker(event)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                       Upload files or documents
+                    </div>
+                    <div class="dropdown-item disabled">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                      Add Knowledge Base
+                      <span class="coming-soon">Coming soon</span>
+                    </div>
+                    <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                      Agents
+                      <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      <div class="dropdown-sub">
+                        <div class="dropdown-item plugin-action" data-category="Legal" data-action="Triage an incoming NDA">Triage an incoming NDA</div>
+                        <div class="dropdown-item plugin-action" data-category="Data" data-action="Explore and profile a dataset">Explore and profile a dataset</div>
+                        <div class="dropdown-item plugin-action" data-category="HR" data-action="Policy look up">Policy look up</div>
+                        <div class="dropdown-item plugin-action" data-category="Ops" data-action="Evaluate a vendor">Evaluate a vendor</div>
+                      </div>
                     </div>
                   </div>
                 </div>
