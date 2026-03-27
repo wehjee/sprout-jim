@@ -2902,6 +2902,44 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 }
 .projects-sort:hover { border-color: var(--slate-300); background: var(--slate-50); }
 .projects-sort svg { width: 14px; height: 14px; opacity: 0.5; }
+.projects-sort { position: relative; }
+
+.projects-sort-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-1);
+  min-width: 160px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: all var(--duration-fast) var(--ease-out);
+  z-index: 200;
+}
+.projects-sort-dropdown.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.projects-sort-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--slate-700);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.projects-sort-option:hover { background: var(--slate-50); }
+.projects-sort-option.active { color: var(--sage-600); font-weight: 500; }
+.projects-sort-option svg { width: 14px; height: 14px; opacity: 0.5; }
 
 .projects-grid {
   display: grid;
@@ -8413,9 +8451,19 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             <svg class="projects-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input type="text" placeholder="Search projects...">
           </div>
-          <button class="projects-sort">
+          <button class="projects-sort" onclick="toggleProjectSort(event)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="8" y2="18"/></svg>
-            Sort by Activity
+            <span id="projectSortLabel">Last Edited</span>
+            <div class="projects-sort-dropdown" id="projectSortDropdown">
+              <div class="projects-sort-option active" onclick="setProjectSort(event, 'Last Edited')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Last Edited
+              </div>
+              <div class="projects-sort-option" onclick="setProjectSort(event, 'Date Created')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Date Created
+              </div>
+            </div>
           </button>
         </div>
 
@@ -10458,6 +10506,19 @@ function showKnowledgeBase() {
   });
 }
 
+function toggleProjectSort(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('projectSortDropdown');
+  dd.classList.toggle('open');
+}
+function setProjectSort(e, label) {
+  e.stopPropagation();
+  document.getElementById('projectSortLabel').textContent = label;
+  document.querySelectorAll('.projects-sort-option').forEach(o => o.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.getElementById('projectSortDropdown').classList.remove('open');
+}
+
 function showProjects() {
   hideAllViews();
   restoreDefaultSidebar();
@@ -10727,7 +10788,12 @@ function handleFolderSelected(input) {
 }
 
 // Close dropdowns on outside click
-document.addEventListener('click', closeAllDropdowns);
+document.addEventListener('click', function(e) {
+  closeAllDropdowns();
+  // Also close project sort dropdown
+  const sortDD = document.getElementById('projectSortDropdown');
+  if (sortDD && !e.target.closest('.projects-sort')) sortDD.classList.remove('open');
+});
 
 // Folder selection
 document.querySelectorAll('.folder-dropdown .dropdown-item').forEach(item => {
