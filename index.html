@@ -2989,6 +2989,10 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   padding: var(--space-8) var(--space-8) var(--space-8) var(--space-8);
   gap: var(--space-8);
 }
+.project-detail-layout.chat-active {
+  max-width: none;
+  padding: 0;
+}
 
 .project-detail-main {
   flex: 1;
@@ -10515,10 +10519,20 @@ let collabIndex = 0;
 function openProjectGroupChat() {
   document.getElementById('pdMainContent').style.display = 'none';
   document.getElementById('projectChatView').classList.add('active');
+  // Hide the right sidebar and expand layout when in chat view
+  const sidebar = document.querySelector('.project-detail-sidebar');
+  if (sidebar) sidebar.style.display = 'none';
+  const layout = document.querySelector('.project-detail-layout');
+  if (layout) layout.classList.add('chat-active');
 }
 function closeProjectGroupChat() {
   document.getElementById('projectChatView').classList.remove('active');
   document.getElementById('pdMainContent').style.display = '';
+  // Restore the right sidebar and layout
+  const sidebar = document.querySelector('.project-detail-sidebar');
+  if (sidebar) sidebar.style.display = '';
+  const layout = document.querySelector('.project-detail-layout');
+  if (layout) layout.classList.remove('chat-active');
 }
 
 // ─── Share modal ───
