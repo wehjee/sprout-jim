@@ -6054,10 +6054,13 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   align-items: center;
   gap: 5px;
   padding: 3px 10px;
-  margin-top: var(--space-3);
+  margin: var(--space-4) var(--space-4) 0;
   background: var(--sage-50);
   border: 1px solid var(--sage-100);
   border-radius: 12px;
+}
+.pd-instructions-footer + .pd-instructions-body {
+  padding-top: var(--space-2);
 }
 .pd-instructions-footer svg { width: 12px; height: 12px; color: var(--sage-400); }
 .pd-instructions-footer span {
@@ -8905,7 +8908,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <button class="pd-instructions-edit" onclick="openInstructionsModal()">Edit</button>
             </div>
             <div class="pd-instructions-card">
-              <div class="pd-instructions-footer" style="margin-top:0; margin-bottom:var(--space-3)">
+              <div class="pd-instructions-footer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 <span>AI-generated</span>
               </div>
