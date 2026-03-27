@@ -2948,6 +2948,46 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   cursor: pointer;
 }
 
+/* List view */
+.kb-grid.list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.kb-grid.list-view .kb-vault-card {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-2);
+}
+.kb-grid.list-view .kb-vault-card:first-child {
+  border-top: 1px solid var(--slate-100);
+}
+.kb-grid.list-view .kb-vault-card:last-child {
+  border-bottom: 1px solid var(--slate-100);
+}
+.kb-grid.list-view .kb-vault-card:hover {
+  box-shadow: none;
+  transform: none;
+  background: var(--slate-50);
+}
+.kb-grid.list-view .kb-vault-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  aspect-ratio: auto;
+}
+.kb-grid.list-view .kb-vault-thumb svg { width: 24px; height: 24px; }
+.kb-grid.list-view .kb-vault-footer {
+  flex: 1;
+  padding: 0;
+}
+
 .kb-empty-state {
   text-align: center;
   padding: var(--space-10) 0;
@@ -8830,17 +8870,6 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
         </div>
 
-        <!-- New vault -->
-        <div class="kb-new-vault">
-          <div class="kb-new-vault-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
-          </div>
-          <div class="kb-new-vault-info">
-            <div class="kb-new-vault-title">New knowledge base</div>
-            <div class="kb-new-vault-desc">Each knowledge base can contain up to 100,000 files</div>
-          </div>
-        </div>
-
         <!-- Filters and controls -->
         <div class="kb-controls">
           <div class="kb-filters">
@@ -8854,8 +8883,8 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="7 15 12 20 17 15"/><polyline points="7 9 12 4 17 9"/></svg>
             </button>
             <div class="kb-view-toggle">
-              <button class="kb-view-btn active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
-              <button class="kb-view-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+              <button class="kb-view-btn active" onclick="toggleKbView(this,'grid')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
+              <button class="kb-view-btn" onclick="toggleKbView(this,'list')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             </div>
           </div>
         </div>
@@ -11345,6 +11374,17 @@ function openKbVaultDetail(name) {
     `).join('');
   }
   detail.classList.add('open');
+}
+
+function toggleKbView(btn, mode) {
+  document.querySelectorAll('.kb-view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const grid = document.querySelector('.kb-grid');
+  if (mode === 'list') {
+    grid.classList.add('list-view');
+  } else {
+    grid.classList.remove('list-view');
+  }
 }
 
 function closeKbVaultDetail() {
