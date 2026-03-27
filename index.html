@@ -6178,7 +6178,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="home-input-toolbar">
             <div class="input-folder-select" onclick="toggleFolderDropdown(event)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
-              <span class="input-folder-name">Work in a folder</span>
+              <span class="input-folder-name">Work in a project</span>
               <svg class="input-folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               <!-- Folder dropdown -->
               <div class="dropdown-menu folder-dropdown" id="folderDropdown">
@@ -6199,9 +6199,9 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                   Marketing
                 </div>
                 <div class="dropdown-divider"></div>
-                <div class="dropdown-item" onclick="openFolderPicker(event)">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
-                  Work in a different folder
+                <div class="dropdown-item" onclick="closeAllDropdowns(); showNewProject()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Work in a new project
                 </div>
               </div>
             </div>
@@ -6539,7 +6539,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="thread-input-toolbar">
             <div class="input-folder-select" onclick="toggleFolderDropdown(event)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
-              <span class="input-folder-name">Work in a folder</span>
+              <span class="input-folder-name">Work in a project</span>
               <svg class="input-folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="input-toolbar-right">
