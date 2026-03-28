@@ -3325,6 +3325,233 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   color: var(--sage-600);
 }
 
+/* ─── Knowledge Readiness (Discover replacement) ─── */
+.kr-page {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.kr-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.kr-header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--sage-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.kr-header-icon svg { width: 22px; height: 22px; color: var(--sage-600); }
+.kr-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--slate-900);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.kr-subtitle {
+  font-size: 0.88rem;
+  color: var(--slate-400);
+  font-weight: 300;
+  margin-top: var(--space-1);
+}
+
+/* Tabs */
+.kr-tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--slate-100);
+  margin-bottom: var(--space-8);
+}
+.kr-tab {
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--slate-400);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.kr-tab:hover { color: var(--slate-600); }
+.kr-tab.active {
+  color: var(--slate-900);
+  font-weight: 500;
+  border-bottom-color: var(--slate-900);
+}
+
+/* Sections */
+.kr-section {
+  background: var(--white);
+  border: 1px solid var(--slate-100);
+  border-radius: 16px;
+  padding: var(--space-8);
+  margin-bottom: var(--space-6);
+}
+.kr-section-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-3);
+}
+.kr-section-desc {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: var(--space-6);
+}
+
+/* Checklist cards */
+.kr-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.kr-check-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--slate-100);
+  border-radius: 12px;
+  background: var(--white);
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+.kr-check-card:hover {
+  border-color: var(--slate-200);
+  box-shadow: var(--shadow-sm);
+}
+.kr-check-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--sage-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.kr-check-icon svg { width: 18px; height: 18px; color: var(--sage-500); }
+.kr-check-body { flex: 1; min-width: 0; }
+.kr-check-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  margin-bottom: var(--space-1);
+}
+.kr-check-desc {
+  font-size: 0.8rem;
+  color: var(--slate-500);
+  line-height: 1.5;
+  font-weight: 300;
+}
+.kr-check-arrow {
+  color: var(--slate-300);
+  flex-shrink: 0;
+  align-self: center;
+}
+.kr-check-arrow svg { width: 16px; height: 16px; }
+
+/* Why it matters */
+.kr-why {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--slate-100);
+}
+.kr-why-title {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+.kr-why-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.82rem;
+  color: var(--slate-700);
+  font-weight: 400;
+}
+.kr-why-item::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sage-400);
+  flex-shrink: 0;
+}
+
+/* Gaps list */
+.kr-gaps-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.kr-gap-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  font-size: 0.82rem;
+  color: var(--slate-600);
+}
+.kr-gap-num {
+  width: 24px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--slate-400);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Download CTA */
+.kr-download-cta {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) 0;
+}
+.kr-download-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: 10px;
+  border: none;
+  background: var(--sage-600);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.kr-download-btn:hover { background: var(--sage-700); box-shadow: var(--shadow-md); }
+.kr-download-btn svg { width: 16px; height: 16px; }
+
 /* ─── PROJECTS VIEW ─── */
 .view-projects { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .view-projects.active { display: flex; }
@@ -6754,7 +6981,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
       <nav class="sidebar-nav">
         <div class="nav-item" onclick="showDiscover()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-          Discover
+          Knowledge Readiness
         </div>
         <div class="nav-item" onclick="showProjects()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
@@ -9005,164 +9232,132 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
     <!-- DISCOVER VIEW -->
     <div class="view-discover" id="viewDiscover">
-      <div class="discover-topbar">
-        <span class="discover-topbar-title">Discover</span>
-      </div>
-      <div class="discover-scroll">
-        <div class="discover-layout">
-          <!-- Main feed -->
-          <div class="discover-feed">
-
-            <!-- Hero article -->
-            <div class="d-hero" onclick="showThread()">
-              <div class="d-hero-text">
-                <h2 class="d-hero-title">FDA proposes new framework for AI-powered clinical decision support tools</h2>
-                <div class="d-hero-time">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  Published 3 hours ago
-                </div>
-                <p class="d-hero-excerpt">The agency outlined a risk-based classification system for machine learning algorithms used in diagnostics, requiring real-world performance monitoring and algorithmic transparency for high-risk applications.</p>
-                <div class="d-sources">
-                  <div class="d-source-icons"><span>R</span><span>S</span><span>F</span></div>
-                  <span>15 sources</span>
-                  <div class="d-actions">
-                    <button class="d-action-btn" title="Save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                    <button class="d-action-btn" title="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
-                  </div>
-                </div>
-              </div>
-              <div class="d-hero-img">
-                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=680&h=440&fit=crop" alt="Medical AI">
-              </div>
-            </div>
-
-            <!-- Three-column cards -->
-            <div class="d-trio">
-              <div class="d-trio-card">
-                <div class="d-trio-img"><img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&h=320&fit=crop" alt="Lab research"></div>
-                <div class="d-trio-title">Moderna announces Phase 3 results for next-gen mRNA respiratory vaccine</div>
-                <div class="d-sources">
-                  <div class="d-source-icons"><span>N</span><span>B</span></div>
-                  <span>24 sources</span>
-                  <div class="d-actions">
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
-                  </div>
-                </div>
-              </div>
-              <div class="d-trio-card">
-                <div class="d-trio-img"><img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&h=320&fit=crop" alt="Hospital"></div>
-                <div class="d-trio-title">CMS finalizes 2026 hospital price transparency enforcement rules</div>
-                <div class="d-sources">
-                  <div class="d-source-icons"><span>C</span><span>H</span></div>
-                  <span>18 sources</span>
-                  <div class="d-actions">
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
-                  </div>
-                </div>
-              </div>
-              <div class="d-trio-card">
-                <div class="d-trio-img"><img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=400&h=320&fit=crop" alt="Data analytics"></div>
-                <div class="d-trio-title">Epic Systems expands interoperability API, enabling real-time data sharing</div>
-                <div class="d-sources">
-                  <div class="d-source-icons"><span>T</span><span>W</span><span>E</span></div>
-                  <span>42 sources</span>
-                  <div class="d-actions">
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Editorial rows -->
-            <div class="d-editorial">
-              <div class="d-editorial-img"><img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=440&h=300&fit=crop" alt="Healthcare executive"></div>
-              <div class="d-editorial-text">
-                <h3 class="d-editorial-title">UnitedHealth replaces CEO amid DOJ investigation into Medicare billing practices</h3>
-                <div class="d-editorial-time">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  Published 2 hours ago
-                </div>
-                <p class="d-editorial-excerpt">The board announced an immediate leadership transition as federal prosecutors expand their investigation into the insurer's risk adjustment and coding practices across its Medicare Advantage plans.</p>
-                <div class="d-sources">
-                  <div class="d-source-icons"><span>R</span><span>W</span></div>
-                  <span>100 sources</span>
-                  <div class="d-actions">
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-editorial">
-              <div class="d-editorial-img"><img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=440&h=300&fit=crop" alt="Pharmacy"></div>
-              <div class="d-editorial-text">
-                <h3 class="d-editorial-title">GLP-1 drug shortage eases as Novo Nordisk ramps up production capacity by 40%</h3>
-                <div class="d-editorial-time">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  Published 5 hours ago
-                </div>
-                <p class="d-editorial-excerpt">The Danish pharmaceutical giant has invested $4.1 billion in new manufacturing facilities, with the first production lines in North Carolina expected to be operational by Q3 2026.</p>
-                <div class="d-sources">
-                  <div class="d-source-icons"><span>B</span><span>F</span><span>N</span></div>
-                  <span>67 sources</span>
-                  <div class="d-actions">
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="d-editorial">
-              <div class="d-editorial-img"><img src="https://images.unsplash.com/photo-1576671081837-49000212a370?w=440&h=300&fit=crop" alt="Medical records"></div>
-              <div class="d-editorial-text">
-                <h3 class="d-editorial-title">HIPAA enforcement actions surge 300% as OCR targets business associate agreements</h3>
-                <div class="d-editorial-time">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  Published 12 hours ago
-                </div>
-                <p class="d-editorial-excerpt">The Office for Civil Rights has issued $28M in penalties this quarter alone, with a focus on inadequate vendor risk management and missing breach notification procedures in mid-size health systems.</p>
-                <div class="d-sources">
-                  <div class="d-source-icons"><span>H</span><span>L</span></div>
-                  <span>29 sources</span>
-                  <div class="d-actions">
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                    <button class="d-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+      <div class="kr-page">
+        <!-- Header -->
+        <div class="kr-header">
+          <div class="kr-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
           </div>
+          <div>
+            <h1 class="kr-title">Knowledge Readiness</h1>
+            <p class="kr-subtitle">What to check before submitting content for AI consumption</p>
+          </div>
+        </div>
 
-          <!-- Right sidebar -->
-          <aside class="discover-aside">
-            <div class="d-widget">
-              <div class="d-widget-title">Your Interests</div>
-              <div class="d-interest-tags">
-                <span class="d-interest-tag active">Clinical Ops</span>
-                <span class="d-interest-tag active">Compliance</span>
-                <span class="d-interest-tag">Research</span>
-                <span class="d-interest-tag">Policy</span>
-                <span class="d-interest-tag">Technology</span>
-                <span class="d-interest-tag">Pharma</span>
+        <!-- Tabs -->
+        <div class="kr-tabs">
+          <button class="kr-tab active">Content Creator Guide</button>
+          <button class="kr-tab">Readiness Framework</button>
+          <button class="kr-tab">KB Architecture</button>
+          <button class="kr-tab">KB Explorer</button>
+        </div>
+
+        <!-- Before You Submit -->
+        <div class="kr-section">
+          <h2 class="kr-section-title">Before You Submit</h2>
+          <p class="kr-section-desc">When you create or update a knowledge article, it gets ingested by the AI and is used to answer questions during live calls. If the content has issues — broken links, duplicate info, or missing metadata — the AI will give bad answers. This page walks through the most common problems we see, so you can catch them before you submit.</p>
+
+          <div class="kr-why">
+            <div class="kr-why-title">Why this matters</div>
+            <div class="kr-why-item">Prevent compliance risks</div>
+            <div class="kr-why-item">Improve First Contact Resolution</div>
+            <div class="kr-why-item">Reduce outdated content exposure</div>
+            <div class="kr-why-item">Scale AI across lines of business</div>
+          </div>
+        </div>
+
+        <!-- Things to Check -->
+        <div class="kr-section">
+          <h2 class="kr-section-title">Things to Check</h2>
+          <p class="kr-section-desc">Run through these before you submit. Most of these take a few minutes and save a lot of back-and-forth later.</p>
+
+          <div class="kr-checklist">
+            <div class="kr-check-card">
+              <div class="kr-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+              <div class="kr-check-body">
+                <div class="kr-check-title">Check for Broken Links</div>
+                <div class="kr-check-desc">If a link in your document is broken or points somewhere that no longer exists, the agent can't follow it — and the associate on the call gets a dead end.</div>
               </div>
+              <div class="kr-check-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
             </div>
-            <div class="d-widget">
-              <div class="d-widget-title">Trending Topics</div>
-              <div class="d-trending-item"><span class="d-trending-rank">1</span><span class="d-trending-name">AI in Diagnostics</span><span class="d-trending-badge">Hot</span></div>
-              <div class="d-trending-item"><span class="d-trending-rank">2</span><span class="d-trending-name">GLP-1 Drug Market</span></div>
-              <div class="d-trending-item"><span class="d-trending-rank">3</span><span class="d-trending-name">HIPAA 2026 Updates</span></div>
-              <div class="d-trending-item"><span class="d-trending-rank">4</span><span class="d-trending-name">Value-Based Care</span></div>
-              <div class="d-trending-item"><span class="d-trending-rank">5</span><span class="d-trending-name">Telehealth Regulation</span></div>
-              <div class="d-trending-item"><span class="d-trending-rank">6</span><span class="d-trending-name">Nurse Staffing Crisis</span></div>
-              <div class="d-trending-item"><span class="d-trending-rank">7</span><span class="d-trending-name">EHR Interoperability</span></div>
+
+            <div class="kr-check-card">
+              <div class="kr-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/></svg></div>
+              <div class="kr-check-body">
+                <div class="kr-check-title">Eliminate Duplicate Content</div>
+                <div class="kr-check-desc">If the same information lives in multiple documents, the agent may pull the wrong version — or give a confusing answer that blends both.</div>
+              </div>
+              <div class="kr-check-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
             </div>
-          </aside>
+
+            <div class="kr-check-card">
+              <div class="kr-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div class="kr-check-body">
+                <div class="kr-check-title">Resolve Contradictions</div>
+                <div class="kr-check-desc">If one document says prior auth takes 72 hours and another says 5 business days, the agent doesn't know which is right — and neither does the associate.</div>
+              </div>
+              <div class="kr-check-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            </div>
+
+            <div class="kr-check-card">
+              <div class="kr-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
+              <div class="kr-check-body">
+                <div class="kr-check-title">Remove Empty &amp; Outdated Content</div>
+                <div class="kr-check-desc">Blank pages, placeholder stubs, and documents from two plan years ago just add clutter. If the agent pulls one of these instead of the right answer, the associate gets nothing useful.</div>
+              </div>
+              <div class="kr-check-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            </div>
+
+            <div class="kr-check-card">
+              <div class="kr-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+              <div class="kr-check-body">
+                <div class="kr-check-title">Structure Content for AI Readability</div>
+                <div class="kr-check-desc">The agent reads your document like a person skimming for an answer — clear headers and short paragraphs help it find the right section fast.</div>
+              </div>
+              <div class="kr-check-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            </div>
+
+            <div class="kr-check-card">
+              <div class="kr-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+              <div class="kr-check-body">
+                <div class="kr-check-title">Provide Complete Metadata</div>
+                <div class="kr-check-desc">Metadata is how the agent knows when to use your document and when not to. If it's missing or wrong, your content might show up for the wrong plan, wrong year, or wrong line of business.</div>
+              </div>
+              <div class="kr-check-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Gaps -->
+        <div class="kr-section">
+          <h2 class="kr-section-title">Common Gaps We See</h2>
+          <p class="kr-section-desc">These are the issues that come up most often. If your doc has any of these, it'll likely get sent back — or worse, go live and give associates bad information.</p>
+
+          <div class="kr-gaps-list">
+            <div class="kr-gap-item"><span class="kr-gap-num">1.</span> Broken links</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">2.</span> Contains outdated website references</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">3.</span> Contradictions</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">4.</span> Crossed-out text</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">5.</span> Empty documents</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">6.</span> Exact document duplicates</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">7.</span> Folders with excessive nesting</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">8.</span> Internal-only information</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">9.</span> Missing categories</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">10.</span> Missing description</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">11.</span> Missing image alt text</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">12.</span> Missing link captions</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">13.</span> Missing table of contents</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">14.</span> Missing tags</div>
+            <div class="kr-gap-item"><span class="kr-gap-num">15.</span> Needs attention</div>
+          </div>
+        </div>
+
+        <!-- Download CTA -->
+        <div class="kr-download-cta">
+          <button class="kr-download-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Readiness Checklist
+          </button>
         </div>
       </div>
     </div>
