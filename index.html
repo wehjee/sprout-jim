@@ -498,7 +498,6 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .home-input {
   width: 100%;
   padding: var(--space-5) var(--space-6);
-  padding-right: 56px;
   border: none;
   border-radius: 16px 16px 0 0;
   font-family: var(--font-body);
@@ -514,13 +513,9 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .home-input::placeholder { color: var(--slate-400); font-weight: 300; }
 
 .home-send {
-  position: absolute;
-  right: var(--space-3);
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   border: none;
   background: var(--slate-900);
   color: var(--white);
@@ -529,8 +524,9 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   justify-content: center;
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
 }
-.home-send:hover { background: var(--slate-700); transform: translateY(-50%) scale(1.05); }
+.home-send:hover { background: var(--slate-700); transform: scale(1.05); }
 .home-send svg { width: 16px; height: 16px; }
 
 /* Input chips */
@@ -7130,15 +7126,13 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="home-input-wrapper">
             <div class="input-chips" id="inputChips"></div>
             <textarea class="home-input" rows="1" placeholder="What would you like to work on?"></textarea>
-            <button class="home-send">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
           </div>
           <div class="home-input-toolbar">
-            <div class="input-folder-select" onclick="toggleFolderDropdown(event)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
-              <span class="input-folder-name">Work in a project</span>
-              <svg class="input-folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <div style="display:flex;align-items:center;gap:var(--space-1)">
+              <div class="input-folder-select" onclick="toggleFolderDropdown(event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+                <span class="input-folder-name">Work in a project</span>
+                <svg class="input-folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               <!-- Folder dropdown -->
               <div class="dropdown-menu folder-dropdown" id="folderDropdown">
                 <div class="dropdown-item">
@@ -7163,7 +7157,76 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                   Work in a new project
                 </div>
               </div>
-            </div>
+              <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <!-- Add dropdown -->
+                <div class="dropdown-menu add-dropdown" id="addDropdown">
+                  <div class="dropdown-item" onclick="openFilePicker(event)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Upload files or documents
+                  </div>
+                  <div class="dropdown-item disabled">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    Add Knowledge Base
+                    <span class="coming-soon">Coming soon</span>
+                  </div>
+                  <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Agents
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    <div class="dropdown-sub">
+                      <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                        Legal
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        <div class="dropdown-sub">
+                          <div class="dropdown-item plugin-action" data-category="Legal" data-action="Triage an incoming NDA">Triage an incoming NDA</div>
+                        </div>
+                      </div>
+                      <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                        Data
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        <div class="dropdown-sub">
+                          <div class="dropdown-item plugin-action" data-category="Data" data-action="Explore and profile a dataset">Explore and profile a dataset</div>
+                          <div class="dropdown-item plugin-action" data-category="Data" data-action="Interactive dashboard builder">Interactive dashboard builder</div>
+                        </div>
+                      </div>
+                      <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                        Human Resources
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        <div class="dropdown-sub">
+                          <div class="dropdown-item plugin-action" data-category="HR" data-action="Policy look up">Policy look up</div>
+                        </div>
+                      </div>
+                      <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                        Operations
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        <div class="dropdown-sub">
+                          <div class="dropdown-item plugin-action" data-category="Ops" data-action="Evaluate a vendor">Evaluate a vendor</div>
+                          <div class="dropdown-item plugin-action" data-category="Ops" data-action="Document a business process as SOP">Document a business process as SOP</div>
+                          <div class="dropdown-item plugin-action" data-category="Ops" data-action="Generate a weekly status for leadership">Generate a weekly status for leadership</div>
+                        </div>
+                      </div>
+                      <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                        Productivity
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        <div class="dropdown-sub">
+                          <div class="dropdown-item plugin-action" data-category="Prod" data-action="Create a PPT">Create a PPT</div>
+                        </div>
+                      </div>
+                      <div class="dropdown-divider"></div>
+                      <div class="dropdown-item" onclick="showAgents()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                        Manage agents
+                      </div>
+                      <div class="dropdown-item" onclick="openBrowseAgents()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Add agent
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /input-toolbar-left -->
             <div class="input-toolbar-right">
               <div class="input-web-switch" onclick="toggleWebSearch(this)" title="Toggle web search">
                 <span class="input-web-switch-label">
@@ -7177,75 +7240,9 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
               </button>
-              <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              <!-- Add dropdown -->
-              <div class="dropdown-menu add-dropdown" id="addDropdown">
-                <div class="dropdown-item" onclick="openFilePicker(event)">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  Upload files or documents
-                </div>
-                <div class="dropdown-item disabled">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                  Add Knowledge Base
-                  <span class="coming-soon">Coming soon</span>
-                </div>
-                <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                  Agents
-                  <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                  <div class="dropdown-sub">
-                    <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
-                      Legal
-                      <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                      <div class="dropdown-sub">
-                        <div class="dropdown-item plugin-action" data-category="Legal" data-action="Triage an incoming NDA">Triage an incoming NDA</div>
-                      </div>
-                    </div>
-                    <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
-                      Data
-                      <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                      <div class="dropdown-sub">
-                        <div class="dropdown-item plugin-action" data-category="Data" data-action="Explore and profile a dataset">Explore and profile a dataset</div>
-                        <div class="dropdown-item plugin-action" data-category="Data" data-action="Interactive dashboard builder">Interactive dashboard builder</div>
-                      </div>
-                    </div>
-                    <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
-                      Human Resources
-                      <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                      <div class="dropdown-sub">
-                        <div class="dropdown-item plugin-action" data-category="HR" data-action="Policy look up">Policy look up</div>
-                      </div>
-                    </div>
-                    <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
-                      Operations
-                      <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                      <div class="dropdown-sub">
-                        <div class="dropdown-item plugin-action" data-category="Ops" data-action="Evaluate a vendor">Evaluate a vendor</div>
-                        <div class="dropdown-item plugin-action" data-category="Ops" data-action="Document a business process as SOP">Document a business process as SOP</div>
-                        <div class="dropdown-item plugin-action" data-category="Ops" data-action="Generate a weekly status for leadership">Generate a weekly status for leadership</div>
-                      </div>
-                    </div>
-                    <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
-                      Productivity
-                      <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                      <div class="dropdown-sub">
-                        <div class="dropdown-item plugin-action" data-category="Prod" data-action="Create a PPT">Create a PPT</div>
-                      </div>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-item" onclick="showAgents()">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-                      Manage agents
-                    </div>
-                    <div class="dropdown-item" onclick="openBrowseAgents()">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                      Add agent
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <button class="home-send">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+              </button>
             </div><!-- /input-toolbar-right -->
           </div>
         </div>
@@ -9512,25 +9509,11 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="home-input-box">
             <div class="home-input-wrapper">
               <textarea class="home-input" rows="1" placeholder="What would you like to work on?"></textarea>
-              <button class="home-send">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </button>
             </div>
             <div class="home-input-toolbar">
-              <div style="flex:1"></div>
-              <div class="input-toolbar-right">
-                <div class="input-web-switch" onclick="toggleWebSearch(this)" title="Toggle web search">
-                  <span class="input-web-switch-label">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    Search
-                  </span>
-                  <div class="input-web-switch-track"><div class="input-web-switch-thumb"></div></div>
-                </div>
-                <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                </button>
+              <div style="display:flex;align-items:center;gap:var(--space-1)">
                 <div class="input-add-trigger" onclick="toggleAddDropdown(event)">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   <div class="dropdown-menu add-dropdown" id="pdAddDropdown">
                     <div class="dropdown-item" onclick="openFilePicker(event)">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -9554,6 +9537,21 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="input-toolbar-right">
+                <div class="input-web-switch" onclick="toggleWebSearch(this)" title="Toggle web search">
+                  <span class="input-web-switch-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    Search
+                  </span>
+                  <div class="input-web-switch-track"><div class="input-web-switch-thumb"></div></div>
+                </div>
+                <button class="input-voice-btn" onclick="toggleVoiceInput(this)" title="Voice input">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                </button>
+                <button class="home-send">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                </button>
               </div>
             </div>
           </div>
